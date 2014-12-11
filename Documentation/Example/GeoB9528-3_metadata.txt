@@ -1,0 +1,12 @@
+[Parameter]											
+Parameter name	Parameter ID	PI ID	Method ID	Comment	Format	Factor	fill empty cells with	Range min	Range max	Number of integers influenced by line	Number of digits influenced by line
+cm	1	34684	43		##0.000	0.01		-1.00E+31	1.00E+31	34	1
+AGE [ka BP]	2205	34684	43		##0.00	1		-1.00E+31	1.00E+31	195	1
+Cibicidoides wuellerstorfi, d18O [per mil PDB]	116	34684	6672		#0.00	1		-1.00E+31	1.00E+31	1	1
+Cibicidoides wuellerstorfi, d13C [per mil PDB]	117	34684	6672		#0.00	1		-1.00E+31	1.00E+31	24	1
+[DataSet comment]											
+PS22/234-5	Comment										
+[URL further details]											
+PS22/234-5	hdl:10013/epic.26895.d001										
+[URL other version]											
+PS22/234-5	http://doi.pangaea.de/10.1594/PANGAEA.587453										

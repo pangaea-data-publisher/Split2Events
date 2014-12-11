@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Dr. Rainer Sieger, www.pangaea.de</author>
+ <class>Split2EventsDialog</class>
+ <widget class="QDialog" name="Split2EventsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>964</width>
+    <height>785</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Settings for</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_23">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab1">
+      <attribute name="title">
+       <string>Mandatory</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>PANGAEA staff ID of the principal investigator</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_13">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="PrincipalInvestigatorLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>PANGAEA institution ID of the source (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_15">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="SourceLineEdit"/>
+          </item>
+          <item row="0" column="1">
+           <spacer>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>PANGAEA staff ID(s) of the author(s)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_14">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="AuthorLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>PANGAEA reference ID(s)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_16">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="ReferenceLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string>PANGAEA project ID(s)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="ProjectLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="3">
+        <widget class="QGroupBox" name="DatasetTitleGroupBox">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Dataset title</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_18">
+          <item row="0" column="0">
+           <widget class="QTextEdit" name="DatasetTitleTextEdit">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QGroupBox" name="groupBox_11">
+         <property name="title">
+          <string>Topologic type</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_10">
+          <item row="0" column="0">
+           <widget class="QComboBox" name="TopologicTypeComboBox">
+            <item>
+             <property name="text">
+              <string>not given</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>not specified</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Point</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Vertical profile</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Horizontal profile</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Profile series</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Irregular surface</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Gridded surface</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Time series</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Time slice</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Gridded time slice</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Uncode table</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="spacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>341</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1" rowspan="2" colspan="2">
+        <widget class="QGroupBox" name="groupBox_13">
+         <property name="title">
+          <string>Access rights</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="UnrestrictedRadioButton">
+            <property name="text">
+             <string>unrestricted</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="SignupRequiredRadioButton">
+            <property name="text">
+             <string>signup required</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="LoginEventRadioButton">
+            <property name="text">
+             <string>@L@Event label@</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="AccessRightsNeededRadioButton">
+            <property name="text">
+             <string>access rights needed</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QGroupBox" name="groupBox_12">
+         <property name="title">
+          <string>Status</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QComboBox" name="StatusComboBox">
+            <item>
+             <property name="text">
+              <string>Not validated</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Validated</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Published</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>197</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="3">
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string>Export filename</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_19">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="ExportFilenameLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab2">
+      <attribute name="title">
+       <string>Optional</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_25">
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="DatasetCommentGroupBox">
+         <property name="title">
+          <string>Dataset comment (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QTextEdit" name="DataSetCommentTextEdit">
+            <property name="html">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.Lucida Grande UI'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>PANGAEA reference ID(s) to be used as further details (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="FurtherDetailsReferenceLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_19">
+         <property name="title">
+          <string>PANGAEA dataset ID(s) to be used as further details (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_22">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="FurtherDetailsDatasetLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="title">
+          <string>PANGAEA reference ID(s) to be used as other version (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="OtherVersionReferenceLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="groupBox_18">
+         <property name="title">
+          <string>PANGAEA dataset ID(s) to be used as other version (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_21">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="OtherVersionDatasetLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string>PANGAEA reference ID(s) to be used as source data set (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_24">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="SourceReferenceLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QGroupBox" name="groupBox_20">
+         <property name="title">
+          <string>PANGAEA dataset ID(s) to be used as source data set (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="SourceDatasetLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_14">
+         <property name="title">
+          <string>User(s) of validated datasets</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="UserLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab3">
+      <attribute name="title">
+       <string>Options</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_15">
+         <property name="title">
+          <string>Split to events options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_1">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="splitFileCheckBox">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>split file to events</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="makeFilenameUniqueCheckBox">
+            <property name="text">
+             <string>make filename unique</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="useFilenameInAsEventLabelCheckBox">
+            <property name="text">
+             <string>use name of input file for $E or ID=999999</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="writeHeaderCheckBox">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>write data description</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="markSmallFileCheckBox">
+            <property name="text">
+             <string>mark files with 1, 2, or 3 lines</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="OverwriteDatasetCheckBox">
+            <property name="text">
+             <string>overwrite existing datasets, be careful</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Handle out of range values</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="ignoreRange_radioButton">
+            <property name="text">
+             <string>ignore range settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="removeValue_radioButton">
+            <property name="text">
+             <string>remove value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="badValue_radioButton">
+            <property name="text">
+             <string>mark as bad</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="questionableValue_radioButton">
+            <property name="text">
+             <string>mark as questionable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_16">
+         <property name="title">
+          <string>Metadata file options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="dontUseMetadataFileRadioButton">
+            <property name="text">
+             <string>don't use metadata file</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="useAutoMetadataFileRadioButton">
+            <property name="text">
+             <string>use auto metadata file (set the default method and a suitable format for the data)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="findByPosisitionRadioButton">
+            <property name="text">
+             <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="findByNameRadioButton">
+            <property name="text">
+             <string>use metadata file; find parameter by name (if a metadata template is created, a parameter database will be used)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_17">
+         <property name="title">
+          <string>Create metadata template options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_20">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
+            <property name="text">
+             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="CreateMetadataTemplatePushButton">
+       <property name="text">
+        <string>Create metadata &amp;template</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NewProjectPushButton">
+       <property name="text">
+        <string>&amp;New</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SaveProjectPushButton">
+       <property name="text">
+        <string>&amp;Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="LoadProjectPushButton">
+       <property name="text">
+        <string>&amp;Load</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="OK_pushButton">
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel_pushButton">
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>PrincipalInvestigatorLineEdit</tabstop>
+  <tabstop>SourceLineEdit</tabstop>
+  <tabstop>AuthorLineEdit</tabstop>
+  <tabstop>ReferenceLineEdit</tabstop>
+  <tabstop>ProjectLineEdit</tabstop>
+  <tabstop>DatasetTitleTextEdit</tabstop>
+  <tabstop>TopologicTypeComboBox</tabstop>
+  <tabstop>StatusComboBox</tabstop>
+  <tabstop>UnrestrictedRadioButton</tabstop>
+  <tabstop>SignupRequiredRadioButton</tabstop>
+  <tabstop>AccessRightsNeededRadioButton</tabstop>
+  <tabstop>LoginEventRadioButton</tabstop>
+  <tabstop>ExportFilenameLineEdit</tabstop>
+  <tabstop>DataSetCommentTextEdit</tabstop>
+  <tabstop>FurtherDetailsReferenceLineEdit</tabstop>
+  <tabstop>FurtherDetailsDatasetLineEdit</tabstop>
+  <tabstop>OtherVersionReferenceLineEdit</tabstop>
+  <tabstop>OtherVersionDatasetLineEdit</tabstop>
+  <tabstop>SourceReferenceLineEdit</tabstop>
+  <tabstop>SourceDatasetLineEdit</tabstop>
+  <tabstop>UserLineEdit</tabstop>
+  <tabstop>splitFileCheckBox</tabstop>
+  <tabstop>writeHeaderCheckBox</tabstop>
+  <tabstop>makeFilenameUniqueCheckBox</tabstop>
+  <tabstop>markSmallFileCheckBox</tabstop>
+  <tabstop>useFilenameInAsEventLabelCheckBox</tabstop>
+  <tabstop>OverwriteDatasetCheckBox</tabstop>
+  <tabstop>ignoreRange_radioButton</tabstop>
+  <tabstop>removeValue_radioButton</tabstop>
+  <tabstop>badValue_radioButton</tabstop>
+  <tabstop>questionableValue_radioButton</tabstop>
+  <tabstop>dontUseMetadataFileRadioButton</tabstop>
+  <tabstop>useAutoMetadataFileRadioButton</tabstop>
+  <tabstop>findByPosisitionRadioButton</tabstop>
+  <tabstop>findByNameRadioButton</tabstop>
+  <tabstop>writeParameterImportFileCheckBox</tabstop>
+  <tabstop>CreateMetadataTemplatePushButton</tabstop>
+  <tabstop>NewProjectPushButton</tabstop>
+  <tabstop>SaveProjectPushButton</tabstop>
+  <tabstop>LoadProjectPushButton</tabstop>
+  <tabstop>OK_pushButton</tabstop>
+  <tabstop>Cancel_pushButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
