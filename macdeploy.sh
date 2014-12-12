@@ -4,7 +4,7 @@ echo Split2Events
 
 echo - macdeployqt 
 
-cd ~/Development/aforge/split2events
+cd ~/Development/GitHub/Split2Events
 
 rm -R '../../Distribution/Split2Events/Split2Events.app'
 cp -R './Split2Events-build-Desktop_Qt_5_3_2_LLDB-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
