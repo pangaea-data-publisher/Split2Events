@@ -20,25 +20,7 @@ int MainWindow::getNumParameterQuerys()
     if ( outfile.exists() == true )
         outfile.remove();
 
-    if ( outfile.open( QIODevice::WriteOnly  | QIODevice::Text ) == true )
-    {
-        webfile m_webfile;
-
-        m_webfile.setUrl( QLatin1String( "http://www.pangaea.de/curator/Parameter/ParameterDDI.txt" ) );
-
-        if ( m_webfile.open() == true )
-        {
-            char    buffer[1024];
-            qint64  nSize = 0;
-
-            while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                outfile.write( buffer, nSize );
-
-            m_webfile.close();
-        }
-
-        outfile.close();
-    }
+    downloadFile( QLatin1String( "http://www.pangaea.de/curator/Parameter/ParameterDDI.txt" ), getParameterDDIFilename() );
 
     if ( ( n = readFile( getParameterDDIFilename(), sl_Input ) ) > 0 ) // System encoding
     {
@@ -88,32 +70,11 @@ void MainWindow::doCreateParameterDB()
         {
             QString s_FilenameParameterQuery = QString( "Parameter%1" ).arg( i+1 );
             QString s_FilenameParameter      = fi.absolutePath() + "/" + s_FilenameParameterQuery + ".txt";
+            QString s_DDI_URL                = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
-            QFile outfile( s_FilenameParameter );
+            downloadFile( s_DDI_URL, s_FilenameParameter );
 
-            if ( outfile.open( QIODevice::WriteOnly  | QIODevice::Text ) == true )
-            {
-                QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
-
-                webfile m_webfile;
-
-                m_webfile.setUrl( s_DDI_URL );
-
-                if ( m_webfile.open() == true )
-                {
-                    char    buffer[1024];
-                    qint64  nSize = 0;
-
-                    while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                        outfile.write( buffer, nSize );
-
-                    m_webfile.close();
-
-                    sl_FilenameIn.append( s_FilenameParameter );
-                }
-
-                outfile.close();
-            }
+            sl_FilenameIn.append( s_FilenameParameter );
 
             i_stopProgress = incFileProgress( gi_NumOfParameterFiles, ++i );
         }
@@ -188,29 +149,11 @@ void MainWindow::doMergeParameterDB()
             if ( outfile.exists() == true )
                 outfile.remove();
 
-            if ( outfile.open( QIODevice::WriteOnly  | QIODevice::Text ) == true )
-            {
-                QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
+            QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
-                webfile m_webfile;
+            downloadFile( s_DDI_URL, s_FilenameParameter );
 
-                m_webfile.setUrl( s_DDI_URL );
-
-                if ( m_webfile.open() == true )
-                {
-                    char    buffer[1024];
-                    qint64  nSize = 0;
-
-                    while ( ( nSize = m_webfile.read( buffer, sizeof( buffer ) ) ) > 0 )
-                        outfile.write( buffer, nSize );
-
-                    m_webfile.close();
-
-                    sl_FilenameIn.append( s_FilenameParameter );
-                }
-
-                outfile.close();
-            }
+            sl_FilenameIn.append( s_FilenameParameter );
         }
 
         i_stopProgress = incFileProgress( gi_NumOfParameterFiles, ++i );
