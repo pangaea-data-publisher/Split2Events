@@ -7,7 +7,7 @@ echo - macdeployqt
 cd ~/Development/GitHub/Split2Events
 
 rm -R '../../Distribution/Split2Events/Split2Events.app'
-cp -R './Split2Events-build-Desktop_Qt_5_4_0_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
+cp -R './build-Split2Events-Desktop_Qt_5_4_1_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
 cp './trunk/Resources/Info.plist' '../../Distribution/Split2Events/Split2Events.app/Contents/Info.plist'
 
 /Developer/Qt/5.4/clang_64/bin/macdeployqt '../../Distribution/Split2Events/Split2Events.app'
@@ -19,7 +19,6 @@ codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Insti
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/Frameworks/QtNetwork.framework'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/Frameworks/QtPrintSupport.framework'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/Frameworks/QtWidgets.framework'
-codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/Frameworks/libz.1.dylib'
 
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/PlugIns/bearer/libqcorewlanbearer.dylib'
 codesign --force --verify --sign 'Developer ID Application: Alfred-Wegener-Institut fur Polar- und Meeresforschung (AWI)' '../../Distribution/Split2Events/Split2Events.app/Contents/PlugIns/bearer/libqgenericbearer.dylib'
