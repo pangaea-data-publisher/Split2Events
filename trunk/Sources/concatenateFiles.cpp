@@ -26,6 +26,8 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
                                   const QString& s_ProgressMessage, const int i_SkipNFirstLines,
                                   const bool b_deleteOriginalFiles )
 {
+    int         err             = _NOERROR_;
+
     int         i				= 0;
     int         j               = 0;
     int         n               = 0;
@@ -50,7 +52,7 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
 
 // ************************************************************************************************
 
-    while ( ( j < sl_FilenameIn.count() ) && ( i_stopProgress != _APPBREAK_ ) && ( n != -10 ) )
+    while ( ( j < sl_FilenameIn.count() ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         setStatusBarFileInProgress( sl_FilenameIn.at( j ) );
 
@@ -73,9 +75,13 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
 
             if ( b_deleteOriginalFiles == true )
                 QFile::remove(sl_FilenameIn.at( j ) );
-
-            i_stopProgress = incFileProgress( sl_FilenameIn.count(), ++j );
         }
+        else
+        {
+            err = -143;
+        }
+
+        i_stopProgress = incFileProgress( sl_FilenameIn.count(), ++j );
     }
 
     fout.close();
@@ -85,5 +91,8 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
     if ( i_stopProgress == _APPBREAK_ )
         return( _APPBREAK_ );
 
-    return( _NOERROR_ );
+    if ( err != _NOERROR_ )
+        fout.remove();
+
+    return( err );
 }
