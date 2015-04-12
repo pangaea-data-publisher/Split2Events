@@ -13,25 +13,21 @@
 // *************************************************************************************
 // 2009-11-09
 
-QString MainWindow::buildParameter( const QString& s_PI, const QString& s_ParameterMF, const QString& s_EventLabel )
+QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString& s_EventLabel )
 {
-    QString s_dummyPI	= "";
-    QString s_Parameter	= s_ParameterMF.section( "\t", 1, 1 );
+    QString s_Parameter	= "";
 
-    if ( s_Parameter.length() <= 0 )
+    if ( s_Parameter.length() > 0 )
         s_Parameter = s_ParameterMF.section( "\t", 0, 0 );
+    else
+        s_Parameter = s_ParameterMF.section( "\t", 1, 1 );
 
     if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
     {
         s_Parameter += " * PI: ";
 
-        if ( s_PI == "999999" )
-            s_dummyPI = "@PP@" + s_EventLabel + "@";
-        else
-            s_dummyPI = s_PI;
-
         if (  s_ParameterMF.section( "\t", 2, 2 ) == "999999" )
-            s_Parameter += s_dummyPI;
+            s_Parameter += "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@";
         else
             s_Parameter += s_ParameterMF.section( "\t", 2, 2 );
     }
@@ -58,6 +54,59 @@ QString MainWindow::buildParameter( const QString& s_PI, const QString& s_Parame
 
     if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
         s_Parameter += " * FORMAT: " + s_ParameterMF.section( "\t", 5, 5 );
+
+    s_Parameter.replace( "@$E@", "@" + s_EventLabel + "@" );
+
+    return( s_Parameter );
+}
+
+// *************************************************************************************
+// *************************************************************************************
+// *************************************************************************************
+// 2015-04-12
+
+QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QString& s_EventLabel )
+{
+    QString q           = "\"";
+    QString qe          = "\": ";
+
+    QString s_Parameter	= "";
+
+// *************************************************************************************
+
+    if ( s_Parameter.length() > 0 )
+        s_Parameter	= "    { " + q + "ID" + q + ": " + s_ParameterMF.section( "\t", 0, 0 );
+    else
+        s_Parameter = "    { " + q + "ID" + q + ": " + s_ParameterMF.section( "\t", 1, 1 );
+
+    if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
+    {
+        if (  s_ParameterMF.section( "\t", 2, 2 ) == "999999" )
+            s_Parameter.append( ", " + q + "PI" + qe + "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+        else
+            s_Parameter.append( ", " + q + "PI" + qe + s_ParameterMF.section( "\t", 2, 2 ) );
+    }
+
+    if ( s_ParameterMF.section( "\t", 3, 3 ).isEmpty() == false )
+    {
+        if (  s_ParameterMF.section( "\t", 3, 3 ) == "999999" )
+            s_Parameter.append( ", " + q + "Method" + qe + "@PM@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+        else
+            s_Parameter.append( ", " + q + "Method" + qe + s_ParameterMF.section( "\t", 3, 3 ) );
+    }
+
+    if ( s_ParameterMF.section( "\t", 4, 4 ).isEmpty() == false )
+    {
+        if (  s_ParameterMF.section( "\t", 4, 4 ) == "999999" )
+            s_Parameter.append( ", " + q + "Comment" + qe + q + "@PC@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" + q );
+        else
+            s_Parameter.append( ", " + q + "Comment" + qe + q + s_ParameterMF.section( "\t", 4, 4 ) + q );
+    }
+
+    if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
+        s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
+
+    s_Parameter.replace( "@$E@", "@" + s_EventLabel + "@" );
 
     return( s_Parameter );
 }

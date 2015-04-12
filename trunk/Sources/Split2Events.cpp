@@ -282,6 +282,13 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
+        writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
+                              sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
+                              sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
+                              s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
+                              s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
+                              b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
+
         writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue );
 
         switch ( i_MetadataFileMode )
@@ -674,7 +681,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
 // overwrite Dataset
 
     if ( b_overwriteDataset == true )
-        tout << tr( "DataSet ID:" ) << "\t" << "@I@" + s_tempEventLabel + "@" << eol;
+        tout << tr( "DataSet ID:" ) << "\t" << "@I@" << s_tempEventLabel << "@" << eol;
 
 // *************************************************************************************
 // Author
@@ -857,7 +864,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                tout << s_Title << "\t" << sd_Source.section( "\t", 1, 1 ) << QString( " * RELATIONTYPE: %1" ).arg( _OTHERVERSION_ ) << eol;
+                tout << s_Title << "\t" << sd_Source.section( "\t", 1, 1 ) << QString( " * RELATIONTYPE: %1" ).arg( _SOURCEDATASET_ ) << eol;
 
                 s_Title             = "";
                 b_foundInSourceList = true;
@@ -980,7 +987,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                tout << s_Title << "\t" << sd_Source.section( "\t", 1, 1 ) << QString( " * RELATIONTYPE: %1" ).arg( _OTHERVERSION_ ) << eol;
+                tout << s_Title << "\t" << sd_Source.section( "\t", 1, 1 ) << QString( " * RELATIONTYPE: %1" ).arg( _SOURCEDATASET_ ) << eol;
 
                 s_Title             = "";
                 b_foundInSourceList = true;
@@ -1081,12 +1088,12 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
                     if ( s_ParameterDS.contains( QRegExp( "[@a-zA-Z]" ) ) == false )
                     {
                         if ( s_ParameterMF.section( "\t", 1, 1 ) == s_ParameterDS ) // s_ParameterDS is a number
-                            s_Parameter = buildParameter( s_PI, s_ParameterMF, s_tempEventLabel );
+                            s_Parameter = buildParameter( s_ParameterMF, s_tempEventLabel );
                     }
                     else
                     {
                         if ( s_ParameterMF.section( "\t", 0, 0 ) == s_ParameterDS ) // s_ParameterDS includes characters
-                            s_Parameter = buildParameter( s_PI, s_ParameterMF, s_tempEventLabel );
+                            s_Parameter = buildParameter( s_ParameterMF, s_tempEventLabel );
                     }
                 }
 
@@ -1096,6 +1103,8 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
                 }
                 else
                 {
+                    s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
+
                     if ( b_EmptyColumn[j] == false )
                         tout << "\t" << s_Parameter << eol;
                 }
@@ -1109,7 +1118,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
                 j++;
 
                 s_ParameterMF	= sl_MFParameter.at( i_MF );
-                s_Parameter		= buildParameter( s_PI, s_ParameterMF, s_tempEventLabel );
+                s_Parameter		= buildParameter( s_ParameterMF, s_tempEventLabel );
 
                 s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
 
@@ -1181,7 +1190,9 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
         s_tempProject.replace( ";", "," );
 
         int i_NumOfProjects = s_tempProject.count( "," ) + 1;
+
         tout << tr( "Project:" ) << "\t" << s_tempProject.section( ",", 0, 0 ) << eol;
+
         for ( int j=1; j<i_NumOfProjects; j++ )
             tout << "\t" << s_tempProject.section( ",", j, j ) << eol;
     }
@@ -1209,7 +1220,9 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
         s_tempUser.replace( ";", "," );
 
         int i_NumOfUsers = s_tempUser.count( "," ) + 1;
+
         tout << tr( "User:" ) << "\t" << s_tempUser.section( ",", 0, 0 ) << eol;
+
         for ( int j=1; j<i_NumOfUsers; j++ )
             tout << "\t" << s_tempUser.section( ",", j, j ) << eol;
     }
@@ -1242,6 +1255,693 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
     return( _NOERROR_ );
 }
 
+// *************************************************************************************
+// *************************************************************************************
+// *************************************************************************************
+// 2015-04-11 - new format of data description block
+
+int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
+                                      const QString& s_baseNameFilenameIn, const QString& s_EventLabel, const QString& s_MinorLabel,
+                                      const QStringList& sl_DSParameter, const QStringList& sl_MFParameter,
+                                      const QStringList& sl_DataSetComment,
+                                      const QStringList& sl_FurtherDetailsReference, const QStringList &sl_FurtherDetailsDataset,
+                                      const QStringList& sl_OtherVersionReference, const QStringList& sl_OtherVersionDataset,
+                                      const QStringList& sl_SourceReference, const QStringList& sl_SourceDataset,
+                                      const QString& s_Author, const QString& s_Source, const QString& s_DatasetTitle,
+                                      const QString& s_ExportFilename, const QString& s_Reference,
+                                      const QString& s_Project, const QString& s_DataSetComment,
+                                      const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
+                                      const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
+                                      const QString& s_SourceReference, const QString& s_SourceDataset,
+                                      const QString& s_PI, const QString& s_User, const int i_Status, const int i_Login,
+                                      const bool b_useFilenameInAsEventLabel,
+                                      const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
+{
+   QString s_Parameter                   = "";
+   QString s_ParameterDS                 = "";
+   QString s_ParameterMF                 = "";
+
+   QString s_tempAuthor                  = s_Author;
+   QString s_tempSource                  = s_Source;
+   QString s_tempReference               = s_Reference;
+   QString s_tempPI                      = s_PI;
+   QString s_tempUser                    = s_User;
+   QString s_tempExportFilename          = s_ExportFilename;
+   QString s_tempDatasetTitle            = s_DatasetTitle;
+   QString s_tempDatasetComment          = s_DataSetComment;
+   QString s_tempProject                 = s_Project;
+   QString s_tempFurtherDetailsReference = s_FurtherDetailsReference;
+   QString s_tempFurtherDetailsDataset   = s_FurtherDetailsDataset;
+   QString s_tempOtherVersionReference   = s_OtherVersionReference;
+   QString s_tempOtherVersionDataset     = s_OtherVersionDataset;
+   QString s_tempSourceReference         = s_SourceReference;
+   QString s_tempSourceDataset           = s_SourceDataset;
+   QString s_tempEventLabel              = s_EventLabel;
+
+   QString sd_DataSetComment             = "";
+   QString sd_FurtherDetails             = "";
+   QString sd_OtherVersion               = "";
+   QString sd_Source                     = "";
+
+   QString q                             = "\"";
+   QString qs                            = "  \"";
+   QString qe                            = "\": ";
+
+   QStringList  sl_Reference;
+   QStringList  sl_DataReference;
+   QStringList  sl_Parameter;
+
+   bool	b_foundInDataSetCommentList      = false;
+   bool	b_foundInFurtherDetailsList      = false;
+   bool	b_foundInOtherVersionList        = false;
+   bool	b_foundInSourceList              = false;
+
+// *************************************************************************************
+
+   QTextStream tout( outDevice );
+
+   switch ( i_Codec )
+   {
+   case _SYSTEM_: // nothing
+       break;
+
+   case _APPLEROMAN_:
+       tout.setCodec( QTextCodec::codecForName( "Apple Roman" ) );
+       break;
+
+   case _LATIN1_:
+       tout.setCodec( QTextCodec::codecForName( "ISO 8859-1" ) );
+       break;
+
+   default:
+       tout.setCodec( QTextCodec::codecForName( "UTF-8" ) );
+       break;
+   }
+
+// *************************************************************************************
+
+   if ( b_useFilenameInAsEventLabel == true )
+       s_tempEventLabel = s_baseNameFilenameIn;
+   else
+       s_tempEventLabel = s_EventLabel;
+
+   if ( s_MinorLabel.isEmpty() == false )
+       s_tempEventLabel.append( "-" + s_MinorLabel );
+
+// *************************************************************************************
+
+   tout << "{" << eol;
+
+// *************************************************************************************
+// PI
+
+    if ( s_tempPI == "999999" )
+        s_tempPI = "@GP@" + s_tempEventLabel + "@";
+
+// *************************************************************************************
+// overwrite Dataset
+
+    if ( b_overwriteDataset == true )
+        tout << qs << tr( "DataSet ID" ) << qe << "@I@" << s_tempEventLabel << "@" << "," << eol;
+
+// *************************************************************************************
+// Author
+
+    if ( s_tempAuthor.isEmpty() == false )
+    {
+        if ( s_tempAuthor == "999999" )
+            s_tempAuthor = "@A@" + s_tempEventLabel + "@";
+
+        s_tempAuthor.replace( " ", "" );
+        s_tempAuthor.replace( ";", "," );
+
+        int i_NumOfAuthors = s_tempAuthor.count( "," ) + 1;
+
+        tout << qs << tr( "Author" ) << qe << "[ " << s_tempAuthor.section( ",", 0, 0 );
+
+        for ( int j=1; j<i_NumOfAuthors; j++ )
+            tout << ", " << s_tempAuthor.section( ",", j, j );
+
+        tout << " ]," << eol;
+    }
+
+// *************************************************************************************
+// Source
+
+    if ( s_tempSource.isEmpty() == false )
+    {
+        if ( s_tempSource == "999999" )
+            s_tempSource = "@S@" + s_tempEventLabel + "@";
+
+        s_tempSource.replace( " ", "" );
+        s_tempSource.replace( ";", "," );
+
+        tout << qs << tr( "Source" ) << qe << s_tempSource.section( ",", 0, 0 ) << "," << eol;
+    }
+
+// *************************************************************************************
+// Dataset title
+
+    if ( s_tempDatasetTitle.isEmpty() == false )
+    {
+        s_tempDatasetTitle.replace( "999999", "@D@" + s_tempEventLabel + "@" );
+
+        if ( b_useFilenameInAsEventLabel == true )
+            s_tempDatasetTitle.replace( "$E", s_baseNameFilenameIn );
+        else
+            s_tempDatasetTitle.replace( "$E", s_EventLabel );
+
+        s_tempDatasetTitle.replace( "$@", s_MinorLabel );
+        s_tempDatasetTitle.replace( "\n", "*" );
+        s_tempDatasetTitle.replace( "-track", "" );
+        s_tempDatasetTitle.replace( "Track.", "" );
+
+        if ( s_tempDatasetTitle.length() <= 255 )
+        {
+            tout << qs << tr( "Title" ) << qe << q << s_tempDatasetTitle << q << "," << eol;
+        }
+        else
+        {
+            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Title comprises more that 255 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
+
+            if ( err == QMessageBox::No )
+                tout << qs << tr( "Title" ) << qe << q << s_tempDatasetTitle.left( 252 ) << "..." << q << "," << eol;
+            else
+                return( _ERROR_ );
+        }
+    }
+
+// *************************************************************************************
+// Reference
+
+    if ( s_tempReference.isEmpty() == false )
+    {
+        s_tempReference.replace( " ", "" );
+        s_tempReference.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempReference.count( "," ) + 1;
+
+        if ( s_tempReference == "999999" )
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+        else
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+
+        for ( int j=1; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempReference == "999999" )
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            else
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+// Further details reference IDs
+
+    if ( sl_FurtherDetailsReference.count() > 0 )
+    {
+        for ( int i=0; i<sl_FurtherDetailsReference.count(); i++ )
+        {
+            sd_FurtherDetails = sl_FurtherDetailsReference.at( i );
+
+            if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+
+                b_foundInFurtherDetailsList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempFurtherDetailsReference.isEmpty() == false ) && ( b_foundInFurtherDetailsList == false ) )
+    {
+        s_tempFurtherDetailsReference.replace( " ", "" );
+        s_tempFurtherDetailsReference.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempFurtherDetailsReference.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempFurtherDetailsReference == "999999" )
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+            else
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+// Other version reference IDs
+
+    if ( sl_OtherVersionReference.count() > 0 )
+    {
+        for ( int i=0; i<sl_OtherVersionReference.count(); i++ )
+        {
+            sd_OtherVersion = sl_OtherVersionReference.at( i );
+
+            if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+
+                b_foundInOtherVersionList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempOtherVersionReference.isEmpty() == false ) && ( b_foundInOtherVersionList == false ) )
+    {
+        s_tempOtherVersionReference.replace( " ", "" );
+        s_tempOtherVersionReference.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempOtherVersionReference.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempOtherVersionReference == "999999" )
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+            else
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+// Source dataset reference IDs
+
+    if ( sl_SourceReference.count() > 0 )
+    {
+        for ( int i=0; i<sl_SourceReference.count(); i++ )
+        {
+            sd_Source = sl_SourceReference.at( i );
+
+            if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+
+                b_foundInSourceList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempSourceReference.isEmpty() == false ) && ( b_foundInSourceList == false ) )
+    {
+        s_tempSourceReference.replace( " ", "" );
+        s_tempSourceReference.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempSourceReference.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempSourceReference == "999999" )
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+            else
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+
+    if ( sl_Reference.count() > 0 )
+    {
+        tout << qs << tr( "Reference" ) << qe << "[ " << eol;
+
+        for ( int i=0; i<sl_Reference.count()-1; i++ )
+            tout << sl_Reference.at( i ) << "," << eol;
+
+        tout << sl_Reference.at( sl_Reference.count()-1 ) << " ]," << eol;
+    }
+
+// *************************************************************************************
+// Further details dataset IDs
+
+    if ( sl_FurtherDetailsDataset.count() > 0 )
+    {
+        for ( int i=0; i<sl_FurtherDetailsDataset.count(); i++ )
+        {
+            sd_FurtherDetails = sl_FurtherDetailsDataset.at( i );
+
+            if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+
+                b_foundInFurtherDetailsList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempFurtherDetailsDataset.isEmpty() == false ) && ( b_foundInFurtherDetailsList == false ) )
+    {
+        s_tempFurtherDetailsDataset.replace( " ", "" );
+        s_tempFurtherDetailsDataset.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempFurtherDetailsDataset.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempFurtherDetailsDataset == "999999" )
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+            else
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+// Other version dataset IDs
+
+    if ( sl_OtherVersionDataset.count() > 0 )
+    {
+        for ( int i=0; i<sl_OtherVersionDataset.count(); i++ )
+        {
+            sd_OtherVersion = sl_OtherVersionDataset.at( i );
+
+            if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+
+                b_foundInOtherVersionList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempOtherVersionDataset.isEmpty() == false ) && ( b_foundInOtherVersionList == false ) )
+    {
+        s_tempOtherVersionDataset.replace( " ", "" );
+        s_tempOtherVersionDataset.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempOtherVersionDataset.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempOtherVersionDataset == "999999" )
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+            else
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+// Source dataset dataset IDs
+
+    if ( sl_SourceDataset.count() > 0 )
+    {
+        for ( int i=0; i<sl_SourceDataset.count(); i++ )
+        {
+            sd_Source = sl_SourceDataset.at( i );
+
+            if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
+            {
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+
+                b_foundInSourceList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempSourceDataset.isEmpty() == false ) && ( b_foundInSourceList == false ) )
+    {
+        s_tempSourceDataset.replace( " ", "" );
+        s_tempSourceDataset.replace( ";", "," );
+
+        int i_NumOfReferences = s_tempSourceDataset.count( "," ) + 1;
+
+        for ( int j=0; j<i_NumOfReferences; j++ )
+        {
+            if ( s_tempSourceDataset == "999999" )
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+            else
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+        }
+    }
+
+// *************************************************************************************
+
+        if ( sl_DataReference.count() > 0 )
+        {
+            tout << qs << tr( "PANGAEA data reference" ) << qe << "[ " << eol;
+
+            for ( int i=0; i<sl_DataReference.count()-1; i++ )
+                tout << sl_DataReference.at( i ) << "," << eol;
+
+            tout << sl_DataReference.at( sl_DataReference.count()-1 ) << " ]," << eol;
+        }
+
+// *************************************************************************************
+// Export filename
+
+    if ( s_tempExportFilename.isEmpty() == false )
+    {
+        s_tempExportFilename.replace( "999999", "@E@" + s_tempEventLabel + "@" );
+
+        if ( b_useFilenameInAsEventLabel == true )
+            s_tempExportFilename.replace( "$E", s_baseNameFilenameIn );
+        else
+            s_tempExportFilename.replace( "$E", s_EventLabel );
+
+        s_tempExportFilename.replace( "$@", s_MinorLabel );
+        s_tempExportFilename.replace( "-track", "" );
+        s_tempExportFilename.replace( "Track.", "" );
+
+        s_tempExportFilename = createValidFilename( s_tempExportFilename );
+
+        if ( s_tempExportFilename.length() <= 80 )
+        {
+            tout << qs << tr( "Export Filename" ) << qe << q << s_tempExportFilename << q << "," << eol;
+        }
+        else
+        {
+            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Export filename comprises more that 80 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
+
+            if ( err == QMessageBox::No )
+                tout << qs << tr( "Export Filename" ) << qe << q << s_tempExportFilename.left( 77 ) << "..." << q << "," << eol;
+            else
+                return( _ERROR_ );
+        }
+    }
+
+// *************************************************************************************
+// Event label
+
+    if ( s_EventLabel.isEmpty() == false )
+        tout << qs << tr( "Event" ) << qe << q << s_EventLabel << q << "," << eol;
+
+// *************************************************************************************
+// PI
+
+    if ( s_tempPI.isEmpty() == false )
+        tout << qs << tr( "PI" ) << qe << s_tempPI << "," << eol;
+    else
+        tout << qs << tr( "PI" ) << qe << tr( "506" ) << "," << eol;
+
+// *************************************************************************************
+// Parameters
+
+    if ( i_MetadataFileMode != _NOTUSED_ )
+    {
+        int     j           = 0;
+        int     i_MF        = 0;
+        QString sd_Parameter = "";
+
+        switch ( i_MetadataFileMode )
+        {
+        case _BYNAME_:
+            for ( int i_DS=1; i_DS<sl_DSParameter.count(); i_DS++ ) // i_DS = 0 => Event label
+            {
+                j++;
+
+                s_ParameterDS	= sl_DSParameter.at( i_DS );
+                s_Parameter		= "";
+                i_MF			= 0;
+
+                while ( ( i_MF<sl_MFParameter.count() ) && ( s_Parameter.isEmpty() == true ) )
+                {
+                    s_ParameterMF = sl_MFParameter.at( i_MF++ );
+
+                    if ( s_ParameterDS.contains( QRegExp( "[@a-zA-Z]" ) ) == false )
+                    {
+                        if ( s_ParameterMF.section( "\t", 1, 1 ) == s_ParameterDS ) // s_ParameterDS is a number
+                            s_Parameter = buildParameterJSON( s_ParameterMF, s_tempEventLabel );
+                    }
+                    else
+                    {
+                        if ( s_ParameterMF.section( "\t", 0, 0 ) == s_ParameterDS ) // s_ParameterDS includes characters
+                            s_Parameter = buildParameterJSON( s_ParameterMF, s_tempEventLabel );
+                    }
+                }
+
+                if ( s_Parameter.isEmpty() == true )
+                {
+                    sl_Parameter.append( "    { " + s_ParameterDS + tr( " * not define in metadata file }" ) );
+                }
+                else
+                {
+                    s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
+
+                    if ( b_EmptyColumn[j] == false )
+                        sl_Parameter.append( s_Parameter );
+                }
+            }
+            break;
+
+        case _AUTO_:
+        case _BYPOSITION_:
+            for ( int i_MF=0; i_MF<sl_MFParameter.count(); i_MF++ )
+            {
+                j++;
+
+                s_ParameterMF	= sl_MFParameter.at( i_MF );
+                s_Parameter		= buildParameterJSON( s_ParameterMF, s_tempEventLabel );
+
+                s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
+
+                if ( b_EmptyColumn[j] == false )
+                    sl_Parameter.append( s_Parameter );
+            }
+            break;
+        }
+    }
+
+// *************************************************************************************
+
+    if ( sl_Parameter.count() > 0 )
+    {
+        tout << qs << tr( "Parameter" ) << qe << "[ " << eol;
+
+        for ( int i=0; i<sl_Parameter.count()-1; i++ )
+            tout << sl_Parameter.at( i ) << " }," << eol;
+
+        tout << sl_Parameter.at( sl_Parameter.count()-1 ) << " } ]," << eol;
+    }
+
+// *************************************************************************************
+// Dataset comment
+
+    if ( sl_DataSetComment.count() > 0 )
+    {
+        QString DummyStr = s_EventLabel;
+
+        if ( s_MinorLabel.isEmpty() == false )
+            DummyStr.append( "@" + s_MinorLabel );
+
+        for ( int i=0; i<sl_DataSetComment.count(); i++ )
+        {
+            sd_DataSetComment = sl_DataSetComment.at( i );
+            sd_DataSetComment.replace( "\"", "" );
+
+            if ( sd_DataSetComment.section( "\t", 0, 0 ) == DummyStr )
+            {
+                tout << qs << tr( "DataSet Comment" ) << qe << q << sd_DataSetComment.section( "\t", 1, 1 ) << q << "," << eol;
+
+                i = sl_DataSetComment.count();
+                b_foundInDataSetCommentList = true;
+            }
+        }
+    }
+
+    if ( ( s_tempDatasetComment.isEmpty() == false ) && ( b_foundInDataSetCommentList == false ) )
+    {
+        if ( s_tempDatasetComment == "999999" )
+            s_tempDatasetComment = "@C@" + s_tempEventLabel + "@";
+
+        if ( b_useFilenameInAsEventLabel == true )
+            s_tempDatasetComment.replace( "$E", s_baseNameFilenameIn );
+        else
+            s_tempDatasetComment.replace( "$E", s_EventLabel );
+
+        s_tempDatasetComment.replace( "$@", s_MinorLabel );
+        s_tempDatasetComment.replace( "\n", " " );
+
+        if ( s_tempDatasetComment.length() <= 1000 )
+        {
+            tout << qs << tr( "DataSet Comment" ) << qe << q << s_tempDatasetComment << q << "," << eol;
+        }
+        else
+        {
+            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Comment comprises more that 1000 characters.\nAbort?" ),QMessageBox::Yes,QMessageBox::No);
+            if ( err == QMessageBox::No )
+                tout << qs << tr( "DataSet Comment" ) << qe << q << s_tempDatasetComment.left( 997 ) << "..." << q << "," << eol;
+            else
+                return( _ERROR_ );
+        }
+    }
+
+// *************************************************************************************
+// Project
+
+    if ( s_tempProject.isEmpty() == false )
+    {
+        if ( s_tempProject == "999999" )
+            s_tempProject = "@Pro@" + s_tempEventLabel + "@";
+
+        s_tempProject.replace( " ", "" );
+        s_tempProject.replace( ";", "," );
+
+        int i_NumOfProjects = s_tempProject.count( "," ) + 1;
+
+        tout << qs << tr( "Project" ) << qe << "[ " << s_tempProject.section( ",", 0, 0 );
+
+        for ( int j=1; j<i_NumOfProjects; j++ )
+            tout << ", " << s_tempProject.section( ",", j, j );
+
+        tout << " ]," << eol;
+    }
+
+// *************************************************************************************
+// Topologic type
+
+    if ( i_TopologicType > 0 )
+        tout << qs << tr( "Topologic Type" ) << qe << i_TopologicType << "," << eol;
+
+// *************************************************************************************
+// Status
+
+    tout << qs << tr( "Status" ) << qe << i_Status + 2 << "," << eol;
+
+// *************************************************************************************
+// User
+
+    if ( ( s_tempUser.isEmpty() == false ) && ( ( i_Login == _SIGNUPREQUIRED_ ) || ( i_Login == _ACCESSRIGHTSNEEDED_ ) ) )
+    {
+        if ( s_tempUser == "999999")
+            s_tempUser = "@U@" + s_tempEventLabel + "@";
+
+        s_tempUser.replace( " ", "" );
+        s_tempUser.replace( ";", "," );
+
+        int i_NumOfUsers = s_tempUser.count( "," ) + 1;
+
+        tout << qs << tr( "User" ) << qe << "[ " << s_tempUser.section( ",", 0, 0 );
+
+        for ( int j=1; j<i_NumOfUsers; j++ )
+            tout << ", " << s_tempUser.section( ",", j, j );
+
+        tout << " ]," << eol;
+    }
+
+// *************************************************************************************
+// Login
+
+/*  2011-01-13 - Michael hat das Login erweitert.
+
+    in dem Metaheader kann man nicht mehr "ON", "OFF" als Werte verwenden,
+    sondern "unrestricted", "signup required", oder "access rights needed".
+    Alternativ einfach die IDs benutzen: "1", "2", "3". Im Falle von Gerts
+    Datensätzen jetzt also "signup required" oder "2" als Wert setzen.
+*/
+
+    if ( i_Login == _UNRESTRICTED_ )
+        tout << qs << tr( "Login" ) << qe << "1" << eol;
+
+    if ( i_Login == _SIGNUPREQUIRED_ )
+        tout << qs << tr( "Login" ) << qe << "2" << eol;
+
+    if ( i_Login == _ACCESSRIGHTSNEEDED_ )
+        tout << qs << tr( "Login" ) << qe << "3" << eol;
+
+    if ( i_Login == _EVENT_ )
+        tout << qs << tr( "Login" ) << qe << "@L@" << s_tempEventLabel << "@" << eol;
+
+    tout << "}" << eol;   // end of data description
+
+    return( _NOERROR_ );
+}
 
 // *************************************************************************************
 // *************************************************************************************
