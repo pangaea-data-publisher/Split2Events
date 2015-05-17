@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Split2Events"
-!define PRODUCT_VERSION "11.9"
+!define PRODUCT_VERSION "12.0"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Split2Events.exe"
@@ -62,19 +62,19 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\platforms\qminimal.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\platforms\qwindows.dll"
-  
+
   SetOutPath "$INSTDIR\License"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\License\gpl-3.0.txt"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\License\License.txt"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\License\Readme.txt"
-  
+
   SetOutPath "$INSTDIR\Manual"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Manual\Manual.pdf"
-  
+
   SetOutPath "$INSTDIR\Example"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Example\GeoB9528-3_data.txt"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Example\GeoB9528-3_metadata.txt"
-  
+
   CreateDirectory "$SMPROGRAMS\PANGAEA"
   CreateDirectory "$SMPROGRAMS\PANGAEA\Split2Events"
   CreateShortCut "$SMPROGRAMS\PANGAEA\Split2Events\Split2Events.lnk" "$INSTDIR\Split2Events.exe"

@@ -275,12 +275,14 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     if ( b_writeHeader == true )
     {
+/*
         writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                               s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
+*/
 
         writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
@@ -1442,16 +1444,16 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         int i_NumOfReferences = s_tempReference.count( "," ) + 1;
 
         if ( s_tempReference == "999999" )
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         else
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
 
         for ( int j=1; j<i_NumOfReferences; j++ )
         {
             if ( s_tempReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         }
     }
 
@@ -1466,7 +1468,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1483,9 +1485,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1500,7 +1502,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1517,9 +1519,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1534,7 +1536,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1551,9 +1553,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 
@@ -1580,7 +1582,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1597,9 +1599,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1614,7 +1616,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1631,9 +1633,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1648,7 +1650,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1665,9 +1667,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "Relationtype" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 

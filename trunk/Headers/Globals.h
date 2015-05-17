@@ -18,7 +18,7 @@
     const QString _PROGRAMDOI_           = "";
     const QString _PROGRAMREADME_        = "http://wiki.pangaea.de/wiki/Split2Events";
 
-    const QString _VERSION_              = "12.0";	// Version number, 2015-04-11
+    const QString _VERSION_              = "12.0";	// Version number, 2015-05-17
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
     const int	_NOERROR_                = 0;
@@ -80,7 +80,7 @@
 
     const int	_CREATEMETADATATEMPLATE_ = 99;
 
-// Relationtypes
+// Relation Types
     const int   _REPLACEDBY_             = 10;       // Replaced by
     const int   _SUPPLEMENTTO_           = 11;       // Supplement to
     const int   _RELATEDTO_              = 12;       // Related to = IsCitedBy
