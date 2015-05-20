@@ -275,21 +275,24 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     if ( b_writeHeader == true )
     {
-/*
-        writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
+        if ( gs_Version.section( "\t", 2, 2 ) != "JSON" )
+        {
+            writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                               s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
-*/
-
-        writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
+        }
+        else
+        {
+            writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                               s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
+        }
 
         writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue );
 

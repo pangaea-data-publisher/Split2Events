@@ -290,6 +290,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
 // *************************************************************************************
 // *************************************************************************************
 // *************************************************************************************
+// 2015-05-20
 
 QString MainWindow::trimParameter( const QString& ParameterInStr )
 {
@@ -320,39 +321,21 @@ QString MainWindow::trimParameter( const QString& ParameterInStr )
         ParameterOutStr += "506\t"; // not given
 
     if ( s_dummy.section( "\t", 3, 3 ).toInt() > 0 ) // Method ID
+    {
         ParameterOutStr += QString( "%1\t" ).arg( s_dummy.section( "\t", 3, 3 ).toInt() );
+    }
     else
+    {
         if ( s_dummy.section( "\t", 3, 3 ) == "default" )
             ParameterOutStr += "\t"; // default method as set in 4D
         else
             ParameterOutStr += "43\t"; // not given
-
-    switch ( i_ParameterID )
-    {   // Geocodes
-        case 1:     // Depth, sediment/rock
-        case 1599:  // Date/Time
-        case 1600:  // Latitude
-        case 1601:  // Longitude
-        case 1619:  // Depth, water
-        case 2205:  // Age
-        case 2920:  // Distance
-        case 4607:  // Altitude
-        case 5059:  // Depth, ice/snow
-        case 6262:  // Oridinal Number
-        case 8128:  // Elevation
-        case 25539: // Section
-        case 26097: // Point distance
-        case 56349: // Height above ground
-            ParameterOutStr += "\t"; // no comment for geocodes
-            break;
-
-        default:
-            if ( s_dummy.section( "\t", 4, 4 ).isEmpty() == false ) // Comment
-                ParameterOutStr += s_dummy.section( "\t", 4, 4 ) + "\t";
-            else
-                ParameterOutStr += "\t"; // not given
-            break;
     }
+
+    if ( s_dummy.section( "\t", 4, 4 ).isEmpty() == false ) // Comment
+        ParameterOutStr += s_dummy.section( "\t", 4, 4 ) + "\t";
+    else
+        ParameterOutStr += "\t"; // not given
 
     if ( s_dummy.section( "\t", 5, 5 ).isEmpty() == false ) // Format
         ParameterOutStr += s_dummy.section( "\t", 5, 5 ) + "\t";
