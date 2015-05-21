@@ -218,6 +218,7 @@ QString MainWindow::buildOutputString( const QString& s_Data )
     {
         if ( ( s_Data.count( "\t" ) <= 2 ) &&
              ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Uniform resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
@@ -262,6 +263,7 @@ QString MainWindow::buildOutputString( const QString& s_Data, const bool b_Empty
     {
         if ( ( s_Data.count( "\t" ) <= 2 ) &&
              ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Uniform resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
