@@ -193,6 +193,14 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     bool    b_hasEmptyColumn     = false;
 
+    bool    b_JSON_Test          = false;
+
+// *************************************************************************************
+// Switch b_JSON_Test to true for testing Split2Events
+
+    if ( QCoreApplication::applicationFilePath().contains( "Split2Events_JSON" ) == true )
+        b_JSON_Test = true;
+
 // *************************************************************************************
 
     bool	b_EmptyColumn[_MAX_NUM_OF_COLUMNS_+1];
@@ -275,7 +283,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     if ( b_writeHeader == true )
     {
-        if ( gs_Version.section( "\t", 2, 2 ) != "JSON" )
+        if ( ( gs_Version.section( "\t", 2, 2 ) != "JSON" ) && ( b_JSON_Test == false ) )
         {
             writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
@@ -1039,7 +1047,9 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
         s_tempExportFilename = createValidFilename( s_tempExportFilename );
 
         if ( s_tempExportFilename.length() <= 80)
+        {
             tout << tr( "Export Filename:" ) << "\t" << s_tempExportFilename << eol;
+        }
         else
         {
             int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Export filename comprises more that 80 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
@@ -1355,7 +1365,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
 // *************************************************************************************
 
-   tout << "{" << eol;
+   tout << "JSON{" << eol;
 
 // *************************************************************************************
 // PI
@@ -1367,7 +1377,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 // overwrite Dataset
 
     if ( b_overwriteDataset == true )
-        tout << qs << tr( "DataSet ID" ) << qe << "@I@" << s_tempEventLabel << "@" << "," << eol;
+        tout << qs << tr( "DataSetID" ) << qe << "@I@" << s_tempEventLabel << "@" << "," << eol;
 
 // *************************************************************************************
 // Author
@@ -1447,16 +1457,16 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         int i_NumOfReferences = s_tempReference.count( "," ) + 1;
 
         if ( s_tempReference == "999999" )
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         else
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
 
         for ( int j=1; j<i_NumOfReferences; j++ )
         {
             if ( s_tempReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         }
     }
 
@@ -1471,7 +1481,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1488,9 +1498,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1505,7 +1515,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1522,9 +1532,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1539,7 +1549,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1556,9 +1566,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 
@@ -1585,7 +1595,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1602,9 +1612,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1619,7 +1629,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1636,9 +1646,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1653,7 +1663,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1670,9 +1680,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "Relation Type" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 
@@ -1680,7 +1690,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         if ( sl_DataReference.count() > 0 )
         {
-            tout << qs << tr( "PANGAEA data reference" ) << qe << "[ " << eol;
+            tout << qs << tr( "PANGAEADataReference" ) << qe << "[ " << eol;
 
             for ( int i=0; i<sl_DataReference.count()-1; i++ )
                 tout << sl_DataReference.at( i ) << "," << eol;
@@ -1708,14 +1718,14 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         if ( s_tempExportFilename.length() <= 80 )
         {
-            tout << qs << tr( "Export Filename" ) << qe << q << s_tempExportFilename << q << "," << eol;
+            tout << qs << tr( "ExportFilename" ) << qe << q << s_tempExportFilename << q << "," << eol;
         }
         else
         {
             int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Export filename comprises more that 80 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
 
             if ( err == QMessageBox::No )
-                tout << qs << tr( "Export Filename" ) << qe << q << s_tempExportFilename.left( 77 ) << "..." << q << "," << eol;
+                tout << qs << tr( "ExportFilename" ) << qe << q << s_tempExportFilename.left( 77 ) << "..." << q << "," << eol;
             else
                 return( _ERROR_ );
         }
@@ -1832,7 +1842,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_DataSetComment.section( "\t", 0, 0 ) == DummyStr )
             {
-                tout << qs << tr( "DataSet Comment" ) << qe << q << sd_DataSetComment.section( "\t", 1, 1 ) << q << "," << eol;
+                tout << qs << tr( "DataSetComment" ) << qe << q << sd_DataSetComment.section( "\t", 1, 1 ) << q << "," << eol;
 
                 i = sl_DataSetComment.count();
                 b_foundInDataSetCommentList = true;
@@ -1855,13 +1865,13 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         if ( s_tempDatasetComment.length() <= 1000 )
         {
-            tout << qs << tr( "DataSet Comment" ) << qe << q << s_tempDatasetComment << q << "," << eol;
+            tout << qs << tr( "DataSetComment" ) << qe << q << s_tempDatasetComment << q << "," << eol;
         }
         else
         {
             int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Comment comprises more that 1000 characters.\nAbort?" ),QMessageBox::Yes,QMessageBox::No);
             if ( err == QMessageBox::No )
-                tout << qs << tr( "DataSet Comment" ) << qe << q << s_tempDatasetComment.left( 997 ) << "..." << q << "," << eol;
+                tout << qs << tr( "DataSetComment" ) << qe << q << s_tempDatasetComment.left( 997 ) << "..." << q << "," << eol;
             else
                 return( _ERROR_ );
         }
@@ -1892,7 +1902,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 // Topologic type
 
     if ( i_TopologicType > 0 )
-        tout << qs << tr( "Topologic Type" ) << qe << i_TopologicType << "," << eol;
+        tout << qs << tr( "TopologicType" ) << qe << i_TopologicType << "," << eol;
 
 // *************************************************************************************
 // Status
@@ -1943,7 +1953,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
     if ( i_Login == _EVENT_ )
         tout << qs << tr( "Login" ) << qe << "@L@" << s_tempEventLabel << "@" << eol;
 
-    tout << "}" << eol;   // end of data description
+    tout << "}JSON" << eol;   // end of data description
 
     return( _NOERROR_ );
 }
