@@ -105,6 +105,7 @@ public:
     QString     gs_SourceReference;
     QString     gs_SourceDataset;
     QString     gs_User;
+    QString     gs_Parent;
 
     int         gi_NumOfParametersInPDB;
     int         gi_MetadataFileMode;
@@ -180,8 +181,8 @@ public:
                               const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                               const QString& OtherVersionReference, const QString& OtherVersionDataset,
                               const QString& SourceReference, const QString& SourceDataset,
-                              const QString& PI, const QString& User, const int Status, const int Login,
-                              const bool useFilenameInAsEventLabel,
+                              const QString& PI, const QString& User, const QString& Parent,
+                              const int Status, const int Login, const bool useFilenameInAsEventLabel,
                               const int MetadataFileMode, const int TopologicType, const bool overwriteDataset );
 
     int writeDataDescriptionJSON( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
@@ -197,20 +198,20 @@ public:
                               const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                               const QString& OtherVersionReference, const QString& OtherVersionDataset,
                               const QString& SourceReference, const QString& SourceDataset,
-                              const QString& PI, const QString& User, const int Status, const int Login,
-                              const bool useFilenameInAsEventLabel,
+                              const QString& PI, const QString& User, const QString& Parent,
+                              const int Status, const int Login, const bool useFilenameInAsEventLabel, const bool hasManyEvents,
                               const int MetadataFileMode, const int TopologicType, const bool overwriteDataset );
 
     int writeDataHeader( QIODevice *outDevice, const int Codec, const QStringList& Data, const QStringList& MFParameter,
                          const int MetadataFileMode, const bool EmptyColumn[], double Factor[], double  RangeMin[],
-                         double RangeMax[], int Digits[], QString defaultValue[] );
+                         double RangeMax[], int Digits[], QString defaultValue[], const QString& EventHeader );
 
     int writeData( QIODevice *outDevice, const int Codec, const QStringList& Data,
-                   const bool EmptyColumn[], const bool hasEmptyColumn,
+                   const bool hasManyEvents, const bool EmptyColumn[], const bool hasEmptyColumn,
                    const int NumOfSavedDataLines, const int firstLine, const int NumOfFiles );
 
     int writeData( QIODevice *outDevice, const int Codec, const QStringList& Data,
-                   const bool EmptyColumn[],
+                   const bool hasManyEvents, const bool EmptyColumn[],
                    double Factor[], double RangeMin[], double RangeMax[], int Digits[], QString defaultValue[],
                    const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
 
@@ -226,10 +227,10 @@ public:
                              const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                              const QString& OtherVersionReference, const QString& OtherVersionDataset,
                              const QString& SourceReference, const QString& SourceDataset,
-                             const QString& PI, const QString& User, const int Status, const int Login,
+                             const QString& PI, const QString& User, const QString& Parent, const int Status, const int Login,
                              const bool writeHeader, const bool splitFile, const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
-                             const int MetadataFileMode, const int TopologicType, const bool overwriteDataset, const bool markSmallFile,
-                             const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
+                             const bool hasManyEvents, const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,
+                             const bool markSmallFile, const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
 
     int Split2Events( const QString& FilenameIn, const int Codec, const int Extension,
                       const QStringList& ParameterList, const QStringList& DataSetCommentList,
@@ -241,7 +242,7 @@ public:
                       const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                       const QString& OtherVersionReference, const QString& OtherVersionDataset,
                       const QString& SourceReference, const QString& SourceDataset,
-                      const QString& PI, const QString& User, const int Status, const int Login,
+                      const QString& PI, const QString& User, const QString& s_Parent, const int Status, const int Login,
                       const bool writeHeader, const bool splitFile, const int OutOfRangeValue,
                       const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
                       const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,

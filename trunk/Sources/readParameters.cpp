@@ -18,14 +18,27 @@ int MainWindow::readDataDescription( const QStringList& sl_Input, QStringList& s
 
 // *************************************************************************************
 
-    if ( sl_Input.at( 0 ).startsWith( "/*" ) == true )
+    if ( ( sl_Input.at( 0 ).startsWith( "/*" ) == true ) || ( sl_Input.at( 0 ).startsWith( "// METAHEADER" ) == true ) )
     {
-        while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "*/" ) == false ) )
+        if ( sl_Input.at( 0 ).startsWith( "/*" ) == true )
         {
-            sl_DataDescription.append( sl_Input.at( i ) );
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "*/" ) == false ) )
+            {
+                sl_DataDescription.append( sl_Input.at( i ) );
 
-            if ( ++i >= n )
-                return( -130 );
+                if ( ++i >= n )
+                    return( -130 );
+            }
+        }
+        else
+        {
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "//" ) == false ) )
+            {
+                sl_DataDescription.append( sl_Input.at( i ) );
+
+                if ( ++i >= n )
+                    return( -130 );
+            }
         }
     }
 

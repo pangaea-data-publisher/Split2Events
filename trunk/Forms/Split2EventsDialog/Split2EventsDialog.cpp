@@ -160,6 +160,7 @@ void Split2EventsDialog::LoadProject()
         this->OtherVersionDatasetLineEdit->setText( settings.value( "OtherVersionDataset", "" ).toString() );
         this->SourceReferenceLineEdit->setText( settings.value( "SourceReference", "" ).toString() );
         this->SourceDatasetLineEdit->setText( settings.value( "SourceDataset", "" ).toString() );
+        this->ParentLineEdit->setText( settings.value( "Parent", "" ).toString() );
         this->UserLineEdit->setText( settings.value( "User", "" ).toString() );
 
         this->TopologicTypeComboBox->setCurrentIndex( settings.value( "TopologicType", 0 ).toInt() );
@@ -279,6 +280,7 @@ void Split2EventsDialog::SaveProject()
         settings.setValue( "OtherVersionDataset", this->OtherVersionDatasetLineEdit->text() );
         settings.setValue( "SourceReference", this->SourceReferenceLineEdit->text() );
         settings.setValue( "SourceDataset", this->SourceDatasetLineEdit->text() );
+        settings.setValue( "Parent", this->ParentLineEdit->text() );
         settings.setValue( "User", this->UserLineEdit->text() );
 
         settings.setValue( "TopologicType", this->TopologicTypeComboBox->currentIndex() );
@@ -361,6 +363,7 @@ void Split2EventsDialog::NewProject()
     this->OtherVersionDatasetLineEdit->setText( "" );
     this->SourceReferenceLineEdit->setText( "" );
     this->SourceDatasetLineEdit->setText( "" );
+    this->ParentLineEdit->setText( "" );
     this->UserLineEdit->setText( "" );
 
     this->TopologicTypeComboBox->setCurrentIndex( _NOTUSED_ );
@@ -620,6 +623,14 @@ void MainWindow::doSplit2EventsDialog()
         "<li><b>Tip:</b> 999999 will be replaced by @U@Event label@</li>"
         "</ul>" );
 
+    dialog.ParentLineEdit->setWhatsThis(
+        "Parent ID"
+        "<ul>"
+        "<li><b>Example:</b> 123</li>"
+        "<li><b>Tip:</b> 999999 will be replaced by @Par@Event label@</li>"
+        "</ul>" );
+
+
 // ***********************************************************************************************************************
 // Mandatory
 
@@ -650,6 +661,7 @@ void MainWindow::doSplit2EventsDialog()
     dialog.OtherVersionDatasetLineEdit->setText( gs_OtherVersionDataset );
     dialog.SourceReferenceLineEdit->setText( gs_SourceReference );
     dialog.SourceDatasetLineEdit->setText( gs_SourceDataset );
+    dialog.ParentLineEdit->setText( gs_Parent );
     dialog.UserLineEdit->setText( gs_User );
 
     dialog.TopologicTypeComboBox->setCurrentIndex( gi_TopologicType );
@@ -763,6 +775,7 @@ void MainWindow::doSplit2EventsDialog()
         gs_Project                  = dialog.ProjectLineEdit->text();
         gs_DatasetTitle             = dialog.DatasetTitleTextEdit->toPlainText();
         gs_ExportFilename       	= dialog.ExportFilenameLineEdit->text();
+        gs_Parent     				= dialog.ParentLineEdit->text();
         gs_User     				= dialog.UserLineEdit->text();
         gs_DataSetComment           = dialog.DataSetCommentTextEdit->toPlainText();
         gs_FurtherDetailsReference  = dialog.FurtherDetailsReferenceLineEdit->text();

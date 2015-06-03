@@ -61,6 +61,7 @@ void MainWindow::savePreferences()
     settings.setValue( "OtherVersionDataset", gs_OtherVersionDataset );
     settings.setValue( "SourceReference", gs_SourceReference );
     settings.setValue( "SourceDataset", gs_SourceDataset );
+    settings.setValue( "Parent", gs_Parent );
     settings.setValue( "User", gs_User );
 
     settings.setValue( "TopologicType", gi_TopologicType );
@@ -160,6 +161,7 @@ void MainWindow::loadPreferences()
     gs_OtherVersionDataset                      = settings.value( "OtherVersionDataset", "" ).toString();
     gs_SourceReference                          = settings.value( "SourceReference", "" ).toString();
     gs_SourceDataset                            = settings.value( "SourceDataset", "" ).toString();
+    gs_Parent                                   = settings.value( "Parent", "" ).toString();
     gs_User                                     = settings.value( "User", "" ).toString();
 
     gi_TopologicType                            = settings.value( "TopologicType", 0 ).toInt();

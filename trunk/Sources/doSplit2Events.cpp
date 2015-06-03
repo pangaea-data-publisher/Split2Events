@@ -94,7 +94,7 @@ void MainWindow::doSplit2Events()
                     err = Split2Events( fi.absoluteFilePath(), gi_Codec, gi_Extension, sl_ParameterList, sl_DataSetComment, sl_FurtherDetailsReference, sl_FurtherDetailsDataset,
                                         sl_OtherVersionReference, sl_OtherVersionDataset, sl_SourceReference, sl_SourceDataset, gs_Author, gs_Source, gs_DatasetTitle,
                                         gs_ExportFilename, gs_Reference, gs_Project, gs_DataSetComment, gs_FurtherDetailsReference, gs_FurtherDetailsDataset,
-                                        gs_OtherVersionReference, gs_OtherVersionDataset, gs_SourceReference, gs_SourceDataset, gs_PI, gs_User,
+                                        gs_OtherVersionReference, gs_OtherVersionDataset, gs_SourceReference, gs_SourceDataset, gs_PI, gs_User, gs_Parent,
                                         gi_Status, gi_Login, gb_writeHeader, gb_splitFile, gi_OutOfRangeValue, gb_useFilenameInAsEventLabel, gb_makeFilenameUnique,
                                         gi_MetadataFileMode, gi_TopologicType, gb_overwriteDataset, gb_markSmallFile, i, gsl_FilenameList.count() );
 

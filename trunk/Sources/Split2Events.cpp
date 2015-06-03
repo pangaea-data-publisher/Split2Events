@@ -18,7 +18,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                               const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                               const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                               const QString& s_SourceReference, const QString& s_SourceDataset,
-                              const QString& s_PI, const QString& s_User, const int i_Status, const int i_Login,
+                              const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status, const int i_Login,
                               const bool b_writeHeader, const bool b_splitFile, const int i_OutOfRangeValue,
                               const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
                               const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
@@ -36,6 +36,8 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
     int         i_NumOfDataDescriptionLines = 0;
     int         i_HeaderLine                = 0;
     int         i_NumOfSavedDataLines       = 0;
+
+    bool        b_hasManyEvents             = false;
 
     QString     s_OutputPath                = "";
 
@@ -77,6 +79,19 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
 
 // *************************************************************************************
 
+    if ( b_splitFile == false )
+    {
+        int k = i;
+
+        while ( ++k < n )
+        {
+          if ( isNewEvent( sl_Input, k ) == true )
+            b_hasManyEvents = true;
+        }
+    }
+
+// *************************************************************************************
+
     if ( b_splitFile == true )
     {
         initProgress( i_NumOfFiles, s_FilenameIn, tr( "Splitting file..." ), 2*(n-i_NumOfDataDescriptionLines-1) );
@@ -91,8 +106,8 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                            sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                            sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                            s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                           s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status,
-                                           i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, i_MetadataFileMode,
+                                           s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login, b_writeHeader, b_splitFile,
+                                           b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                            i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
 
                 i_NumOfSavedDataLines += 2*(sl_Data.count()-1);
@@ -113,8 +128,8 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                    sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                    sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                    s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                   s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status,
-                                   i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, i_MetadataFileMode,
+                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status,
+                                   i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                    i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
 
         resetProgress( i_NumOfFiles );
@@ -139,8 +154,8 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                    sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                    sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                    s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                   s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status,
-                                   i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, i_MetadataFileMode,
+                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status,
+                                   i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                    i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
 
         resetProgress( i_NumOfFiles );
@@ -178,16 +193,18 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                                      const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                                      const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                                      const QString& s_SourceReference, const QString& s_SourceDataset,
-                                     const QString& s_PI, const QString& s_User, const int i_Status, const int i_Login,
+                                     const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status, const int i_Login,
                                      const bool b_writeHeader, const bool b_splitFile, const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
-                                     const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset, const bool b_markSmallFile,
-                                     const int i_NumOfSavedDataLines, const int i_OutOfRangeValue, const int i_NumOfFiles )
+                                     const bool b_hasManyEvents, const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
+                                     const bool b_markSmallFile, const int i_NumOfSavedDataLines, const int i_OutOfRangeValue, const int i_NumOfFiles )
 {
     QString s_OutputFile         = "";
     QString s_baseNameEventLabel = "";
+    QString s_FileExtension      = "";
+
+    QString s_EventHeader        = "";
     QString s_EventLabel         = sl_Data.at( 1 ).section( "\t", 0, 0 ).section( "@", 0, 0 );
     QString s_MinorLabel         = sl_Data.at( 1 ).section( "\t", 0, 0 ).section( "@", 1, 1 );
-    QString s_FileExtension      = "";
 
     int     i_NumOfColumns       = NumOfSections( buildHeaderOutputString( sl_Data.at( 0 ) ) );
 
@@ -200,6 +217,10 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     if ( QCoreApplication::applicationFilePath().contains( "Split2Events_JSON" ) == true )
         b_JSON_Test = true;
+
+// *************************************************************************************
+
+    b_JSON_Test = true;
 
 // *************************************************************************************
 
@@ -250,6 +271,9 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     s_EventLabel.replace( "~", "/" );	// Event labels contains "/"
 
+    if ( b_hasManyEvents == true )
+        s_EventHeader = "EventLabel";
+
 // *************************************************************************************
 
     b_hasEmptyColumn = findEmptyColumns( sl_Data, i_NumOfColumns, b_EmptyColumn );
@@ -289,8 +313,10 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                               s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
-                              s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
+                              s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
+
+            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, "Event label" ); // hasManyEvents not supported in old version of metaheader => always true
         }
         else
         {
@@ -298,26 +324,26 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                               s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
-                              s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, i_Status, i_Login,
-                              b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
-        }
+                              s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login,
+                              b_useFilenameInAsEventLabel, b_hasManyEvents, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
-        writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue );
+            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
+        }
 
         switch ( i_MetadataFileMode )
         {
           case _NOTUSED_:
-            writeData( &fout, i_Codec, sl_Data, b_EmptyColumn, b_hasEmptyColumn, i_NumOfSavedDataLines, 1, i_NumOfFiles );
+            writeData( &fout, i_Codec, sl_Data, b_hasManyEvents, b_EmptyColumn, b_hasEmptyColumn, i_NumOfSavedDataLines, 1, i_NumOfFiles );
             break;
 
           default:
-            writeData( &fout, i_Codec, sl_Data, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, i_NumOfSavedDataLines, i_OutOfRangeValue, i_NumOfFiles );
+            writeData( &fout, i_Codec, sl_Data, b_hasManyEvents, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, i_NumOfSavedDataLines, i_OutOfRangeValue, i_NumOfFiles );
             break;
         }
     }
     else
     {
-        writeData( &fout, i_Codec, sl_Data, b_EmptyColumn, b_hasEmptyColumn, i_NumOfSavedDataLines, 0, i_NumOfFiles );
+        writeData( &fout, i_Codec, sl_Data, true, b_EmptyColumn, b_hasEmptyColumn, i_NumOfSavedDataLines, 0, i_NumOfFiles );
     }
 
 // *************************************************************************************
@@ -332,7 +358,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 // *************************************************************************************
 
 int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data,
-                           const bool b_EmptyColumn[], const bool b_hasEmptyColumn,
+                           const bool b_hasManyEvents, const bool b_EmptyColumn[], const bool b_hasEmptyColumn,
                            const int i_NumOfSavedDataLines, const int i_firstLine, const int i_NumOfFiles )
 {
     QString s_Output        = "";
@@ -369,7 +395,12 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
             s_Output = buildOutputString( sl_Data.at( i ) );
 
         if ( s_Output.isEmpty() == false )
-            tout << s_Output << eol;
+        {
+            if ( b_hasManyEvents == true )
+                tout << s_Output << eol;
+            else
+                tout << s_Output.section( "\t", 1, -1 ) << eol;
+        }
 
         if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
             return( _APPBREAK_ );
@@ -383,7 +414,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 // *************************************************************************************
 
 int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data,
-                           const bool b_EmptyColumn[],
+                           const bool b_hasManyEvents, const bool b_EmptyColumn[],
                            double d_Factor[], double  d_RangeMin[], double d_RangeMax[],
                            int i_Digits[], QString s_defaultValue[],
                            const int i_NumOfSavedDataLines, const int i_OutOfRangeValue,
@@ -397,6 +428,8 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 
     QString s_Data              = "";
     QString s_Parameter         = "";
+
+    QStringList sl_Output;
 
 // *************************************************************************************
 
@@ -439,7 +472,10 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 
         if ( s_Data.isEmpty() == false )
         {
-            tout << s_Data.section( "\t", 0, 0 );
+            sl_Output.clear();
+
+            if ( b_hasManyEvents == true )
+                sl_Output.append( s_Data.section( "\t", 0, 0 ) );
 
             for ( int j=1; j<i_NumOfParameters; j++ )
             {
@@ -468,25 +504,25 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                             if ( d_Factor[j] != 1. )
                             {
                                 if ( ( s_Parameter.toDouble() >= d_RangeMin[j] ) && ( s_Parameter.toDouble() <= d_RangeMax[j] ) )
-                                    tout << "\t" << s_QF << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                    sl_Output.append( s_QF + QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                 else
                                 {
                                     switch ( i_OutOfRangeValue )
                                     {
                                     case _IGNORE_:
-                                        tout << "\t" << s_QF << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( s_QF + QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     case _REMOVE_:
-                                        tout << "\t";
+                                        sl_Output.append( "" );
                                         break;
                                     case _BAD_:
-                                        tout << "\t/" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "/%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     case _QUESTIONABLE_:
-                                        tout << "\t?" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "?%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     default:
-                                        tout << "\t" << s_QF << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( s_QF + QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     }
                                 }
@@ -494,25 +530,27 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                             else
                             {
                                 if ( ( s_Parameter.toDouble() >= d_RangeMin[j] ) && ( s_Parameter.toDouble() <= d_RangeMax[j] ) )
-                                    tout << "\t" << s_QF << s_Parameter;
+                                {
+                                    sl_Output.append( s_QF + s_Parameter );
+                                }
                                 else
                                 {
                                     switch ( i_OutOfRangeValue )
                                     {
                                     case _IGNORE_:
-                                        tout << "\t" << s_QF << s_Parameter;
+                                        sl_Output.append( s_QF + s_Parameter );
                                         break;
                                     case _REMOVE_:
-                                        tout << "\t";
+                                        sl_Output.append( "" );
                                         break;
                                     case _BAD_:
-                                        tout << "\t/" << s_Parameter;
+                                        sl_Output.append( "/" + s_Parameter );
                                         break;
                                     case _QUESTIONABLE_:
-                                        tout << "\t?" << s_Parameter;
+                                        sl_Output.append( "?" + s_Parameter );
                                         break;
                                     default:
-                                        tout << "\t" << s_QF << s_Parameter;
+                                        sl_Output.append( s_QF + s_Parameter );
                                         break;
                                     }
                                 }
@@ -523,25 +561,27 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                             if ( d_Factor[j] != 1. )
                             {
                                 if ( ( s_Parameter.toDouble() >= d_RangeMin[j] ) && ( s_Parameter.toDouble() <= d_RangeMax[j] ) )
-                                    tout << "\t" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                {
+                                    sl_Output.append( QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
+                                }
                                 else
                                 {
                                     switch ( i_OutOfRangeValue )
                                     {
                                     case _IGNORE_:
-                                        tout << "\t" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     case _REMOVE_:
-                                        tout << "\t";
+                                        sl_Output.append( "" );
                                         break;
                                     case _BAD_:
-                                        tout << "\t/" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "/%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     case _QUESTIONABLE_:
-                                        tout << "\t?" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "?%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     default:
-                                        tout << "\t" << QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] );
+                                        sl_Output.append( QString( "%1" ).arg( s_Parameter.toDouble()*d_Factor[j], 0, 'f', i_Digits[j] ) );
                                         break;
                                     }
                                 }
@@ -549,25 +589,25 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                             else
                             {
                                 if ( ( s_Parameter.toDouble() >= d_RangeMin[j] ) && ( s_Parameter.toDouble() <= d_RangeMax[j] ) )
-                                    tout << "\t" << s_Parameter;
+                                    sl_Output.append( s_Parameter );
                                 else
                                 {
                                     switch ( i_OutOfRangeValue )
                                     {
                                     case _IGNORE_:
-                                        tout << "\t" << s_Parameter;
+                                        sl_Output.append( s_Parameter );
                                         break;
                                     case _REMOVE_:
-                                        tout << "\t";
+                                        sl_Output.append( "" );
                                         break;
                                     case _BAD_:
-                                        tout << "\t/" << s_Parameter;
+                                       sl_Output.append( "/" + s_Parameter );
                                         break;
                                     case _QUESTIONABLE_:
-                                        tout << "\t?" << s_Parameter;
+                                        sl_Output.append( "?" + s_Parameter );
                                         break;
                                     default:
-                                        tout << "\t" << s_Parameter;
+                                        sl_Output.append( s_Parameter );
                                         break;
                                     }
                                 }
@@ -577,14 +617,14 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                     else
                     {
                         if ( s_Parameter != "@is empty@" )
-                            tout << "\t" << s_Parameter; // contains characters
+                            sl_Output.append( s_Parameter ); // contains characters
                         else
-                            tout << "\t";
+                            sl_Output.append( "" );
                     }
                 }
             }
 
-            tout << eol;
+            tout << sl_Output.join( "\t" ) << eol;
         }
 
         if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
@@ -598,7 +638,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
+int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
                                       const QString& s_baseNameFilenameIn, const QString& s_EventLabel, const QString& s_MinorLabel,
                                       const QStringList& sl_DSParameter, const QStringList& sl_MFParameter,
                                       const QStringList& sl_DataSetComment,
@@ -611,8 +651,8 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
                                       const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                                       const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                                       const QString& s_SourceReference, const QString& s_SourceDataset,
-                                      const QString& s_PI, const QString& s_User, const int i_Status, const int i_Login,
-                                      const bool b_useFilenameInAsEventLabel,
+                                      const QString& s_PI, const QString& s_User, const QString& s_Parent,
+                                      const int i_Status, const int i_Login, const bool b_useFilenameInAsEventLabel,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
    QString s_Parameter                   = "";
@@ -626,6 +666,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
    QString s_tempReference               = s_Reference;
    QString s_tempPI                      = s_PI;
    QString s_tempUser                    = s_User;
+   QString s_tempParent                  = s_Parent;
    QString s_tempExportFilename          = s_ExportFilename;
    QString s_tempDatasetTitle            = s_DatasetTitle;
    QString s_tempDatasetComment          = s_DataSetComment;
@@ -681,6 +722,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
        s_tempEventLabel.append( "-" + s_MinorLabel );
 
 // *************************************************************************************
+// start of metaheader
 
    tout << "/* DATA DESCRIPTION:" << eol;
 
@@ -689,6 +731,20 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
 
     if ( s_tempPI == "999999" )
         s_tempPI = "@GP@" + s_tempEventLabel + "@";
+
+// *************************************************************************************
+// Parent
+
+    if ( s_tempParent.isEmpty() == false )
+    {
+        if ( s_tempParent == "999999" )
+            s_tempParent = "@Par@" + s_tempEventLabel + "@";
+
+        s_tempParent.replace( " ", "" );
+        s_tempParent.replace( ";", "," );
+
+        tout << tr( "Parent:" ) << "\t" << s_tempParent.section( ",", 0, 0 ) << eol;
+    }
 
 // *************************************************************************************
 // overwrite Dataset
@@ -1265,7 +1321,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
     if ( i_Login == _EVENT_ )
         tout << tr( "Login:" ) << "\t@L@" + s_tempEventLabel + "@" << eol;
 
-    tout << "*/" << eol;   // end of data description
+    tout << "*/" << eol;   // end of metaheader
 
     return( _NOERROR_ );
 }
@@ -1275,7 +1331,7 @@ int MainWindow::writeDataDescription(QIODevice *outDevice, const int i_Codec, co
 // *************************************************************************************
 // 2015-04-11 - new format of data description block
 
-int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
+int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
                                       const QString& s_baseNameFilenameIn, const QString& s_EventLabel, const QString& s_MinorLabel,
                                       const QStringList& sl_DSParameter, const QStringList& sl_MFParameter,
                                       const QStringList& sl_DataSetComment,
@@ -1288,8 +1344,8 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
                                       const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                                       const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                                       const QString& s_SourceReference, const QString& s_SourceDataset,
-                                      const QString& s_PI, const QString& s_User, const int i_Status, const int i_Login,
-                                      const bool b_useFilenameInAsEventLabel,
+                                      const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status,
+                                      const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
    QString s_Parameter                   = "";
@@ -1301,6 +1357,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
    QString s_tempReference               = s_Reference;
    QString s_tempPI                      = s_PI;
    QString s_tempUser                    = s_User;
+   QString s_tempParent                  = s_Parent;
    QString s_tempExportFilename          = s_ExportFilename;
    QString s_tempDatasetTitle            = s_DatasetTitle;
    QString s_tempDatasetComment          = s_DataSetComment;
@@ -1364,14 +1421,30 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
        s_tempEventLabel.append( "-" + s_MinorLabel );
 
 // *************************************************************************************
+// start of metaheader
 
-   tout << "JSON{" << eol;
+   tout << "// METAHEADER" << eol;
+   tout << "{" << eol;
 
 // *************************************************************************************
 // PI
 
     if ( s_tempPI == "999999" )
         s_tempPI = "@GP@" + s_tempEventLabel + "@";
+
+// *************************************************************************************
+// Parent
+
+if ( s_tempParent.isEmpty() == false )
+{
+    if ( s_tempParent == "999999" )
+        s_tempParent = "@Par@" + s_tempEventLabel + "@";
+
+    s_tempParent.replace( " ", "" );
+    s_tempParent.replace( ";", "," );
+
+    tout << qs << tr( "ParentID" ) << qe << s_tempParent.section( ",", 0, 0 ) << "," << eol;
+}
 
 // *************************************************************************************
 // overwrite Dataset
@@ -1392,7 +1465,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         int i_NumOfAuthors = s_tempAuthor.count( "," ) + 1;
 
-        tout << qs << tr( "Author" ) << qe << "[ " << s_tempAuthor.section( ",", 0, 0 );
+        tout << qs << tr( "AuthorIDs" ) << qe << "[ " << s_tempAuthor.section( ",", 0, 0 );
 
         for ( int j=1; j<i_NumOfAuthors; j++ )
             tout << ", " << s_tempAuthor.section( ",", j, j );
@@ -1411,7 +1484,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         s_tempSource.replace( " ", "" );
         s_tempSource.replace( ";", "," );
 
-        tout << qs << tr( "Source" ) << qe << s_tempSource.section( ",", 0, 0 ) << "," << eol;
+        tout << qs << tr( "SourceID" ) << qe << s_tempSource.section( ",", 0, 0 ) << "," << eol;
     }
 
 // *************************************************************************************
@@ -1457,16 +1530,16 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         int i_NumOfReferences = s_tempReference.count( "," ) + 1;
 
         if ( s_tempReference == "999999" )
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         else
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
 
         for ( int j=1; j<i_NumOfReferences; j++ )
         {
             if ( s_tempReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
         }
     }
 
@@ -1481,7 +1554,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1498,9 +1571,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1515,7 +1588,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1532,9 +1605,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1549,7 +1622,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1566,9 +1639,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 
@@ -1576,7 +1649,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
     if ( sl_Reference.count() > 0 )
     {
-        tout << qs << tr( "Reference" ) << qe << "[ " << eol;
+        tout << qs << tr( "ReferenceIDs" ) << qe << "[ " << eol;
 
         for ( int i=0; i<sl_Reference.count()-1; i++ )
             tout << sl_Reference.at( i ) << "," << eol;
@@ -1595,7 +1668,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1612,9 +1685,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempFurtherDetailsDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
         }
     }
 
@@ -1629,7 +1702,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1646,9 +1719,9 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempOtherVersionDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
         }
     }
 
@@ -1663,7 +1736,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
 
                 b_foundInSourceList = true;
             }
@@ -1680,23 +1753,23 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
         for ( int j=0; j<i_NumOfReferences; j++ )
         {
             if ( s_tempSourceDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
             else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "RelationType" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
         }
     }
 
 // *************************************************************************************
 
-        if ( sl_DataReference.count() > 0 )
-        {
-            tout << qs << tr( "PANGAEADataReference" ) << qe << "[ " << eol;
+    if ( sl_DataReference.count() > 0 )
+    {
+        tout << qs << tr( "PANGAEADataReferenceIDs" ) << qe << "[ " << eol;
 
-            for ( int i=0; i<sl_DataReference.count()-1; i++ )
-                tout << sl_DataReference.at( i ) << "," << eol;
+        for ( int i=0; i<sl_DataReference.count()-1; i++ )
+            tout << sl_DataReference.at( i ) << "," << eol;
 
-            tout << sl_DataReference.at( sl_DataReference.count()-1 ) << " ]," << eol;
-        }
+        tout << sl_DataReference.at( sl_DataReference.count()-1 ) << " ]," << eol;
+    }
 
 // *************************************************************************************
 // Export filename
@@ -1734,8 +1807,8 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 // *************************************************************************************
 // Event label
 
-    if ( s_EventLabel.isEmpty() == false )
-        tout << qs << tr( "Event" ) << qe << q << s_EventLabel << q << "," << eol;
+    if ( ( s_EventLabel.isEmpty() == false ) && ( b_hasManyEvents == false ) )
+        tout << qs << tr( "EventLabel" ) << qe << q << s_EventLabel << q << "," << eol;
 
 // *************************************************************************************
 // PI
@@ -1752,7 +1825,6 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
     {
         int     j           = 0;
         int     i_MF        = 0;
-        QString sd_Parameter = "";
 
         switch ( i_MetadataFileMode )
         {
@@ -1890,7 +1962,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         int i_NumOfProjects = s_tempProject.count( "," ) + 1;
 
-        tout << qs << tr( "Project" ) << qe << "[ " << s_tempProject.section( ",", 0, 0 );
+        tout << qs << tr( "ProjectIDs" ) << qe << "[ " << s_tempProject.section( ",", 0, 0 );
 
         for ( int j=1; j<i_NumOfProjects; j++ )
             tout << ", " << s_tempProject.section( ",", j, j );
@@ -1902,12 +1974,12 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 // Topologic type
 
     if ( i_TopologicType > 0 )
-        tout << qs << tr( "TopologicType" ) << qe << i_TopologicType << "," << eol;
+        tout << qs << tr( "TopologicTypeID" ) << qe << i_TopologicType << "," << eol;
 
 // *************************************************************************************
 // Status
 
-    tout << qs << tr( "Status" ) << qe << i_Status + 2 << "," << eol;
+    tout << qs << tr( "StatusID" ) << qe << i_Status + 2 << "," << eol;
 
 // *************************************************************************************
 // User
@@ -1922,7 +1994,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 
         int i_NumOfUsers = s_tempUser.count( "," ) + 1;
 
-        tout << qs << tr( "User" ) << qe << "[ " << s_tempUser.section( ",", 0, 0 );
+        tout << qs << tr( "UserIDs" ) << qe << "[ " << s_tempUser.section( ",", 0, 0 );
 
         for ( int j=1; j<i_NumOfUsers; j++ )
             tout << ", " << s_tempUser.section( ",", j, j );
@@ -1942,18 +2014,19 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 */
 
     if ( i_Login == _UNRESTRICTED_ )
-        tout << qs << tr( "Login" ) << qe << "1" << eol;
+        tout << qs << tr( "LoginID" ) << qe << "1" << eol;
 
     if ( i_Login == _SIGNUPREQUIRED_ )
-        tout << qs << tr( "Login" ) << qe << "2" << eol;
+        tout << qs << tr( "LoginID" ) << qe << "2" << eol;
 
     if ( i_Login == _ACCESSRIGHTSNEEDED_ )
-        tout << qs << tr( "Login" ) << qe << "3" << eol;
+        tout << qs << tr( "LoginID" ) << qe << "3" << eol;
 
     if ( i_Login == _EVENT_ )
-        tout << qs << tr( "Login" ) << qe << "@L@" << s_tempEventLabel << "@" << eol;
+        tout << qs << tr( "LoginID" ) << qe << "@L@" << s_tempEventLabel << "@" << eol;
 
-    tout << "}JSON" << eol;   // end of data description
+    tout << "}" << eol;
+    tout << "//" << eol;  // end of metaheader
 
     return( _NOERROR_ );
 }
@@ -1965,7 +2038,7 @@ int MainWindow::writeDataDescriptionJSON(QIODevice *outDevice, const int i_Codec
 int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data, const QStringList& sl_MFParameter,
                                  const int i_MetadataFileMode, const bool b_EmptyColumn[],
                                  double d_Factor[], double  d_RangeMin[], double d_RangeMax[],
-                                 int i_Digits[], QString s_defaultValue[] )
+                                 int i_Digits[], QString s_defaultValue[], const QString& s_EventHeader )
 {
    #if defined(Q_OS_LINUX)
        const char eol = '\n';
@@ -1984,6 +2057,8 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
    QString s_Header         = "";
    QString s_Parameter      = "";
    QString s_ParameterMF    = "";
+
+   QStringList sl_Header;
 
 // *************************************************************************************
 
@@ -2015,7 +2090,8 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
 // *************************************************************************************
 // write header
 
-    tout << tr( "Event label" );
+    if ( s_EventHeader.isEmpty() == false )
+        sl_Header.append( s_EventHeader );
 
     switch ( i_MetadataFileMode )
     {
@@ -2023,7 +2099,7 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
         for ( int j=1; j<i_NumOfParameters; j++ )
         {
             if ( b_EmptyColumn[j] == false )
-                tout << "\t" << s_Header.section( "\t", j, j );
+                sl_Header.append( s_Header.section( "\t", j, j ) );
         }
         break;
 
@@ -2065,7 +2141,7 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
                     }
                 }
 
-                tout << "\t" << s_Parameter;
+                sl_Header.append( s_Parameter );
             }
         }
         break;
@@ -2102,13 +2178,13 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
                     d_RangeMax[j] = 10E30;
                 }
 
-                tout << "\t" << s_Parameter;
+                sl_Header.append( s_Parameter );
             }
         }
         break;
     }
 
-    tout << eol;
+    tout << sl_Header.join( "\t" ) << eol;
 
     return( _NOERROR_ );
 }

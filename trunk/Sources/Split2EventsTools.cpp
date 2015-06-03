@@ -82,17 +82,17 @@ QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QStr
     if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 2, 2 ) == "999999" )
-            s_Parameter.append( ", " + q + "PI" + qe + "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+            s_Parameter.append( ", " + q + "PI_ID" + qe + "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
         else
-            s_Parameter.append( ", " + q + "PI" + qe + s_ParameterMF.section( "\t", 2, 2 ) );
+            s_Parameter.append( ", " + q + "PI_ID" + qe + s_ParameterMF.section( "\t", 2, 2 ) );
     }
 
     if ( s_ParameterMF.section( "\t", 3, 3 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 3, 3 ) == "999999" )
-            s_Parameter.append( ", " + q + "Method" + qe + "@PM@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+            s_Parameter.append( ", " + q + "MethodID" + qe + "@PM@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
         else
-            s_Parameter.append( ", " + q + "Method" + qe + s_ParameterMF.section( "\t", 3, 3 ) );
+            s_Parameter.append( ", " + q + "MethodID" + qe + s_ParameterMF.section( "\t", 3, 3 ) );
     }
 
     if ( s_ParameterMF.section( "\t", 4, 4 ).isEmpty() == false )

@@ -334,7 +334,7 @@
       <attribute name="title">
        <string>Optional</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_25">
+      <layout class="QGridLayout" name="gridLayout_26">
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="DatasetCommentGroupBox">
          <property name="title">
@@ -347,7 +347,7 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.Lucida Grande UI'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.Helvetica Neue DeskInterface'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
@@ -427,14 +427,26 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
+       <item row="4" column="0">
         <widget class="QGroupBox" name="groupBox_14">
          <property name="title">
-          <string>User(s) of validated datasets</string>
+          <string>User(s) of validated datasets (optional)</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_12">
           <item row="0" column="0">
            <widget class="QLineEdit" name="UserLineEdit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QGroupBox" name="groupBox_21">
+         <property name="title">
+          <string>Add to parent (optional)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_25">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="ParentLineEdit"/>
           </item>
          </layout>
         </widget>
@@ -709,12 +721,13 @@ p, li { white-space: pre-wrap; }
   <tabstop>ExportFilenameLineEdit</tabstop>
   <tabstop>DataSetCommentTextEdit</tabstop>
   <tabstop>FurtherDetailsReferenceLineEdit</tabstop>
-  <tabstop>FurtherDetailsDatasetLineEdit</tabstop>
   <tabstop>OtherVersionReferenceLineEdit</tabstop>
-  <tabstop>OtherVersionDatasetLineEdit</tabstop>
   <tabstop>SourceReferenceLineEdit</tabstop>
-  <tabstop>SourceDatasetLineEdit</tabstop>
   <tabstop>UserLineEdit</tabstop>
+  <tabstop>FurtherDetailsDatasetLineEdit</tabstop>
+  <tabstop>OtherVersionDatasetLineEdit</tabstop>
+  <tabstop>SourceDatasetLineEdit</tabstop>
+  <tabstop>ParentLineEdit</tabstop>
   <tabstop>splitFileCheckBox</tabstop>
   <tabstop>writeHeaderCheckBox</tabstop>
   <tabstop>makeFilenameUniqueCheckBox</tabstop>
