@@ -442,7 +442,7 @@ p, li { white-space: pre-wrap; }
        <item row="4" column="1">
         <widget class="QGroupBox" name="groupBox_21">
          <property name="title">
-          <string>Add to parent (optional)</string>
+          <string>Add to an existing parent (optional)</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_25">
           <item row="0" column="0">
