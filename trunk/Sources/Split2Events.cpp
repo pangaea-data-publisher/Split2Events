@@ -195,7 +195,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                                      const QString& s_SourceReference, const QString& s_SourceDataset,
                                      const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status, const int i_Login,
                                      const bool b_writeHeader, const bool b_splitFile, const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
-                                     const bool b_hasManyEvents, const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
+                                     const bool b_hasManyEventsIn, const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
                                      const bool b_markSmallFile, const int i_NumOfSavedDataLines, const int i_OutOfRangeValue, const int i_NumOfFiles )
 {
     QString s_OutputFile         = "";
@@ -208,9 +208,9 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     int     i_NumOfColumns       = NumOfSections( buildHeaderOutputString( sl_Data.at( 0 ) ) );
 
-    bool    b_hasEmptyColumn     = false;
-
     bool    b_JSON_Test          = false;
+    bool    b_hasEmptyColumn     = false;
+    bool    b_hasManyEvents      = false;
 
 // *************************************************************************************
 // Switch b_JSON_Test to true for testing Split2Events
@@ -316,7 +316,9 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
-            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, "Event label" ); // hasManyEvents not supported in old version of metaheader => always true
+            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, "Event label" );
+
+            b_hasManyEvents = true;  // hasManyEvents not supported in old version of metaheader => always true
         }
         else
         {
@@ -328,6 +330,8 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               b_useFilenameInAsEventLabel, b_hasManyEvents, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
             writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
+
+            b_hasManyEvents = b_hasManyEventsIn;
         }
 
         switch ( i_MetadataFileMode )
