@@ -271,7 +271,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     s_EventLabel.replace( "~", "/" );	// Event labels contains "/"
 
-    if ( b_hasManyEvents == true )
+    if ( b_hasManyEventsIn == true )
         s_EventHeader = "EventLabel";
 
 // *************************************************************************************
@@ -309,6 +309,8 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
     {
         if ( ( gs_Version.section( "\t", 2, 2 ) != "JSON" ) && ( b_JSON_Test == false ) )
         {
+            b_hasManyEvents = true;  // hasManyEvents not supported in old version of metaheader => always true
+
             writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
@@ -317,11 +319,11 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
             writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, "Event label" );
-
-            b_hasManyEvents = true;  // hasManyEvents not supported in old version of metaheader => always true
         }
         else
         {
+            b_hasManyEvents = b_hasManyEventsIn;
+
             writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                               sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
@@ -330,8 +332,6 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               b_useFilenameInAsEventLabel, b_hasManyEvents, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
             writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
-
-            b_hasManyEvents = b_hasManyEventsIn;
         }
 
         switch ( i_MetadataFileMode )
@@ -1816,12 +1816,12 @@ if ( s_tempParent.isEmpty() == false )
 
 // *************************************************************************************
 // PI
-
+/*
     if ( s_tempPI.isEmpty() == false )
-        tout << qs << tr( "PI" ) << qe << s_tempPI << "," << eol;
+        tout << qs << tr( "PI_ID" ) << qe << s_tempPI << "," << eol;
     else
-        tout << qs << tr( "PI" ) << qe << tr( "506" ) << "," << eol;
-
+        tout << qs << tr( "PI_ID" ) << qe << tr( "506" ) << "," << eol;
+*/
 // *************************************************************************************
 // Parameters
 
@@ -1893,7 +1893,7 @@ if ( s_tempParent.isEmpty() == false )
 
     if ( sl_Parameter.count() > 0 )
     {
-        tout << qs << tr( "Parameter" ) << qe << "[ " << eol;
+        tout << qs << tr( "ParameterIDs" ) << qe << "[ " << eol;
 
         for ( int i=0; i<sl_Parameter.count()-1; i++ )
             tout << sl_Parameter.at( i ) << " }," << eol;
