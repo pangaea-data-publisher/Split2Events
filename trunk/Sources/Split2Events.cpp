@@ -220,7 +220,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
 // *************************************************************************************
 
-//  b_JSON_Test = true;
+    b_JSON_Test = true;
 
 // *************************************************************************************
 
@@ -271,9 +271,6 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     s_EventLabel.replace( "~", "/" );	// Event labels contains "/"
 
-    if ( b_hasManyEventsIn == true )
-        s_EventHeader = "EventLabel";
-
 // *************************************************************************************
 
     b_hasEmptyColumn = findEmptyColumns( sl_Data, i_NumOfColumns, b_EmptyColumn );
@@ -310,6 +307,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
         if ( ( gs_Version.section( "\t", 2, 2 ) != "JSON" ) && ( b_JSON_Test == false ) )
         {
             b_hasManyEvents = true;  // hasManyEvents not supported in old version of metaheader => always true
+            s_EventHeader   = "Event label";
 
             writeDataDescription( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
@@ -318,11 +316,14 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                               s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login,
                               b_useFilenameInAsEventLabel, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
-            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, "Event label" );
+            writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
         }
         else
         {
             b_hasManyEvents = b_hasManyEventsIn;
+
+            if ( b_hasManyEventsIn == true )
+                s_EventHeader = "500000";
 
             writeDataDescriptionJSON( &fout, i_Codec, b_EmptyColumn, s_baseNameFilenameIn, s_EventLabel, s_MinorLabel, sl_DSParameter, sl_MFParameter, sl_DataSetComment,
                               sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
@@ -1507,6 +1508,7 @@ if ( s_tempParent.isEmpty() == false )
         s_tempDatasetTitle.replace( "\n", "*" );
         s_tempDatasetTitle.replace( "-track", "" );
         s_tempDatasetTitle.replace( "Track.", "" );
+        s_tempDatasetTitle.replace( "\"", "\\\"" );
 
         if ( s_tempDatasetTitle.length() <= 255 )
         {
@@ -1895,6 +1897,14 @@ if ( s_tempParent.isEmpty() == false )
     {
         tout << qs << tr( "ParameterIDs" ) << qe << "[ " << eol;
 
+        if ( b_hasManyEvents == true )
+        {
+            if ( s_tempPI.isEmpty() == false )
+                tout << "    { " << q << tr ( "ID" ) << qe << tr( "500000" ) << ", " << q << tr( "PI_ID" ) << qe << s_tempPI << " }," << eol;
+            else
+                tout << "    { " << q << tr ( "ID" ) << qe << tr( "500000" ) << ", " << q << tr( "PI_ID" ) << qe << tr( "506" ) << " }," << eol;
+        }
+
         for ( int i=0; i<sl_Parameter.count()-1; i++ )
             tout << sl_Parameter.at( i ) << " }," << eol;
 
@@ -1914,7 +1924,7 @@ if ( s_tempParent.isEmpty() == false )
         for ( int i=0; i<sl_DataSetComment.count(); i++ )
         {
             sd_DataSetComment = sl_DataSetComment.at( i );
-            sd_DataSetComment.replace( "\"", "" );
+            sd_DataSetComment.replace( "\"", "\\\"" );
 
             if ( sd_DataSetComment.section( "\t", 0, 0 ) == DummyStr )
             {
@@ -1938,6 +1948,7 @@ if ( s_tempParent.isEmpty() == false )
 
         s_tempDatasetComment.replace( "$@", s_MinorLabel );
         s_tempDatasetComment.replace( "\n", " " );
+        s_tempDatasetComment.replace( "\"", "\\\"" );
 
         if ( s_tempDatasetComment.length() <= 1000 )
         {

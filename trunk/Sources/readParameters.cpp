@@ -101,9 +101,10 @@ int MainWindow::readDataHeaderLine( const QString& s_Header, QStringList& sl_Lis
     {
         s_Parameter = s_Header.section( "\t", i, i ).trimmed();
 
-        s_Parameter.replace( "\"", "" );
         s_Parameter.replace( "  ", " " );
         s_Parameter.replace( "] (", "]@(" );
+        s_Parameter.section( "@", 0, 0 ).replace( "\"", "" );
+        s_Parameter.section( "@", 1, 1 ).replace( "\"", "\\\"" );
         s_Parameter.replace( "Salinity (", "Salinity []@(" );
 
         sl_ListParameter.append( s_Parameter );
