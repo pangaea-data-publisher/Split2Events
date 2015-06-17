@@ -220,7 +220,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
 // *************************************************************************************
 
-    b_JSON_Test = true;
+//  b_JSON_Test = true;
 
 // *************************************************************************************
 
