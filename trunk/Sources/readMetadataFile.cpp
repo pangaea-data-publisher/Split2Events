@@ -301,7 +301,7 @@ QString MainWindow::trimParameter( const QString& ParameterInStr )
 
 // *************************************************************************************
 
-    s_dummy.replace( "\"", "\\\"" );
+    s_dummy.replace( "\"", "" );  // " in parameter and its comment not supported (2015-06-21)
 
     i_ParameterID = s_dummy.section( "\t", 1, 1 ).toInt();
 
