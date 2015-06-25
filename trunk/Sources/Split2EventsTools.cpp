@@ -95,9 +95,6 @@ QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QStr
             s_Parameter.append( ", " + q + "MethodID" + qe + s_ParameterMF.section( "\t", 3, 3 ) );
     }
 
-    if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
-        s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
-
     if ( s_ParameterMF.section( "\t", 4, 4 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 4, 4 ) == "999999" )
@@ -105,6 +102,9 @@ QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QStr
         else
             s_Parameter.append( ", " + q + "Comment" + qe + q + s_ParameterMF.section( "\t", 4, 4 ) + q );
     }
+
+    if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
+        s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
 
     s_Parameter.replace( "@$E@", "@" + s_EventLabel + "@" );
 

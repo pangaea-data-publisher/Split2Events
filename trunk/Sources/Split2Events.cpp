@@ -1911,7 +1911,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( sl_Parameter.count() > 0 )
     {
-        tout << qs << tr( "ParameterIDs" ) << qe << "[ " << eol;
+        tout << qs << tr( "ParameterIDs" ) << qe << "[" << eol;
 
         if ( b_hasManyEvents == true )
         {
