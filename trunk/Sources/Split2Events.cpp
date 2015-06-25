@@ -1353,6 +1353,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
                                       const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
+   QString q                             = "\"";
+   QString qs                            = "  \"";
+   QString qe                            = "\": ";
+
    QString s_Parameter                   = "";
    QString s_ParameterDS                 = "";
    QString s_ParameterMF                 = "";
@@ -1375,14 +1379,12 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
    QString s_tempSourceDataset           = s_SourceDataset;
    QString s_tempEventLabel              = s_EventLabel;
 
+   QString sd_Login                      = "";
+   QString sd_DatasetID                  = "";
    QString sd_DataSetComment             = "";
    QString sd_FurtherDetails             = "";
    QString sd_OtherVersion               = "";
    QString sd_Source                     = "";
-
-   QString q                             = "\"";
-   QString qs                            = "  \"";
-   QString qe                            = "\": ";
 
    QStringList  sl_Reference;
    QStringList  sl_DataReference;
@@ -1425,105 +1427,155 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
    if ( s_MinorLabel.isEmpty() == false )
        s_tempEventLabel.append( "-" + s_MinorLabel );
 
+   if ( s_tempPI == "999999" )
+       s_tempPI = "@PI@" + s_tempEventLabel + "@";
+
+   if ( s_tempPI.isEmpty() == true )
+       s_tempPI = "506";
+
+   if ( s_tempParent == "999999" )
+       s_tempParent = "@Par@" + s_tempEventLabel + "@";
+
+   if ( b_overwriteDataset == true )
+       sd_DatasetID = "@I@" + s_tempEventLabel + "@";
+
+   if ( s_tempAuthor == "999999" )
+       s_tempAuthor = "@A@" + s_tempEventLabel + "@";
+
+   if ( s_tempSource == "999999" )
+       s_tempSource = "@S@" + s_tempEventLabel + "@";
+
+   s_tempDatasetTitle.replace( "999999", "@D@" + s_tempEventLabel + "@" );
+
+   if ( b_useFilenameInAsEventLabel == true )
+       s_tempDatasetTitle.replace( "$E", s_baseNameFilenameIn );
+   else
+       s_tempDatasetTitle.replace( "$E", s_EventLabel );
+
+   s_tempExportFilename.replace( "999999", "@E@" + s_tempEventLabel + "@" );
+
+   if ( b_useFilenameInAsEventLabel == true )
+       s_tempExportFilename.replace( "$E", s_baseNameFilenameIn );
+   else
+       s_tempExportFilename.replace( "$E", s_EventLabel );
+
+   s_tempDatasetComment.replace( "999999", "@C@" + s_tempEventLabel + "@" );
+
+   if ( b_useFilenameInAsEventLabel == true )
+       s_tempDatasetComment.replace( "$E", s_baseNameFilenameIn );
+   else
+       s_tempDatasetComment.replace( "$E", s_EventLabel );
+
+   if ( s_tempProject == "999999" )
+       s_tempProject = "@Pro@" + s_tempEventLabel + "@";
+
+   if ( s_tempUser == "999999")
+       s_tempUser = "@U@" + s_tempEventLabel + "@";
+
+   s_tempSource.replace( " ", "" );
+   s_tempSource.replace( ";", "," );
+   s_tempAuthor.replace( " ", "" );
+   s_tempAuthor.replace( ";", "," );
+   s_tempParent.replace( " ", "" );
+   s_tempParent.replace( ";", "," );
+   s_tempDatasetTitle.replace( "$@", s_MinorLabel );
+   s_tempDatasetTitle.replace( "\n", "*" );
+   s_tempDatasetTitle.replace( "-track", "" );
+   s_tempDatasetTitle.replace( "Track.", "" );
+   s_tempDatasetTitle.replace( "\"", "\\\"" );
+   s_tempExportFilename.replace( "$@", s_MinorLabel );
+   s_tempExportFilename.replace( "-track", "" );
+   s_tempExportFilename.replace( "Track.", "" );
+   s_tempDatasetComment.replace( "$@", s_MinorLabel );
+   s_tempDatasetComment.replace( "\n", " " );
+   s_tempDatasetComment.replace( "\"", "\\\"" );
+   s_tempProject.replace( " ", "" );
+   s_tempProject.replace( ";", "," );
+   s_tempUser.replace( " ", "" );
+   s_tempUser.replace( ";", "," );
+
+   s_tempExportFilename = createValidFilename( s_tempExportFilename );
+
+   if ( s_tempExportFilename.length() > 80 )
+   {
+       int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Export filename comprises more that 80 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
+
+       if ( err == QMessageBox::No )
+           s_tempExportFilename = s_tempExportFilename.left( 77 ) + "...";
+       else
+           return( _ERROR_ );
+   }
+
+   if ( s_tempDatasetTitle.length() > 255 )
+   {
+       int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Title comprises more that 255 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
+
+       if ( err == QMessageBox::No )
+           s_tempDatasetTitle = s_tempDatasetTitle.left( 252 ) + "...";
+       else
+           return( _ERROR_ );
+   }
+
+   if ( s_tempDatasetComment.length() > 1000 )
+   {
+       int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Comment comprises more that 1000 characters.\nAbort?" ),QMessageBox::Yes,QMessageBox::No);
+
+       if ( err == QMessageBox::No )
+           s_tempDatasetComment = s_tempDatasetComment.left( 997 ) + "...";
+       else
+           return( _ERROR_ );
+   }
+
+   switch( i_Login )
+   {
+   case _UNRESTRICTED_:
+       sd_Login = "1";
+       break;
+   case _SIGNUPREQUIRED_:
+       sd_Login = "2";
+       break;
+   case _ACCESSRIGHTSNEEDED_:
+       sd_Login = "3";
+       break;
+   case _EVENT_:
+       sd_Login = "@L@" + s_tempEventLabel + "@";
+   }
+
+// *************************************************************************************
+
+//   tout << ParameterFirst( 1599, i_PIID, 43, "yyyy-MM-dd'T'HH:mm", "" );
+//   tout << ParameterLast( 49377, i_PIID, i_MethodID, "###0" );
+
+
 // *************************************************************************************
 // start of metaheader
 
-   tout << "// METAHEADER" << eol;
-   tout << "{" << eol;
-
-// *************************************************************************************
-// PI
-
-    if ( s_tempPI == "999999" )
-        s_tempPI = "@GP@" + s_tempEventLabel + "@";
+   tout << OpenDataDescriptionHeader();
 
 // *************************************************************************************
 // Parent
 
-if ( s_tempParent.isEmpty() == false )
-{
-    if ( s_tempParent == "999999" )
-        s_tempParent = "@Par@" + s_tempEventLabel + "@";
-
-    s_tempParent.replace( " ", "" );
-    s_tempParent.replace( ";", "," );
-
-    tout << qs << tr( "ParentID" ) << qe << s_tempParent.section( ",", 0, 0 ) << "," << eol;
-}
+   tout << ParentID( s_tempParent );
 
 // *************************************************************************************
 // overwrite Dataset
 
-    if ( b_overwriteDataset == true )
-        tout << qs << tr( "DataSetID" ) << qe << "@I@" << s_tempEventLabel << "@" << "," << eol;
+   tout << DataSetID( sd_DatasetID );
 
 // *************************************************************************************
-// Author
+// Author(s)
 
-    if ( s_tempAuthor.isEmpty() == false )
-    {
-        if ( s_tempAuthor == "999999" )
-            s_tempAuthor = "@A@" + s_tempEventLabel + "@";
-
-        s_tempAuthor.replace( " ", "" );
-        s_tempAuthor.replace( ";", "," );
-
-        int i_NumOfAuthors = s_tempAuthor.count( "," ) + 1;
-
-        tout << qs << tr( "AuthorIDs" ) << qe << "[ " << s_tempAuthor.section( ",", 0, 0 );
-
-        for ( int j=1; j<i_NumOfAuthors; j++ )
-            tout << ", " << s_tempAuthor.section( ",", j, j );
-
-        tout << " ]," << eol;
-    }
+   tout << AuthorIDs( s_tempAuthor );
 
 // *************************************************************************************
 // Source
 
-    if ( s_tempSource.isEmpty() == false )
-    {
-        if ( s_tempSource == "999999" )
-            s_tempSource = "@S@" + s_tempEventLabel + "@";
-
-        s_tempSource.replace( " ", "" );
-        s_tempSource.replace( ";", "," );
-
-        tout << qs << tr( "SourceID" ) << qe << s_tempSource.section( ",", 0, 0 ) << "," << eol;
-    }
+   tout << SourceID( s_tempSource );
 
 // *************************************************************************************
 // Dataset title
 
-    if ( s_tempDatasetTitle.isEmpty() == false )
-    {
-        s_tempDatasetTitle.replace( "999999", "@D@" + s_tempEventLabel + "@" );
-
-        if ( b_useFilenameInAsEventLabel == true )
-            s_tempDatasetTitle.replace( "$E", s_baseNameFilenameIn );
-        else
-            s_tempDatasetTitle.replace( "$E", s_EventLabel );
-
-        s_tempDatasetTitle.replace( "$@", s_MinorLabel );
-        s_tempDatasetTitle.replace( "\n", "*" );
-        s_tempDatasetTitle.replace( "-track", "" );
-        s_tempDatasetTitle.replace( "Track.", "" );
-        s_tempDatasetTitle.replace( "\"", "\\\"" );
-
-        if ( s_tempDatasetTitle.length() <= 255 )
-        {
-            tout << qs << tr( "Title" ) << qe << q << s_tempDatasetTitle << q << "," << eol;
-        }
-        else
-        {
-            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Title comprises more that 255 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
-
-            if ( err == QMessageBox::No )
-                tout << qs << tr( "Title" ) << qe << q << s_tempDatasetTitle.left( 252 ) << "..." << q << "," << eol;
-            else
-                return( _ERROR_ );
-        }
-    }
+   tout << DatasetTitle( s_tempDatasetTitle );
 
 // *************************************************************************************
 // Reference
@@ -1780,50 +1832,14 @@ if ( s_tempParent.isEmpty() == false )
 // *************************************************************************************
 // Export filename
 
-    if ( s_tempExportFilename.isEmpty() == false )
-    {
-        s_tempExportFilename.replace( "999999", "@E@" + s_tempEventLabel + "@" );
-
-        if ( b_useFilenameInAsEventLabel == true )
-            s_tempExportFilename.replace( "$E", s_baseNameFilenameIn );
-        else
-            s_tempExportFilename.replace( "$E", s_EventLabel );
-
-        s_tempExportFilename.replace( "$@", s_MinorLabel );
-        s_tempExportFilename.replace( "-track", "" );
-        s_tempExportFilename.replace( "Track.", "" );
-
-        s_tempExportFilename = createValidFilename( s_tempExportFilename );
-
-        if ( s_tempExportFilename.length() <= 80 )
-        {
-            tout << qs << tr( "ExportFilename" ) << qe << q << s_tempExportFilename << q << "," << eol;
-        }
-        else
-        {
-            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Export filename comprises more that 80 characters.\nAbort?" ), QMessageBox::Yes, QMessageBox::No );
-
-            if ( err == QMessageBox::No )
-                tout << qs << tr( "ExportFilename" ) << qe << q << s_tempExportFilename.left( 77 ) << "..." << q << "," << eol;
-            else
-                return( _ERROR_ );
-        }
-    }
+    tout << ExportFilename( s_tempExportFilename );
 
 // *************************************************************************************
 // Event label
 
     if ( ( s_EventLabel.isEmpty() == false ) && ( b_hasManyEvents == false ) )
-        tout << qs << tr( "EventLabel" ) << qe << q << s_EventLabel << q << "," << eol;
+        tout << EventLabel( s_EventLabel );
 
-// *************************************************************************************
-// PI
-/*
-    if ( s_tempPI.isEmpty() == false )
-        tout << qs << tr( "PI_ID" ) << qe << s_tempPI << "," << eol;
-    else
-        tout << qs << tr( "PI_ID" ) << qe << tr( "506" ) << "," << eol;
-*/
 // *************************************************************************************
 // Parameters
 
@@ -1937,111 +1953,38 @@ if ( s_tempParent.isEmpty() == false )
     }
 
     if ( ( s_tempDatasetComment.isEmpty() == false ) && ( b_foundInDataSetCommentList == false ) )
-    {
-        if ( s_tempDatasetComment == "999999" )
-            s_tempDatasetComment = "@C@" + s_tempEventLabel + "@";
-
-        if ( b_useFilenameInAsEventLabel == true )
-            s_tempDatasetComment.replace( "$E", s_baseNameFilenameIn );
-        else
-            s_tempDatasetComment.replace( "$E", s_EventLabel );
-
-        s_tempDatasetComment.replace( "$@", s_MinorLabel );
-        s_tempDatasetComment.replace( "\n", " " );
-        s_tempDatasetComment.replace( "\"", "\\\"" );
-
-        if ( s_tempDatasetComment.length() <= 1000 )
-        {
-            tout << qs << tr( "DataSetComment" ) << qe << q << s_tempDatasetComment << q << "," << eol;
-        }
-        else
-        {
-            int err = QMessageBox::warning( this, tr( "Split2Events" ), tr( "Comment comprises more that 1000 characters.\nAbort?" ),QMessageBox::Yes,QMessageBox::No);
-            if ( err == QMessageBox::No )
-                tout << qs << tr( "DataSetComment" ) << qe << q << s_tempDatasetComment.left( 997 ) << "..." << q << "," << eol;
-            else
-                return( _ERROR_ );
-        }
-    }
+        tout << DatasetComment( s_tempDatasetComment );
 
 // *************************************************************************************
 // Project
 
-    if ( s_tempProject.isEmpty() == false )
-    {
-        if ( s_tempProject == "999999" )
-            s_tempProject = "@Pro@" + s_tempEventLabel + "@";
-
-        s_tempProject.replace( " ", "" );
-        s_tempProject.replace( ";", "," );
-
-        int i_NumOfProjects = s_tempProject.count( "," ) + 1;
-
-        tout << qs << tr( "ProjectIDs" ) << qe << "[ " << s_tempProject.section( ",", 0, 0 );
-
-        for ( int j=1; j<i_NumOfProjects; j++ )
-            tout << ", " << s_tempProject.section( ",", j, j );
-
-        tout << " ]," << eol;
-    }
+    tout << ProjectIDs( s_tempProject );
 
 // *************************************************************************************
 // Topologic type
 
-    if ( i_TopologicType > 0 )
-        tout << qs << tr( "TopologicTypeID" ) << qe << i_TopologicType << "," << eol;
+    tout << TopologicTypeID( i_TopologicType );
 
 // *************************************************************************************
 // Status
 
-    tout << qs << tr( "StatusID" ) << qe << i_Status + 2 << "," << eol;
+    tout << StatusID( i_Status + 2 );
 
 // *************************************************************************************
 // User
 
     if ( ( s_tempUser.isEmpty() == false ) && ( ( i_Login == _SIGNUPREQUIRED_ ) || ( i_Login == _ACCESSRIGHTSNEEDED_ ) ) )
-    {
-        if ( s_tempUser == "999999")
-            s_tempUser = "@U@" + s_tempEventLabel + "@";
-
-        s_tempUser.replace( " ", "" );
-        s_tempUser.replace( ";", "," );
-
-        int i_NumOfUsers = s_tempUser.count( "," ) + 1;
-
-        tout << qs << tr( "UserIDs" ) << qe << "[ " << s_tempUser.section( ",", 0, 0 );
-
-        for ( int j=1; j<i_NumOfUsers; j++ )
-            tout << ", " << s_tempUser.section( ",", j, j );
-
-        tout << " ]," << eol;
-    }
+        tout << UserIDs( s_tempUser );
 
 // *************************************************************************************
 // Login
 
-/*  2011-01-13 - Michael hat das Login erweitert.
+    tout << LoginID( sd_Login );
 
-    in dem Metaheader kann man nicht mehr "ON", "OFF" als Werte verwenden,
-    sondern "unrestricted", "signup required", oder "access rights needed".
-    Alternativ einfach die IDs benutzen: "1", "2", "3". Im Falle von Gerts
-    Datensätzen jetzt also "signup required" oder "2" als Wert setzen.
-*/
+// *************************************************************************************
+// end of metaheader
 
-    if ( i_Login == _UNRESTRICTED_ )
-        tout << qs << tr( "LoginID" ) << qe << "1" << eol;
-
-    if ( i_Login == _SIGNUPREQUIRED_ )
-        tout << qs << tr( "LoginID" ) << qe << "2" << eol;
-
-    if ( i_Login == _ACCESSRIGHTSNEEDED_ )
-        tout << qs << tr( "LoginID" ) << qe << "3" << eol;
-
-    if ( i_Login == _EVENT_ )
-        tout << qs << tr( "LoginID" ) << qe << "@L@" << s_tempEventLabel << "@" << eol;
-
-    tout << "}" << eol;
-    tout << "//" << eol;  // end of metaheader
+    tout << CloseDataDescriptionHeader();
 
     return( _NOERROR_ );
 }

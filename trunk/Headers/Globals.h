@@ -12,13 +12,13 @@
    #endif
 
    #if defined(Q_OS_MAC)
-       const char eol = '\r';
+       const char eol = '\n'; // von '\r' auf '\n' umgesetzt am 2015-06-25
    #endif
 
     const QString _PROGRAMDOI_           = "doi:10.1594/PANGAEA.835398";
     const QString _PROGRAMREADME_        = "http://wiki.pangaea.de/wiki/Split2Events";
 
-    const QString _VERSION_              = "12.5";	// Version number, 2015-06-21
+    const QString _VERSION_              = "12.6";	// Version number, 2015-06-25
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
     const int	_NOERROR_                = 0;
