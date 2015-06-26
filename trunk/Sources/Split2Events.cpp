@@ -1847,7 +1847,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
     }
 
 // *************************************************************************************
-// write arameter block
+// write parameter block
 
     if ( sl_Parameter.count() > 0 )
     {
