@@ -257,7 +257,8 @@ public:
     QString AuthorIDs(const QString& AuthorIDs = "" );
     QString SourceID( const QString& SourceID = "" );
     QString DatasetTitle( const QString& DatasetTitel = "" );
-    QString ExportFilename(const QString& ExportFilename = "" );
+    QString ReferenceID( const QString &ReferenceID, const int RelationTypeID, const QString &ReferenceType, const QString& EventLabel = "" );
+    QString ExportFilename( const QString& ExportFilename = "" );
     QString EventLabel( const QString& EventLabel = "" );
     QString Parameter( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );
     QString ParameterFirst( const int ParameterID, const int PIID = 506, const int MethodID = 43, const QString& Format = "", const QString& Comment = "" );

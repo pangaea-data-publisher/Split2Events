@@ -63,21 +63,38 @@ QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString&
 // *************************************************************************************
 // *************************************************************************************
 // *************************************************************************************
-// 2015-04-12
+// 2015-06-26
 
 QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QString& s_EventLabel )
 {
     QString q           = "\"";
     QString qe          = "\": ";
 
-    QString s_Parameter	= "";
+    QString s_Parameter	= "    ";
 
 // *************************************************************************************
 
-    if ( s_Parameter.length() > 0 )
-        s_Parameter	= "    { " + q + "ID" + q + ": " + s_ParameterMF.section( "\t", 0, 0 );
-    else
-        s_Parameter = "    { " + q + "ID" + q + ": " + s_ParameterMF.section( "\t", 1, 1 );
+    if ( s_EventLabel == "has many events" )
+    {
+        s_Parameter.append( "{ " + q + "ID" + qe + "500000" + ", " + q + "PI_ID" + qe + s_ParameterMF + " }" );  // s_ParameterMF = PI_ID
+        return( s_Parameter );
+    }
+
+    if ( s_EventLabel == "Parameter not found" )
+    {
+        s_Parameter.append( "{ " + s_ParameterMF + tr( " * not define in metadata file }" ) );
+        return( s_Parameter );
+    }
+
+    if ( s_ParameterMF.section( "\t", 1, 1 ) == "unknown" )
+    {
+        s_Parameter.append( "{ " + s_ParameterMF.section( "\t", 0, 0 ) + tr( " * Parameter unknown }" ) );
+        return( s_Parameter );
+    }
+
+// *************************************************************************************
+
+    s_Parameter.append( "{ " + q + "ID" + qe + s_ParameterMF.section( "\t", 1, 1 ) );
 
     if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
     {
@@ -104,7 +121,12 @@ QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QStr
     }
 
     if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
-        s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
+    {
+        if (  s_ParameterMF.section( "\t", 5, 5 ) == "999999" )
+            s_Parameter.append( ", " + q + "Format" + qe + q + "@PF@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" + q );
+        else
+            s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
+    }
 
     s_Parameter.replace( "@$E@", "@" + s_EventLabel + "@" );
 
@@ -495,9 +517,9 @@ QString MainWindow::OpenDataDescriptionHeader()
 
     s_OutputStr.append( tr( "// METAHEADER - Data import at " ) );
     s_OutputStr.append( QDateTime::currentDateTime().toString( "yyyy-MM-ddThh:mm" ) );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
     s_OutputStr.append( "{" );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -511,9 +533,9 @@ QString MainWindow::CloseDataDescriptionHeader()
     QString s_OutputStr = "";
 
     s_OutputStr.append( "}" );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
     s_OutputStr.append( "//" );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -532,7 +554,7 @@ QString MainWindow::ParentID( const QString& s_ParentID )
         s_OutputStr.append( "\"ParentID\": " );
         s_OutputStr.append( s_ParentID );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -552,7 +574,7 @@ QString MainWindow::DataSetID( const QString& s_DatasetID )
         s_OutputStr.append( "\"DataSetID\": " );
         s_OutputStr.append( s_DatasetID );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -572,7 +594,7 @@ QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
         s_OutputStr.append( "\"AuthorIDs\": " );
         s_OutputStr.append( "[ "+ s_AuthorIDs + " ]" );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -592,7 +614,7 @@ QString MainWindow::SourceID( const QString& s_SourceID )
         s_OutputStr.append( "\"SourceID\": " );
         s_OutputStr.append( s_SourceID );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -604,16 +626,36 @@ QString MainWindow::SourceID( const QString& s_SourceID )
 
 QString MainWindow::DatasetTitle( const QString& s_DatasetTitle )
 {
-    QString s_OutputStr = "";
+    QString s_OutputStr     = "";
+    QString sd_DatasetTitle = s_DatasetTitle;
 
     if ( s_DatasetTitle.isEmpty() == false )
     {
+        sd_DatasetTitle.replace( "\"", "\\\"" );
+        sd_DatasetTitle.replace( "\\\\", "\\" );
+
         s_OutputStr = "  ";
         s_OutputStr.append( "\"Title\": \"" );
-        s_OutputStr.append( s_DatasetTitle );
+        s_OutputStr.append( sd_DatasetTitle );
         s_OutputStr.append( "\"," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+QString MainWindow::ReferenceID( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+{
+    QString s_OutputStr = "";
+
+    if ( s_ReferenceID == "999999" )
+        s_OutputStr = "    { \"ID\": @" + s_ReferenceType + "@" + s_EventLabel + "@" + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
+    else
+        s_OutputStr = "    { \"ID\": " + s_ReferenceID + ", \"RelationTypeID\": " + QString( "%1" ).arg( i_RelationTypeID ) + " }";
 
     return( s_OutputStr );
 }
@@ -632,7 +674,7 @@ QString MainWindow::ExportFilename( const QString& s_ExportFilename )
         s_OutputStr.append( "\"ExportFilename\": \"" );
         s_OutputStr.append( s_ExportFilename );
         s_OutputStr.append( "\"," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -652,7 +694,7 @@ QString MainWindow::EventLabel( const QString& s_EventLabel )
         s_OutputStr.append( "\"EventLabel\": \"" );
         s_OutputStr.append( s_EventLabel );
         s_OutputStr.append( "\"," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -677,7 +719,7 @@ QString MainWindow::Parameter( const int i_ParameterID, const int i_PIID, const 
         s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
 
     s_OutputStr.append( " },");
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -691,7 +733,7 @@ QString MainWindow::ParameterFirst( const int i_ParameterID, const int i_PIID, c
     QString s_OutputStr = "  ";
 
     s_OutputStr.append( "\"ParameterIDs\": [" );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
     s_OutputStr.append( "    { \"ID\": " + QString( "%1" ).arg( i_ParameterID ) + ", " );
     s_OutputStr.append( "\"PI_ID\": "  + QString( "%1" ).arg( i_PIID ) + ", " );
     s_OutputStr.append( "\"MethodID\": "  + QString( "%1" ).arg( i_MethodID ) );
@@ -703,7 +745,7 @@ QString MainWindow::ParameterFirst( const int i_ParameterID, const int i_PIID, c
         s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
 
     s_OutputStr.append( " },");
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -727,7 +769,7 @@ QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, co
         s_OutputStr.append( ", \"Comment\": \""  + s_Comment + "\"" );
 
     s_OutputStr.append( " } ],");
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -739,14 +781,18 @@ QString MainWindow::ParameterLast( const int i_ParameterID, const int i_PIID, co
 QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 {
     QString s_OutputStr = "";
+    QString sd_DatasetComment = s_DatasetComment;
 
     if ( s_DatasetComment.isEmpty() == false )
     {
+        sd_DatasetComment.replace( "\"", "\\\"" );
+        sd_DatasetComment.replace( "\\\\", "\\" );
+
         s_OutputStr = "  ";
         s_OutputStr.append( "\"DataSetComment\": \"" );
-        s_OutputStr.append( s_DatasetComment );
+        s_OutputStr.append( sd_DatasetComment );
         s_OutputStr.append( "\"," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -766,7 +812,7 @@ QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
         s_OutputStr.append( "\"ProjectIDs\": " );
         s_OutputStr.append( "[ "+ s_ProjectIDs + " ]" );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -782,7 +828,7 @@ QString MainWindow::TopologicTypeID( const int i_TopologicTypeID )
 
     s_OutputStr.append( "\"TopologicTypeID\": " );
     s_OutputStr.append( QString( "%1," ).arg( i_TopologicTypeID ) );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -797,7 +843,7 @@ QString MainWindow::StatusID( const int i_StatusID )
 
     s_OutputStr.append( "\"StatusID\": " );
     s_OutputStr.append( QString( "%1," ).arg( i_StatusID ) );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
@@ -816,7 +862,7 @@ QString MainWindow::UserIDs( const QString& s_UserIDs )
         s_OutputStr.append( "\"UserIDs\": " );
         s_OutputStr.append( "[ "+ s_UserIDs + " ]" );
         s_OutputStr.append( "," );
-        s_OutputStr.append( "\n" );
+        s_OutputStr.append( eol );
     }
 
     return( s_OutputStr );
@@ -832,7 +878,7 @@ QString MainWindow::LoginID( const QString& s_LoginID )
 
     s_OutputStr.append( "\"LoginID\": " );
     s_OutputStr.append( s_LoginID );
-    s_OutputStr.append( "\n" );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }

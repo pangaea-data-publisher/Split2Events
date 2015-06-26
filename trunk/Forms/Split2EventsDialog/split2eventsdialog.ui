@@ -565,13 +565,6 @@ p, li { white-space: pre-wrap; }
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="dontUseMetadataFileRadioButton">
-            <property name="text">
-             <string>don't use metadata file</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
            <widget class="QRadioButton" name="useAutoMetadataFileRadioButton">
             <property name="text">
              <string>use auto metadata file (set the default method and a suitable format for the data)</string>
@@ -579,16 +572,16 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QRadioButton" name="findByPosisitionRadioButton">
-            <property name="text">
-             <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
            <widget class="QRadioButton" name="findByNameRadioButton">
             <property name="text">
              <string>use metadata file; find parameter by name (if a metadata template is created, a parameter database will be used)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="findByPosisitionRadioButton">
+            <property name="text">
+             <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
             </property>
            </widget>
           </item>
@@ -738,7 +731,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>removeValue_radioButton</tabstop>
   <tabstop>badValue_radioButton</tabstop>
   <tabstop>questionableValue_radioButton</tabstop>
-  <tabstop>dontUseMetadataFileRadioButton</tabstop>
   <tabstop>useAutoMetadataFileRadioButton</tabstop>
   <tabstop>findByPosisitionRadioButton</tabstop>
   <tabstop>findByNameRadioButton</tabstop>

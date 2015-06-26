@@ -1353,6 +1353,9 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
                                       const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
+   int     j                             = 0;
+   int     i_MF                          = 0;
+
    QString q                             = "\"";
    QString qs                            = "  \"";
    QString qe                            = "\": ";
@@ -1493,6 +1496,20 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
    s_tempProject.replace( ";", "," );
    s_tempUser.replace( " ", "" );
    s_tempUser.replace( ";", "," );
+   s_tempReference.replace( " ", "" );
+   s_tempReference.replace( ";", "," );
+   s_tempFurtherDetailsReference.replace( " ", "" );
+   s_tempFurtherDetailsReference.replace( ";", "," );
+   s_tempOtherVersionReference.replace( " ", "" );
+   s_tempOtherVersionReference.replace( ";", "," );
+   s_tempSourceReference.replace( " ", "" );
+   s_tempSourceReference.replace( ";", "," );
+   s_tempFurtherDetailsDataset.replace( " ", "" );
+   s_tempFurtherDetailsDataset.replace( ";", "," );
+   s_tempOtherVersionDataset.replace( " ", "" );
+   s_tempOtherVersionDataset.replace( ";", "," );
+   s_tempSourceDataset.replace( " ", "" );
+   s_tempSourceDataset.replace( ";", "," );
 
    s_tempExportFilename = createValidFilename( s_tempExportFilename );
 
@@ -1582,23 +1599,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( s_tempReference.isEmpty() == false )
     {
-        s_tempReference.replace( " ", "" );
-        s_tempReference.replace( ";", "," );
-
         int i_NumOfReferences = s_tempReference.count( "," ) + 1;
 
-        if ( s_tempReference == "999999" )
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
-        else
-            sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", 0, 0 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
-
-        for ( int j=1; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@R@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
-            else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _RELATEDTO_ ) + " }" );
-        }
+        for ( int j=0; j<i_NumOfReferences; j++ )
+            sl_Reference.append( ReferenceID( s_tempReference.section( ",", j, j ), _RELATEDTO_, "R", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1612,7 +1616,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_Reference.append( ReferenceID( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1621,18 +1625,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempFurtherDetailsReference.isEmpty() == false ) && ( b_foundInFurtherDetailsList == false ) )
     {
-        s_tempFurtherDetailsReference.replace( " ", "" );
-        s_tempFurtherDetailsReference.replace( ";", "," );
-
         int i_NumOfReferences = s_tempFurtherDetailsReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempFurtherDetailsReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@FR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
-            else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
-        }
+            sl_Reference.append( ReferenceID( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1646,7 +1642,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_Reference.append( ReferenceID( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1655,18 +1651,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempOtherVersionReference.isEmpty() == false ) && ( b_foundInOtherVersionList == false ) )
     {
-        s_tempOtherVersionReference.replace( " ", "" );
-        s_tempOtherVersionReference.replace( ";", "," );
-
         int i_NumOfReferences = s_tempOtherVersionReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempOtherVersionReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@OR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
-            else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
-        }
+            sl_Reference.append( ReferenceID( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1680,7 +1668,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + sd_Source.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_Reference.append( ReferenceID( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
 
                 b_foundInSourceList = true;
             }
@@ -1689,21 +1677,14 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempSourceReference.isEmpty() == false ) && ( b_foundInSourceList == false ) )
     {
-        s_tempSourceReference.replace( " ", "" );
-        s_tempSourceReference.replace( ";", "," );
-
         int i_NumOfReferences = s_tempSourceReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempSourceReference == "999999" )
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + "@SR@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
-            else
-                sl_Reference.append( "    { " + q + "ID" + q + ": " + s_tempSourceReference.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
-        }
+            sl_Reference.append( ReferenceID( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
+// write references block
 
     if ( sl_Reference.count() > 0 )
     {
@@ -1726,7 +1707,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_FurtherDetails.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
+                sl_DataReference.append( ReferenceID( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1735,18 +1716,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempFurtherDetailsDataset.isEmpty() == false ) && ( b_foundInFurtherDetailsList == false ) )
     {
-        s_tempFurtherDetailsDataset.replace( " ", "" );
-        s_tempFurtherDetailsDataset.replace( ";", "," );
-
         int i_NumOfReferences = s_tempFurtherDetailsDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempFurtherDetailsDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@FD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
-            else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempFurtherDetailsDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _FURTHERDETAILS_ ) + " }" );
-        }
+            sl_DataReference.append( ReferenceID( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1760,7 +1733,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
+                sl_DataReference.append( ReferenceID( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1769,18 +1742,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempOtherVersionDataset.isEmpty() == false ) && ( b_foundInOtherVersionList == false ) )
     {
-        s_tempOtherVersionDataset.replace( " ", "" );
-        s_tempOtherVersionDataset.replace( ";", "," );
-
         int i_NumOfReferences = s_tempOtherVersionDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempOtherVersionDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@OD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
-            else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempOtherVersionDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _OTHERVERSION_ ) + " }" );
-        }
+            sl_DataReference.append( ReferenceID( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1794,7 +1759,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + sd_OtherVersion.section( ",", 1, 1 ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
+                sl_DataReference.append( ReferenceID( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
 
                 b_foundInSourceList = true;
             }
@@ -1803,21 +1768,14 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
     if ( ( s_tempSourceDataset.isEmpty() == false ) && ( b_foundInSourceList == false ) )
     {
-        s_tempSourceDataset.replace( " ", "" );
-        s_tempSourceDataset.replace( ";", "," );
-
         int i_NumOfReferences = s_tempSourceDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-        {
-            if ( s_tempSourceDataset == "999999" )
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + "@SD@" + s_tempEventLabel + "@" + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
-            else
-                sl_DataReference.append( "    { " + q + "ID" + q + ": " + s_tempSourceDataset.section( ",", j, j ) + ", " + q + "RelationTypeID" + q + ": " + QString( "%1" ).arg( _SOURCEDATASET_ ) + " }" );
-        }
+            sl_DataReference.append( ReferenceID( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
+// write data references block
 
     if ( sl_DataReference.count() > 0 )
     {
@@ -1841,20 +1799,15 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         tout << EventLabel( s_EventLabel );
 
 // *************************************************************************************
-// Parameters
+// Parameter
 
-    if ( i_MetadataFileMode != _NOTUSED_ )
+    switch ( i_MetadataFileMode )
     {
-        int     j           = 0;
-        int     i_MF        = 0;
-
-        switch ( i_MetadataFileMode )
+    case _BYNAME_:
+        for ( int i_DS=1; i_DS<sl_DSParameter.count(); i_DS++ ) // i_DS = 0 => Event label
         {
-        case _BYNAME_:
-            for ( int i_DS=1; i_DS<sl_DSParameter.count(); i_DS++ ) // i_DS = 0 => Event label
+            if ( b_EmptyColumn[++j] == false )
             {
-                j++;
-
                 s_ParameterDS	= sl_DSParameter.at( i_DS );
                 s_Parameter		= "";
                 i_MF			= 0;
@@ -1876,50 +1829,32 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
                 }
 
                 if ( s_Parameter.isEmpty() == true )
-                {
-                    sl_Parameter.append( "    { " + s_ParameterDS + tr( " * not define in metadata file }" ) );
-                }
+                    sl_Parameter.append( buildParameterJSON( s_ParameterDS, "Parameter not found" ) );
                 else
-                {
-                    s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
-
-                    if ( b_EmptyColumn[j] == false )
-                        sl_Parameter.append( s_Parameter );
-                }
-            }
-            break;
-
-        case _AUTO_:
-        case _BYPOSITION_:
-            for ( int i_MF=0; i_MF<sl_MFParameter.count(); i_MF++ )
-            {
-                j++;
-
-                s_ParameterMF	= sl_MFParameter.at( i_MF );
-                s_Parameter		= buildParameterJSON( s_ParameterMF, s_tempEventLabel );
-
-                s_Parameter.replace( "@$E@", "@" + s_tempEventLabel + "@" );
-
-                if ( b_EmptyColumn[j] == false )
                     sl_Parameter.append( s_Parameter );
             }
-            break;
         }
+        break;
+
+    case _AUTO_:
+    case _BYPOSITION_:
+        for ( int i_MF=0; i_MF<sl_MFParameter.count(); i_MF++ )
+        {
+            if ( b_EmptyColumn[++j] == false )
+                sl_Parameter.append( buildParameterJSON( sl_MFParameter.at( i_MF ), s_tempEventLabel ) );
+        }
+        break;
     }
 
 // *************************************************************************************
+// write arameter block
 
     if ( sl_Parameter.count() > 0 )
     {
         tout << qs << tr( "ParameterIDs" ) << qe << "[" << eol;
 
         if ( b_hasManyEvents == true )
-        {
-            if ( s_tempPI.isEmpty() == false )
-                tout << "    { " << q << tr ( "ID" ) << qe << tr( "500000" ) << ", " << q << tr( "PI_ID" ) << qe << s_tempPI << " }," << eol;
-            else
-                tout << "    { " << q << tr ( "ID" ) << qe << tr( "500000" ) << ", " << q << tr( "PI_ID" ) << qe << tr( "506" ) << " }," << eol;
-        }
+            tout << buildParameterJSON( s_tempPI, "has many events" ) + "," << eol;
 
         for ( int i=0; i<sl_Parameter.count()-1; i++ )
             tout << sl_Parameter.at( i ) << " }," << eol;
@@ -1940,11 +1875,10 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         for ( int i=0; i<sl_DataSetComment.count(); i++ )
         {
             sd_DataSetComment = sl_DataSetComment.at( i );
-            sd_DataSetComment.replace( "\"", "\\\"" );
 
             if ( sd_DataSetComment.section( "\t", 0, 0 ) == DummyStr )
             {
-                tout << qs << tr( "DataSetComment" ) << qe << q << sd_DataSetComment.section( "\t", 1, 1 ) << q << "," << eol;
+                tout << DatasetComment( sd_DataSetComment.section( "\t", 1, 1 ) );
 
                 i = sl_DataSetComment.count();
                 b_foundInDataSetCommentList = true;
