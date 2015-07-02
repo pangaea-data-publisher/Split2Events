@@ -1602,7 +1602,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_Reference.append( ReferenceID( s_tempReference.section( ",", j, j ), _RELATEDTO_, "R", s_tempEventLabel ) );
+            sl_Reference.append( Reference( s_tempReference.section( ",", j, j ), _RELATEDTO_, "R", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1616,7 +1616,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( ReferenceID( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
+                sl_Reference.append( Reference( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1628,7 +1628,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempFurtherDetailsReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_Reference.append( ReferenceID( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
+            sl_Reference.append( Reference( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1642,7 +1642,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( ReferenceID( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
+                sl_Reference.append( Reference( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1654,7 +1654,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempOtherVersionReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_Reference.append( ReferenceID( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
+            sl_Reference.append( Reference( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1668,7 +1668,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_Reference.append( ReferenceID( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
+                sl_Reference.append( Reference( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
 
                 b_foundInSourceList = true;
             }
@@ -1680,7 +1680,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempSourceReference.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_Reference.append( ReferenceID( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
+            sl_Reference.append( Reference( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SR", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1707,7 +1707,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_FurtherDetails.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( ReferenceID( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
+                sl_DataReference.append( Reference( sd_FurtherDetails.section( ",", 1, 1 ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
 
                 b_foundInFurtherDetailsList = true;
             }
@@ -1719,7 +1719,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempFurtherDetailsDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( ReferenceID( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1733,7 +1733,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_OtherVersion.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( ReferenceID( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
+                sl_DataReference.append( Reference( sd_OtherVersion.section( ",", 1, 1 ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
 
                 b_foundInOtherVersionList = true;
             }
@@ -1745,7 +1745,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempOtherVersionDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( ReferenceID( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1759,7 +1759,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 
             if ( sd_Source.section( "\t", 0, 0 ) == s_EventLabel )
             {
-                sl_DataReference.append( ReferenceID( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
+                sl_DataReference.append( Reference( sd_Source.section( ",", 1, 1 ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
 
                 b_foundInSourceList = true;
             }
@@ -1771,7 +1771,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempSourceDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( ReferenceID( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1897,12 +1897,12 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 // *************************************************************************************
 // Topologic type
 
-    tout << TopologicTypeID( i_TopologicType );
+    tout << TopologicTypeID( num2str( i_TopologicType ) );
 
 // *************************************************************************************
 // Status
 
-    tout << StatusID( i_Status + 2 );
+    tout << StatusID( num2str( i_Status + 2 ) );
 
 // *************************************************************************************
 // User
