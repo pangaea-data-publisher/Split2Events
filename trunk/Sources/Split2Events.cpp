@@ -1482,7 +1482,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
    s_tempParent.replace( " ", "" );
    s_tempParent.replace( ";", "," );
    s_tempDatasetTitle.replace( "$@", s_MinorLabel );
-   s_tempDatasetTitle.replace( "\n", "*" );
+   s_tempDatasetTitle.replace( "\n", "<*?*>" );
    s_tempDatasetTitle.replace( "-track", "" );
    s_tempDatasetTitle.replace( "Track.", "" );
    s_tempDatasetTitle.replace( "\"", "\\\"" );
@@ -1490,7 +1490,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
    s_tempExportFilename.replace( "-track", "" );
    s_tempExportFilename.replace( "Track.", "" );
    s_tempDatasetComment.replace( "$@", s_MinorLabel );
-   s_tempDatasetComment.replace( "\n", " " );
+   s_tempDatasetComment.replace( "\n", "<newline>" );
    s_tempDatasetComment.replace( "\"", "\\\"" );
    s_tempProject.replace( " ", "" );
    s_tempProject.replace( ";", "," );

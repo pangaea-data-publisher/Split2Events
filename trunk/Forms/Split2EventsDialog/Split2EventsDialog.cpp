@@ -265,13 +265,13 @@ void Split2EventsDialog::SaveProject()
         settings.setValue( "Project", this->ProjectLineEdit->text() );
 
         s_Dummy = DatasetTitleTextEdit->toPlainText();
-        s_Dummy.replace( "\n", "//" );
+        s_Dummy.replace( "\n", "<*?*>" );
         settings.setValue( "DatasetTitle", s_Dummy );
 
         settings.setValue( "ExportFilename", this->ExportFilenameLineEdit->text() );
 
         s_Dummy = this->DataSetCommentTextEdit->toPlainText();
-        s_Dummy.replace( "\n", "//" );
+        s_Dummy.replace( "\n", "<newline>" );
         settings.setValue( "DatasetComment", s_Dummy );
 
         settings.setValue( "FurtherDetailsReference", this->FurtherDetailsReferenceLineEdit->text() );
@@ -863,13 +863,13 @@ void MainWindow::doSplit2EventsDialog()
 // ****************************************************************************
 
         if ( gs_PI.isEmpty() == true )
-            gs_PI = "506";
+            gs_PI = num2str( 506 );
 
         if ( gs_Project.isEmpty() == true )
-            gs_Project = "15";
+            gs_Project = num2str( 15 );
 
-        gs_DatasetTitle.replace( "\n", "//" );
-        gs_DataSetComment.replace( "\n", "//" );
+        gs_DatasetTitle.replace( "\n", "<*?*>" );
+        gs_DataSetComment.replace( "\n", "<newline>" );
 
         break;
 
