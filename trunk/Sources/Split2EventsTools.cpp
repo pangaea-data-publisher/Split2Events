@@ -240,6 +240,17 @@ QString MainWindow::buildOutputString( const QString& s_Data )
     {
         if ( ( s_Data.count( "\t" ) <= 2 ) &&
              ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54034" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54242" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54243" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54248" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54251" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54968" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "77453" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83431" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83788" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "84658" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "90375" ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Uniform resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
@@ -285,6 +296,17 @@ QString MainWindow::buildOutputString( const QString& s_Data, const bool b_Empty
     {
         if ( ( s_Data.count( "\t" ) <= 2 ) &&
              ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54034" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54242" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54243" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54248" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54251" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54968" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "77453" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83431" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83788" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "84658" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "90375" ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Uniform resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
@@ -321,7 +343,25 @@ QString MainWindow::buildHeaderOutputString( const QString& s_Data )
     }
     else
     {
-        if ( ( s_Data.count( "\t" ) <= 2 ) && ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) || ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) || ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) || ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) || ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "hdl:" ) ) == true ) || ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "doi:" ) ) == true ) ) )
+        if ( ( s_Data.count( "\t" ) <= 2 ) &&
+             ( ( s_Data.section( "\t", 1, 1 ) == "15651" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54034" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54242" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54243" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54248" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54251" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "54968" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "77453" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83431" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "83788" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "84658" ) ||
+               ( s_Data.section( "\t", 1, 1 ) == "90375" ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Uniform resource locator" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "hdl:" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "doi:" ) ) == true ) ) )
             s_Output = s_Data.section( "\t", 0, 0 ).section( "@", 0, 0 ) + "\t" + s_Data.section( "\t", 1, 1 );
         else
             s_Output = ""; // no data found
