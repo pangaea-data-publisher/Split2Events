@@ -163,7 +163,7 @@ void Split2EventsDialog::LoadProject()
         this->ParentLineEdit->setText( settings.value( "Parent", "" ).toString() );
         this->UserLineEdit->setText( settings.value( "User", "" ).toString() );
 
-        this->TopologicTypeComboBox->setCurrentIndex( settings.value( "TopologicType", 0 ).toInt() );
+        this->TopologicTypeComboBox->setCurrentIndex( settings.value( "TopologicType", 1 ).toInt() );
         this->StatusComboBox->setCurrentIndex( settings.value( "Status", 2 ).toInt() );
 
         switch ( settings.value( "MetadataFileMode", _BYNAME_ ).toInt() )
@@ -366,7 +366,7 @@ void Split2EventsDialog::NewProject()
     this->ParentLineEdit->setText( "" );
     this->UserLineEdit->setText( "" );
 
-    this->TopologicTypeComboBox->setCurrentIndex( _NOTUSED_ );
+    this->TopologicTypeComboBox->setCurrentIndex( _NOTSPECIFIED_ );
     this->StatusComboBox->setCurrentIndex( _PUBLISHED_ );
 
     this->UnrestrictedRadioButton->setChecked( true );

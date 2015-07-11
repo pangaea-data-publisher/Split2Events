@@ -42,6 +42,11 @@ void MainWindow::savePreferences()
     settings.setValue( "DialogHeight", sizeDialog.height() );
     settings.setValue( "DialogWidth", sizeDialog.width() );
 
+    settings.setValue( "SettingDialogX", posSettingDialog.x() );
+    settings.setValue( "SettingDialogY", posSettingDialog.y() );
+    settings.setValue( "SettingDialogHeight", sizeSettingDialog.height() );
+    settings.setValue( "SettingDialogWidth", sizeSettingDialog.width() );
+
     settings.setValue( "Path", gs_Path );
     settings.setValue( "FilenameFormat", gs_FilenameFormat );
 
@@ -141,6 +146,11 @@ void MainWindow::loadPreferences()
     sizeDialog.setHeight( settings.value( "DialogHeight", 100 ).toInt() );
     sizeDialog.setWidth( settings.value( "DialogWidth", 100 ).toInt() );
 
+    posSettingDialog.setX( settings.value( "SettingDialogX", 110 ).toInt() );
+    posSettingDialog.setY( settings.value( "SettingDialogY", 110 ).toInt() );
+    sizeSettingDialog.setHeight( settings.value( "SettingDialogHeight", 100 ).toInt() );
+    sizeSettingDialog.setWidth( settings.value( "SettingDialogWidth", 100 ).toInt() );
+
     gs_Path                                     = settings.value( "Path", getDocumentDir() ).toString();
     gs_FilenameFormat                           = settings.value( "FilenameFormat", "zz%a_%N.txt" ).toString();
     gi_NumOfProgramStarts                       = settings.value( "NumOfProgramStarts", 0 ).toInt();
@@ -164,7 +174,7 @@ void MainWindow::loadPreferences()
     gs_Parent                                   = settings.value( "Parent", "" ).toString();
     gs_User                                     = settings.value( "User", "" ).toString();
 
-    gi_TopologicType                            = settings.value( "TopologicType", 0 ).toInt();
+    gi_TopologicType                            = settings.value( "TopologicType", _NOTSPECIFIED_ ).toInt();
     gi_Status                                   = settings.value( "Status", 2 ).toInt();
     gi_MetadataFileMode                         = settings.value( "MetadataFileMode", _BYNAME_ ).toInt();
     gi_OutOfRangeValue                          = settings.value( "OutOfRangeValue", _IGNORE_ ).toInt();

@@ -392,8 +392,11 @@ private:
     QPoint	posWindow;			//!< Position des Programmfensters.
     QSize	sizeWindow;			//!< Groesse des Programmfensters.
 
-    QPoint	posDialog;			//!< Position des Programmfensters.
-    QSize	sizeDialog;			//!< Groesse des Programmfensters.
+    QPoint	posDialog;			//!< Position des Programmdialoges.
+    QSize	sizeDialog;			//!< Groesse des Programmdialoges.
+
+    QPoint	posSettingDialog;	//!< Position des Settingdialoges.
+    QSize	sizeSettingDialog;	//!< Groesse des Settingdialoges.
 };
 
 #endif

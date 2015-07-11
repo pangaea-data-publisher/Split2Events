@@ -41,6 +41,7 @@ void MainWindow::createActions()
     connect(hideWindowAction, SIGNAL(triggered()), this, SLOT(hideWindow()));
 
     setSettingsAction = new QAction(tr("General options..."), this);
+    setSettingsAction->setShortcut(tr("Ctrl+,"));
     connect(setSettingsAction, SIGNAL(triggered()), this, SLOT(doSettingsDialog()));
 
     exitAction = new QAction(tr("&Quit"), this);

@@ -114,8 +114,8 @@ void MainWindow::doSettingsDialog()
     dialog.Cancel_pushButton->setWhatsThis( "Cancel dialog" );
     dialog.browseDirParameterDB_pushButton->setWhatsThis( "Browse for the parameter database directory" );
 
-    dialog.move( posDialog );
-    dialog.resize( dialog.sizeHint() );
+    dialog.move( posSettingDialog );
+    dialog.resize( sizeSettingDialog );
     dialog.show();
 
 // ******************************************************************************************************
@@ -157,5 +157,6 @@ void MainWindow::doSettingsDialog()
         gs_FilenamePDB = QDir::toNativeSeparators( dialog.DirParameterDB_lineEdit->text() + "/ParameterDB.pdb" );
     }
 
-    posDialog = dialog.pos();
+    posSettingDialog  = dialog.pos();
+    sizeSettingDialog = dialog.size();
 }

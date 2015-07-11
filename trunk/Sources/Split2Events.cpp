@@ -1897,7 +1897,8 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
 // *************************************************************************************
 // Topologic type
 
-    tout << TopologicTypeID( num2str( i_TopologicType ) );
+    if ( i_TopologicType > 0 )
+        tout << TopologicTypeID( num2str( i_TopologicType ) );
 
 // *************************************************************************************
 // Status
