@@ -49,11 +49,11 @@ void MainWindow::createActions()
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
     // Tools menu
-    Split2EventsAction = new QAction(tr("&Split to events..."), this);
+    Split2EventsAction = new QAction(tr("Create &import file(s)..."), this);
     Split2EventsAction->setShortcut(tr("F5"));
     connect(Split2EventsAction, SIGNAL(triggered()), this, SLOT(doSplit2EventsDialog()));
 
-    Split2EventsWithoutDialogAction = new QAction(tr("&Split to events"), this);
+    Split2EventsWithoutDialogAction = new QAction(tr("Create import file(s)"), this);
     Split2EventsWithoutDialogAction->setShortcut(tr("F2"));
     connect(Split2EventsWithoutDialogAction, SIGNAL(triggered()), this, SLOT(doSplit2Events()));
 
@@ -61,7 +61,7 @@ void MainWindow::createActions()
     createMetadataTemplateAction->setShortcut(tr("F4"));
     connect(createMetadataTemplateAction, SIGNAL(triggered()), this, SLOT(doMetadataTemplateOptionsDialog()));
 
-    createMetadataTemplateWithoutDialogAction = new QAction(tr("&Create metadata template"), this);
+    createMetadataTemplateWithoutDialogAction = new QAction(tr("Create metadata template"), this);
     createMetadataTemplateWithoutDialogAction->setShortcut(tr("F3"));
     connect(createMetadataTemplateWithoutDialogAction, SIGNAL(triggered()), this, SLOT(doCreateMetadataTemplate()));
 
