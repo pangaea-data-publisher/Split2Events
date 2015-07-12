@@ -461,7 +461,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_15">
          <property name="title">
-          <string>File creation options</string>
+          <string>Data import file creation options</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_1">
           <item row="0" column="0">
@@ -500,7 +500,7 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="text">
-             <string>write metadata to import file</string>
+             <string>write metadata to data import file</string>
             </property>
            </widget>
           </item>
