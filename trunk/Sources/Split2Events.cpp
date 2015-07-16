@@ -1719,7 +1719,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempFurtherDetailsDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( Reference( s_tempFurtherDetailsReference.section( ",", j, j ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempFurtherDetailsDataset.section( ",", j, j ), _FURTHERDETAILS_, "FD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1745,7 +1745,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempOtherVersionDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( Reference( s_tempOtherVersionReference.section( ",", j, j ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempOtherVersionDataset.section( ",", j, j ), _OTHERVERSION_, "OD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
@@ -1771,7 +1771,7 @@ int MainWindow::writeDataDescriptionJSON( QIODevice *outDevice, const int i_Code
         int i_NumOfReferences = s_tempSourceDataset.count( "," ) + 1;
 
         for ( int j=0; j<i_NumOfReferences; j++ )
-            sl_DataReference.append( Reference( s_tempSourceReference.section( ",", j, j ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
+            sl_DataReference.append( Reference( s_tempSourceDataset.section( ",", j, j ), _SOURCEDATASET_, "SD", s_tempEventLabel ) );
     }
 
 // *************************************************************************************
