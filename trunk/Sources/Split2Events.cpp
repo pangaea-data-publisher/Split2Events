@@ -254,7 +254,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
         s_baseNameEventLabel = createValidFilename( sl_Data.at( 1 ).section( "\t", 0, 0 ) );
 
     if ( b_makeFilenameUnique == true )
-        s_FileExtension = QString( "_%1.txt" ).arg( rand() );
+        s_FileExtension = QString( "_%1.txt" ).arg( QTime::currentTime().toString( "hhmmsszzz") );
 
     s_OutputFile = s_OutputPath + tr( "/" ) + s_baseNameEventLabel + s_FileExtension;
 
