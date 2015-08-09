@@ -1802,6 +1802,7 @@ void MainWindow::resetProgress( const int i_NumOfFiles )
         break;
 
     case 1:
+        ProgressDialog->hide();
         ProgressDialog->reset();
         break;
 
