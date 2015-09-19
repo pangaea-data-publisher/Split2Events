@@ -33,6 +33,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
     QString		  s_Parameter                       = "";
     QString		  s_ParameterName                   = "";
     QString		  s_ParameterAbbreviation           = "";
+    QString       s_ParameterSearch                 = "";
     QString		  s_Unit                            = "";
     QString		  s_Format                          = "";
     QString		  s_Factor                          = "";
@@ -198,33 +199,36 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
         }
         else
         {   // Parameter is given as text
-            s_ParameterID = tr( "unknown" );
 
-            if ( s_Parameter.toLower() == "latitude" )
+            s_ParameterID     = tr( "unknown" );
+            s_ParameterSearch = s_Parameter.section( "@", 0, 0 ).toLower();
+
+            if ( ( s_ParameterSearch == "latitude" ) || ( s_ParameterSearch == "latitude []" ) )
             {
                 s_ParameterID	= "1600";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.toLower() == "longitude" )
+            if ( ( s_ParameterSearch == "longitude" ) || ( s_ParameterSearch == "longitude []" ) )
             {
                 s_ParameterID	= "1601";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.toLower() == "depth, water [m]" )
+            if ( s_ParameterSearch == "depth, water [m]" )
             {
                 s_ParameterID	= "1619";
                 s_Factor		= "1";
             }
 
-            if ( ( s_Parameter.toLower() == "m" ) || ( s_Parameter.toLower() == "depth, rock [m]" ) || ( s_Parameter.toLower() == "depth, sediment [m]" ) || ( s_Parameter.toLower() == "depth, sediment/rock [m]" )  || ( s_Parameter.toLower() == "depth, rock/sediment [m]" ) )
+
+            if ( ( s_ParameterSearch == "m" ) || ( s_ParameterSearch == "depth, rock [m]" ) || ( s_ParameterSearch == "depth, sediment [m]" ) || ( s_ParameterSearch == "depth, sediment/rock [m]" )  || ( s_ParameterSearch == "depth, rock/sediment [m]" ) )
             {
                 s_ParameterID	= "1";
                 s_Factor		= "1";
             }
 
-            if ( ( s_Parameter.toLower() == "cm" ) || ( s_Parameter.toLower() == "depth, sediment [cm]" ) )
+            if ( ( s_ParameterSearch == "cm" ) || ( s_ParameterSearch == "depth, sediment [cm]" ) )
             {
                 s_ParameterID	= "1";
                 s_Factor		= "0.01";
@@ -235,56 +239,72 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
                     s_Format.append( ".00" );
             }
 
-            if ( s_Parameter.toLower() == "date/time" )
+            if ( s_ParameterSearch == "date/time" )
             {
                 s_ParameterID	= "1599";
                 s_Format		= "yyyy-MM-dd'T'HH:mm";
                 s_Comment       = "for details see: http://icu-project.org/apiref/icu4j/com/ibm/icu/text/SimpleDateFormat.html";
             }
 
-            if ( s_Parameter.startsWith( "depth, bathymetric [m]", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "depth, bathymetric [m]")
             {
                 s_ParameterID	= "2268";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "depth, top [m]", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "depth, top [m]" )
             {
                 s_ParameterID	= "3";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "depth, bottom [m]", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "depth, bottom [m]" )
             {
                 s_ParameterID	= "4";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "volume [m**3]", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "volume [m**3]" )
             {
                 s_ParameterID	= "8247";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "label", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "label" )
             {
                 s_ParameterID	= "790";
                 s_Format		= "";
             }
 
-            if ( s_Parameter.startsWith( "temperature, water [deg c]", Qt::CaseInsensitive ) == true )
+            if ( s_ParameterSearch == "temperature, water [deg c]" )
             {
                 s_ParameterID	= "717";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "salinity (", Qt::CaseInsensitive ) == true )
+            if ( ( s_ParameterSearch == "salinity" ) || ( s_ParameterSearch == "salinity []" ) || ( s_ParameterSearch == "sal" ) || ( s_ParameterSearch == "sal []" ) )
             {
+                if ( s_Parameter.section( "@", 1, 1 ).isEmpty() == true )
+                    s_Parameter = "Salinity []";
+                else
+                    s_Parameter = "Salinity []@" + s_Parameter.section( "@", 1, 1 ).simplified();
+
                 s_ParameterID	= "716";
                 s_Factor		= "1";
             }
 
-            if ( s_Parameter.startsWith( "temperature, air [deg c]", Qt::CaseInsensitive ) == true )
+            if ( ( s_ParameterSearch == "salinity (psu)" ) || ( s_ParameterSearch == "sal (psu)" ) )
+            {
+                if ( s_Parameter.section( "@", 1, 1 ).isEmpty() == true )
+                    s_Parameter = "Salinity []@PSU";
+                else
+                    s_Parameter = "Salinity []@PSU, " + s_Parameter.section( "@", 1, 1 ).simplified();
+
+                s_ParameterID	= "716";
+                s_Factor		= "1";
+            }
+
+            if ( s_ParameterSearch == "temperature, air [deg c]" )
             {
                 s_ParameterID	= "4610";
                 s_Factor		= "1";
@@ -319,7 +339,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 
             if ( s_ParameterID == "unknown" )
             {
-                QString s_ParameterSearch = s_Parameter.section( "@", 0, 0 ).simplified().toLower();
+                s_ParameterSearch = s_Parameter.section( "@", 0, 0 ).simplified().toLower();
 
                 s_ParameterSearch.append( " []" );
                 s_ParameterSearch.replace( "] []", "]" );
@@ -494,6 +514,9 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
 
     if ( s_Unit.contains( "deg" ) == true )
     {
+        if ( s_Unit.contains( "deg C" ) == true )
+            s_Unit.replace( "deg C", "°C" );
+
         if ( ( s_Unit != "[deg]" ) && ( s_Unit != "[s*deg]" ) && ( s_Unit != "[deg/min]" ) && ( s_Unit != "[deg s]" ) )
             s_Unit.replace( "deg", "°" );
     }
@@ -537,13 +560,30 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
 
 QString MainWindow::findParameterByID( const structParameter p_ParameterList[], const QString& s_Parameter )
 {
-    int     i_ParameterID   = s_Parameter.section( "@", 0, 0 ).toInt();
-    QString s_ParameterName	= p_ParameterList[i_ParameterID].ParameterName;
+    int     i_NumOfParametersInPDB  = p_ParameterList[0].ParameterID.toInt();
+    int     i_ParameterID           = s_Parameter.section( "@", 0, 0 ).toInt();
 
-    if ( s_Parameter.section( "@", 1, 1 ).isEmpty() == false )
-        s_ParameterName.append( QString( "@%1" ).arg( s_Parameter.section( "@", 1, 1 ) ) );
+    QString s_ParameterName         = "Parameter ID xxx is out-of-range!";
 
-    return( s_ParameterName );
+// *************************************************************************************
+
+    if ( ( 1 <= i_ParameterID ) && ( i_ParameterID <= i_NumOfParametersInPDB ) )
+    {
+        s_ParameterName = p_ParameterList[i_ParameterID].ParameterName;
+
+        if ( s_Parameter.section( "@", 1, 1 ).isEmpty() == false )
+            s_ParameterName.append( QString( "@%1" ).arg( s_Parameter.section( "@", 1, 1 ) ) );
+
+        return( s_ParameterName );
+    }
+    else
+    {
+        s_ParameterName = QString( "Parameter ID %1 is out-of-range!" ).arg( i_ParameterID );
+
+        return( s_ParameterName );
+    }
+
+    return( "ERROR" );
 }
 
 // *************************************************************************************

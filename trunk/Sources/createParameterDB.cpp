@@ -74,7 +74,11 @@ void MainWindow::doCreateParameterDB()
 
             downloadFile( s_DDI_URL, s_FilenameParameter );
 
-            sl_FilenameIn.append( s_FilenameParameter );
+            if ( ( i < gi_NumOfParameterFiles-1 ) && ( QFileInfo( s_FilenameParameter ).size() > 730000 ) )
+                sl_FilenameIn.append( s_FilenameParameter );
+
+            if ( i == gi_NumOfParameterFiles-1 )
+                sl_FilenameIn.append( s_FilenameParameter );
 
             i_stopProgress = incFileProgress( gi_NumOfParameterFiles, ++i );
         }
@@ -84,7 +88,7 @@ void MainWindow::doCreateParameterDB()
 
 // **********************************************************************************************
 
-    if ( ( sl_FilenameIn.count() > 0 ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
+    if ( ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
 
@@ -94,7 +98,9 @@ void MainWindow::doCreateParameterDB()
     }
     else
     {
-        setStatusBar( tr( "Refreshing parameter database was canceled" ), 2 );
+        setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+
+        err = -143;
     }
 
 // **********************************************************************************************
