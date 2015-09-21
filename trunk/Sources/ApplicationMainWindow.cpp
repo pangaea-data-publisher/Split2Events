@@ -103,12 +103,7 @@ QString MainWindow::getVersion()
         n = readFile( s_Version_Filename, sl_Input, _SYSTEM_ ); // System encoding
 
         if ( ( n >= 2) && ( sl_Input.at( 0 ).startsWith( "<!DOCTYPE") == false ) )
-        {
-            s_Version = QCoreApplication::applicationName();
-
-            for ( int i=1; i<n; i++)
-                s_Version.append(  tr( "\t" ) + sl_Input.at( i ).section( " ", 1, 1 ) );
-        }
+            s_Version = sl_Input.at( 1 ).section( " ", 1, 1 );
     }
 
     return( s_Version );
@@ -1535,18 +1530,18 @@ void MainWindow::about()
     dialog.Version->setText( tr( "V%1" ).arg( _VERSION_ ) );
     dialog.Warranty->setText( tr( "%1 comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See the License.txt file for details." ).arg( getApplicationName( true ) ) );
 
-    if ( _VERSION_ != gs_Version.section( "\t", 1, 1 ) )
+    if ( _VERSION_ != gs_Version )
     {
         if ( _PROGRAMDOI_.isEmpty() == true )
         {
-            if ( gs_Version.section( "\t", 1, 1 ) == "unknown" )
+            if ( gs_Version == "unknown" )
                 s_newVersionText = QString( tr( "Cannot determine the most recent version of %1.<br>Please look at <a href=\"%2\">%3</a> for the<br>latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMREADME_ ).arg( _PROGRAMREADME_ ) );
             else
                 s_newVersionText = QString( tr( "This version of %1 is outdated. Please look at<br><a href=\"%2\">%3</a> for the latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMREADME_ ).arg( _PROGRAMREADME_ ) );
         }
         else
         {
-            if ( gs_Version.section( "\t", 1, 1 ) == "unknown" )
+            if ( gs_Version == "unknown" )
                 s_newVersionText = QString( tr( "Cannot determine the most recent version of %1.<br>Please look at <a href=\"http://doi.pangaea.de/%2?format=html\">%3</a> for the<br>latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );
             else
                 s_newVersionText = QString( tr( "This version of %1 is outdated. Please look at<br><a href=\"http://doi.pangaea.de/%2?format=html\">%3</a> for the latest version." ).arg( getApplicationName( true ) ).arg( _PROGRAMDOI_.mid( 4 ) ).arg( _PROGRAMDOI_ ) );

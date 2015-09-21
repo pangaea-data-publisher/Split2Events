@@ -148,9 +148,7 @@ public:
     QString findMethod( const QString& Comment );
     QString findParameterByName( const structParameter ParameterList[], const QString& Parameter );
     QString findParameterByID( const structParameter ParameterList[], const QString& Parameter );
-
     QString buildParameter( const QString& ParameterMF, const QString& EventLabel );
-    QString buildParameterJSON( const QString& ParameterMF, const QString& EventLabel );
 
     QString createDir( const QString& Filename, const int NumOfFiles, const bool emtpyDir = true );
     QString buildOutputString( const QString& Data, const bool EmptyColumn[] );
@@ -169,23 +167,6 @@ public:
                                const int NumOfFiles );
 
     int writeDataDescription( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
-                              const QString& baseName, const QString& EventLabel, const QString& MinorLabel,
-                              const QStringList& DSParameter, const QStringList& MFParameter,
-                              const QStringList& DataSetCommentList,
-                              const QStringList& FurtherDetailsReferenceList, const QStringList& FurtherDetailsDatasetList,
-                              const QStringList& OtherVersionReferenceList, const QStringList& OtherVersionDatasetList,
-                              const QStringList& SourceReferenceList, const QStringList& SourceDatasetList,
-                              const QString& Author, const QString& Source, const QString& DatasetTitle,
-                              const QString& ExportFilename, const QString& Reference,
-                              const QString& Project, const QString& DataSetComment,
-                              const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
-                              const QString& OtherVersionReference, const QString& OtherVersionDataset,
-                              const QString& SourceReference, const QString& SourceDataset,
-                              const QString& PI, const QString& User, const QString& Parent,
-                              const int Status, const int Login, const bool useFilenameInAsEventLabel,
-                              const int MetadataFileMode, const int TopologicType, const bool overwriteDataset );
-
-    int writeDataDescriptionJSON( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
                               const QString& baseName, const QString& EventLabel, const QString& MinorLabel,
                               const QStringList& DSParameter, const QStringList& MFParameter,
                               const QStringList& DataSetCommentList,

@@ -11,61 +11,9 @@
 // *************************************************************************************
 // *************************************************************************************
 // *************************************************************************************
-// 2009-11-09
-
-QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString& s_EventLabel )
-{
-    QString s_Parameter	= "";
-
-    if ( s_Parameter.length() > 0 )
-        s_Parameter = s_ParameterMF.section( "\t", 0, 0 );
-    else
-        s_Parameter = s_ParameterMF.section( "\t", 1, 1 );
-
-    if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
-    {
-        s_Parameter += " * PI: ";
-
-        if (  s_ParameterMF.section( "\t", 2, 2 ) == "999999" )
-            s_Parameter += "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@";
-        else
-            s_Parameter += s_ParameterMF.section( "\t", 2, 2 );
-    }
-
-    if ( s_ParameterMF.section( "\t", 3, 3 ).isEmpty() == false )
-    {
-        s_Parameter += " * METHOD: ";
-
-        if (  s_ParameterMF.section( "\t", 3, 3 ) == "999999" )
-            s_Parameter += "@PM@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@";
-        else
-            s_Parameter += s_ParameterMF.section( "\t", 3, 3 );
-    }
-
-    if ( s_ParameterMF.section( "\t", 4, 4 ).isEmpty() == false )
-    {
-        s_Parameter += " * COMMENT: ";
-
-        if (  s_ParameterMF.section( "\t", 4, 4 ) == "999999" )
-            s_Parameter += "@PC@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@";
-        else
-            s_Parameter += s_ParameterMF.section( "\t", 4, 4 );
-    }
-
-    if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
-        s_Parameter += " * FORMAT: " + s_ParameterMF.section( "\t", 5, 5 );
-
-    s_Parameter.replace( "@$E@", "@" + s_EventLabel + "@" );
-
-    return( s_Parameter );
-}
-
-// *************************************************************************************
-// *************************************************************************************
-// *************************************************************************************
 // 2015-06-26
 
-QString MainWindow::buildParameterJSON( const QString& s_ParameterMF, const QString& s_EventLabel )
+QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString& s_EventLabel )
 {
     QString q           = "\"";
     QString qe          = "\": ";
