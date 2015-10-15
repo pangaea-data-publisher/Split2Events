@@ -21,8 +21,6 @@ int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *
 
     QStringList     sl_Input;
 
-    QTime           timestamp;
-
 //------------------------------------------------------------------
 
     if ( ( n = readFile( s_FilenamePDB, sl_Input, 0 ) ) < 1 ) // UTF-8
@@ -45,8 +43,6 @@ int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *
 
     i = 1;
 
-    timestamp.start();
-
     while ( ( i < i_NumOfParameters ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         p_Parameter[i].ParameterID			    = QString( "%1" ).arg( i );
@@ -54,19 +50,10 @@ int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *
         p_Parameter[i].ParameterNameL           = "";
         p_Parameter[i].ParameterAbbreviationL	= "";
 
-        ++i;
-
-        if ( timestamp.elapsed() > 100 )
-        {
-            i_stopProgress = incProgress( 1, i );
-            QApplication::processEvents();
-            timestamp.start();
-        }
+        i_stopProgress = incProgress( 1, ++i );
     }
 
     i = 1;
-
-    timestamp.start();
 
     while ( ( i < n ) && ( i_stopProgress != _APPBREAK_ ) )
     {
@@ -80,14 +67,7 @@ int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *
         p_Parameter[i_ParameterID].ParameterNameL           = sl_Input.at( i ).section( "\t", 1, 1 ).toLower() + s_Unit.toLower();
         p_Parameter[i_ParameterID].ParameterAbbreviationL	= sl_Input.at( i ).section( "\t", 2, 2 ).toLower() + s_Unit.toLower();
 
-        ++i;
-
-        if ( timestamp.elapsed() > 100 )
-        {
-            i_stopProgress = incProgress( 1, i + i_NumOfParameters );
-            QApplication::processEvents();
-            timestamp.start();
-        }
+        i_stopProgress = incProgress( 1, ++i + i_NumOfParameters );
     }
 
     resetProgress( 1 );

@@ -36,8 +36,6 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
 
     QStringList	sl_Input;
 
-    QTime       timestamp;
-
 // ************************************************************************************************
 
     QFile fout( s_FilenameOut );
@@ -67,18 +65,10 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
             else
                 i = 0;
 
-            timestamp.start();
-
             while ( i < n )
             {
-                tout << sl_Input.at( i++ ) << endl;
-
-                if ( timestamp.elapsed() > 100 )
-                {
-                    i_stopProgress = incProgress( sl_FilenameIn.count(), i );
-                    QApplication::processEvents();
-                    timestamp.start();
-                }
+                tout << sl_Input.at( i ) << endl;
+                i_stopProgress = incProgress( sl_FilenameIn.count(), ++i );
             }
 
             resetProgress( sl_FilenameIn.count() );

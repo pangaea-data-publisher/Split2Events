@@ -22,8 +22,6 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
 
     QString     s_dataItem			= "";
 
-    QTime       timestamp;
-
 // *************************************************************************************
 
     if ( n < 2 ) return( -124 ); // no data
@@ -45,8 +43,6 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
 
 // *************************************************************************************
 // check all data items
-
-    timestamp.start();
 
     while ( ( i < n ) && ( i_stopProgress != _APPBREAK_ ) )
     {
@@ -83,14 +79,7 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
             }
         }
 
-        ++i;
-
-        if ( timestamp.elapsed() > 100 )
-        {
-            i_stopProgress = incProgress( i_NumOfFiles, i );
-            QApplication::processEvents();
-            timestamp.start();
-        }
+        i_stopProgress = incProgress( i_NumOfFiles, ++i );
     }
 
 //-----------------------------------------------------------------------------------------------------------
