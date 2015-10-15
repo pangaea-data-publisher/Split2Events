@@ -340,6 +340,8 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 {
     QString s_Output        = "";
 
+    QTime   timestamp;
+
 // *************************************************************************************
 
     QTextStream tout( outDevice );
@@ -379,8 +381,15 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                 tout << s_Output.section( "\t", 1, -1 ) << eol;
         }
 
-        if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
-            return( _APPBREAK_ );
+        if ( timestamp.elapsed() > 1000 )
+        {
+            QApplication::processEvents();
+
+            if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
+                return( _APPBREAK_ );
+
+            timestamp.start();
+        }
     }
 
     return( _NOERROR_ );
@@ -407,6 +416,8 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
     QString s_Parameter         = "";
 
     QStringList sl_Output;
+
+    QTime       timestamp;
 
 // *************************************************************************************
 
@@ -604,8 +615,15 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
             tout << sl_Output.join( "\t" ) << eol;
         }
 
-        if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
-            return( _APPBREAK_ );
+        if ( timestamp.elapsed() > 1000 )
+        {
+            QApplication::processEvents();
+
+            if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
+                return( _APPBREAK_ );
+
+            timestamp.start();
+        }
     }
 
     return( _NOERROR_ );
