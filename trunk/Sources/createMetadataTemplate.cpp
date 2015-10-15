@@ -514,8 +514,8 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
 
     if ( s_Unit.contains( "deg" ) == true )
     {
-        if ( s_Unit.contains( "deg C" ) == true )
-            s_Unit.replace( "deg C", "°C" );
+        if ( s_Unit.contains( "deg c" ) == true )
+            s_Unit.replace( "deg c", "°c" );
 
         if ( ( s_Unit != "[deg]" ) && ( s_Unit != "[s*deg]" ) && ( s_Unit != "[deg/min]" ) && ( s_Unit != "[deg s]" ) )
             s_Unit.replace( "deg", "°" );
