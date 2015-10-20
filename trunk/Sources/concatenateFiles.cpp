@@ -58,20 +58,13 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
 
         if ( ( n = readFile( sl_FilenameIn.at( j ), sl_Input, _UTF8_ ) ) > 0 ) // encoding: UTF-8
         {
-            initProgress( n );
-
             if ( j > 0 )
                 i = i_SkipNFirstLines;
             else
                 i = 0;
 
             while ( i < n )
-            {
-                tout << sl_Input.at( i ) << endl;
-                i_stopProgress = incProgress( sl_FilenameIn.count(), ++i );
-            }
-
-            resetProgress( sl_FilenameIn.count() );
+                tout << sl_Input.at( i++ ) << endl;
 
             if ( b_deleteOriginalFiles == true )
                 QFile::remove(sl_FilenameIn.at( j ) );
@@ -85,6 +78,8 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
     }
 
     fout.close();
+
+// ************************************************************************************************
 
     resetFileProgress( sl_FilenameIn.count() );
 

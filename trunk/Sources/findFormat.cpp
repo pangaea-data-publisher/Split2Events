@@ -20,6 +20,9 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
     int         integer				= 0;
     int         digits				= 0;
 
+    int         i_NumOfDataItems    = 0;
+    int         i_minDataItems      = 10000;
+
     QString     s_dataItem			= "";
 
 // *************************************************************************************
@@ -38,8 +41,13 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
 
 // *************************************************************************************
 
-    setWaitCursor();
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Find best format..." ), n );
+    i_NumOfDataItems = i_NumOfParameters * n;
+
+    if ( i_NumOfDataItems > i_minDataItems )
+    {
+        setWaitCursor();
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Find best format..." ), n );
+    }
 
 // *************************************************************************************
 // check all data items
@@ -79,13 +87,20 @@ int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_I
             }
         }
 
-        i_stopProgress = incProgress( i_NumOfFiles, ++i );
+        ++i;
+
+        if ( i_NumOfDataItems > i_minDataItems )
+            i_stopProgress = incProgress( i_NumOfFiles, i );
     }
 
 //-----------------------------------------------------------------------------------------------------------
 
-    resetProgress( i_NumOfFiles );
-    setNormalCursor();
+    if ( i_NumOfDataItems > i_minDataItems )
+    {
+        resetProgress( i_NumOfFiles );
+        setNormalCursor();
+    }
+
     setStatusBar( tr( "Done" ), 2 );
 
     if ( i_stopProgress == _APPBREAK_ )

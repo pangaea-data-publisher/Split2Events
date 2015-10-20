@@ -28,6 +28,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
     int			  i_NumOfParameters                 = 0;
     int			  i_DataType                        = 0;
     int           i_HeaderLine                      = 0;
+    int           i_minNumOfParameters              = 30;
 
     QString       s_ParameterID                     = "";
     QString		  s_Parameter                       = "";
@@ -106,8 +107,11 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 
     timer.start();
 
-    setWaitCursor();
-    initProgress( i_NumOfFiles, s_FilenameIn, tr( "Find IDs or names of parameters ..." ), i_NumOfParameters );
+    if ( i_NumOfParameters > i_minNumOfParameters )
+    {
+        setWaitCursor();
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Find IDs or names of parameters ..." ), i_NumOfParameters );
+    }
 
 // **********************************************************************************************
 
@@ -434,14 +438,21 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
             }
         }
 
-        if ( ( i_stopProgress = incProgress( i_NumOfFiles, k ) ) == _APPBREAK_ )
-            k = i_NumOfParameters;
+        if ( i_NumOfParameters > i_minNumOfParameters )
+        {
+            if ( ( i_stopProgress = incProgress( i_NumOfFiles, k ) ) == _APPBREAK_ )
+                k = i_NumOfParameters;
+        }
     }
 
 // **********************************************************************************************
 
-    resetProgress( i_NumOfFiles );
-    setNormalCursor();
+    if ( i_NumOfParameters > i_minNumOfParameters )
+    {
+        resetProgress( i_NumOfFiles );
+        setNormalCursor();
+    }
+
     setStatusBar( tr( "Done" ), 2 );
 
 // **********************************************************************************************
@@ -679,9 +690,8 @@ void MainWindow::doCreateMetadataTemplate()
 
             QString s_Message = tr( "A list of missing parameter(s) has been created. See\n\n" ) +
                                 fi.completeBaseName() + tr( "." ) + fi.suffix() + tr( "\n\n" ) +
-                                tr( "After completing this file (See http://wiki.pangaea.de/wiki/Parameter for details) " ) +
-                                tr( "create an issue (http://issues.pangaea.de) and upload the parameter import file\n" ) +
-                                tr( "to the issue." );
+                                tr( "After completing this list " ) +
+                                tr( "create an issue and upload the parameter import file." );
 
             QMessageBox::information( this, getApplicationName( true ), s_Message );
         }

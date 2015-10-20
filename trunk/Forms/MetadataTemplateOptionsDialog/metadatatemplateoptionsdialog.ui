@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
-    <height>257</height>
+    <width>722</width>
+    <height>203</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,39 +46,12 @@
       <string>Create metadata template options</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0" colspan="2">
+      <item row="0" column="0">
        <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
         <property name="text">
-         <string>write parameter import file</string>
+         <string>write parameter import file. After completing &quot;imp_Parameter.txt&quot; create an issue (http://issues.pangaea.de).</string>
         </property>
        </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QLabel" name="label_1">
-        <property name="text">
-         <string>    after completing &quot;imp_Parameter.txt&quot; create an issue (http://issues.pangaea.de)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>    and upload it to the issue.</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>

@@ -113,8 +113,6 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
     int         i                   = 0;
     int         n                   = 0;
 
-    int         i_stopProgress      = 0;
-
     QString     s_EventLabel        = "";
     QString     s_Dummy             = "";
 
@@ -140,10 +138,6 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
         return( -112 );
 
 //------------------------------------------------------------------
-
-    initProgress( 1, s_FilenameMetadata, tr( "Reading metadata file..." ), n );
-
-//------------------------------------------------------------------
 // Parameters
 
     if ( sl_Input.at( 0 ).startsWith( tr( "[Parameter]" ) ) == false )
@@ -151,29 +145,29 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
 
     i = 2;
 
-    while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+    while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
     {
         if ( sl_Input.at( i ).isEmpty() == false )
             sl_ParameterList.append( trimParameter( sl_Input.at( i ) ) );
 
-        i_stopProgress = incProgress( 1, ++i );
+        ++i;
     }
 
 //------------------------------------------------------------------
 // Dataset comments
 
-    while ( ( i < n ) && ( i_stopProgress != _APPBREAK_ ) )
+    while ( i < n )
     {
         if ( ( i < n ) && ( sl_Input.at( i ).startsWith( tr( "[DataSet comment]" ) ) == true ) )
         {
             i++;
 
-            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
             {
                 if ( sl_Input.at( i ).isEmpty() == false )
                     sl_DataSetComment.append( sl_Input.at( i ) );
 
-                i_stopProgress = incProgress( 1, ++i );
+                ++i;
             }
         }
 
@@ -184,7 +178,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
         {
             i++;
 
-            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
             {
                 if ( sl_Input.at( i ).isEmpty() == false )
                 {
@@ -198,7 +192,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
                         sl_FurtherDetailsReference.append( s_EventLabel + "\t" + s_Dummy.section( ",", j, j ) );
                 }
 
-                i_stopProgress = incProgress( 1, ++i );
+                ++i;
             }
         }
 
@@ -209,7 +203,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
         {
             i++;
 
-            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
             {
                 if ( sl_Input.at( i ).isEmpty() == false )
                 {
@@ -223,7 +217,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
                         sl_FurtherDetailsDataset.append( s_EventLabel + "\t" + s_Dummy.section( ",", j, j ) );
                 }
 
-                i_stopProgress = incProgress( 1, ++i );
+                ++i;
             }
         }
 
@@ -234,7 +228,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
         {
             i++;
 
-            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
             {
                 if ( sl_Input.at( i ).isEmpty() == false )
                 {
@@ -248,7 +242,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
                         sl_OtherVersionReference.append( s_EventLabel + "\t" + s_Dummy.section( ",", j, j ) );
                 }
 
-                i_stopProgress = incProgress( 1, ++i );
+                ++i;
             }
         }
 
@@ -259,7 +253,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
         {
             i++;
 
-            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) && ( i_stopProgress != _APPBREAK_ ) )
+            while ( ( i < n ) && ( sl_Input.at( i ).startsWith( "[" ) == false ) )
             {
                 if ( sl_Input.at( i ).isEmpty() == false )
                 {
@@ -273,16 +267,12 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
                         sl_OtherVersionDataset.append( s_EventLabel + "\t" + s_Dummy.section( ",", j, j ) );
                 }
 
-                i_stopProgress = incProgress( 1, ++i );
+                ++i;
             }
         }
 
         i++;
     }
-
-//-----------------------------------------------------------------------------------------------------------
-
-    resetProgress( 1 );
 
     return( _NOERROR_ );
 }
