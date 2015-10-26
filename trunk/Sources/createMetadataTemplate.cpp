@@ -107,11 +107,15 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 
     timer.start();
 
+    setWaitCursor();
+
+    if ( i_NumOfFiles > 1 )
+        i_minNumOfParameters = 9999;
+
     if ( i_NumOfParameters > i_minNumOfParameters )
-    {
-        setWaitCursor();
         initProgress( i_NumOfFiles, s_FilenameIn, tr( "Find IDs or names of parameters ..." ), i_NumOfParameters );
-    }
+    else
+        setStatusBarFileInProgress( s_FilenameIn );
 
 // **********************************************************************************************
 
@@ -448,12 +452,9 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 // **********************************************************************************************
 
     if ( i_NumOfParameters > i_minNumOfParameters )
-    {
         resetProgress( i_NumOfFiles );
-        setNormalCursor();
-    }
 
-    setStatusBar( tr( "Done" ), 2 );
+    setNormalCursor();
 
 // **********************************************************************************************
 

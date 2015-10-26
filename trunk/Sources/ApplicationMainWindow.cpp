@@ -1652,7 +1652,7 @@ void MainWindow::resetFileProgress( const int i_NumOfFiles )
 // **********************************************************************************************
 // **********************************************************************************************
 
-/*! @brief Progressdialog zurueksetzen.
+/*! @brief Progressdialog zuruecksetzen.
 *
 *   @param i_totalNumberOfSteps Maximale Anzahl der Schritte.
 */
