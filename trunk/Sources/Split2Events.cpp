@@ -94,7 +94,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
 
     if ( b_splitFile == true )
     {
-        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Splitting file..." ), 2*(n-i_NumOfDataDescriptionLines-1) );
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Creating import file(s)..." ), 2*(n-i_NumOfDataDescriptionLines-1) );
 
         resetDataList( sl_Input, i_HeaderLine, i, sl_Data );
 
@@ -139,7 +139,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
 
     if ( b_splitFile == false )
     {
-        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Processing file..." ), 2*n );
+        initProgress( i_NumOfFiles, s_FilenameIn, tr( "Creating import file..." ), 2*n );
 
         resetDataList( sl_Input, i_HeaderLine, i, sl_Data );
 
@@ -156,7 +156,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                    s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
                                    s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status,
                                    i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
-                                   i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
+                                   i_TopologicType, b_overwriteDataset, b_markSmallFile, n, i_OutOfRangeValue, i_NumOfFiles );
 
         resetProgress( i_NumOfFiles );
     }
