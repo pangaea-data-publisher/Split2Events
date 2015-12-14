@@ -42,6 +42,20 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
 // **********************************************************************************************
 
+    #if defined(Q_OS_LINUX)
+        gb_showProgressBar = true;
+    #endif
+
+    #if defined(Q_OS_MAC)
+        gb_showProgressBar = false;
+    #endif
+
+    #if defined(Q_OS_WIN)
+        gb_showProgressBar = true;
+    #endif
+
+// **********************************************************************************************
+
     Model		= new QStringListModel( this );
     ListView	= new QListView;
 
@@ -65,7 +79,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow( parent )
 
     createActions();
     createMenus();
-    createStatusBar();
+    createStatusBar( gb_showProgressBar );
 
 // **********************************************************************************************
 
