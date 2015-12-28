@@ -3,6 +3,7 @@
     #define _GLOBALS
 
 // Application constants
+
    #if defined(Q_OS_LINUX)
        const char eol = '\n';
    #endif
@@ -18,7 +19,7 @@
     const QString _PROGRAMDOI_           = "doi:10.1594/PANGAEA.835398";
     const QString _PROGRAMREADME_        = "http://wiki.pangaea.de/wiki/Split2Events";
 
-    const QString _VERSION_              = "12.9";	// Version number, 2015-10-18
+    const QString _VERSION_              = "12.10";	// Version number, 2015-12-28
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
     const int	_NOERROR_                = 0;
