@@ -22,9 +22,13 @@
     const QString _VERSION_              = "12.10";	// Version number, 2015-12-28
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
-    const int	_NOERROR_                = 0;
-    const int	_ERROR_                  = 1;
-    const int	_APPBREAK_               = 2;
+    const int   _NOERROR_                = 0;
+    const int   _ERROR_                  = 1;
+    const int   _APPBREAK_               = 2;
+    const int   _NODATAFOUND_            = 3;
+    const int   _DATAFOUND_              = 4;
+    const int   _CHOOSEABORTED_          = 5;
+    const int   _FILENOTEXISTS_          = 6;
 
     const int	_ZIP_                    = 1;
     const int	_GZIP_                   = 2;
