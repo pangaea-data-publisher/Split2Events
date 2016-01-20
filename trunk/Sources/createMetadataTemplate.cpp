@@ -45,8 +45,6 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
     QStringList	  sl_ListParameter;
     QStringList   sl_Input;
 
-    QTime         timer;
-
     structPFormat F_ptr[_MAX_NUM_OF_COLUMNS_+1];
 
 // **********************************************************************************************
@@ -104,8 +102,6 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
     }
 
 // **********************************************************************************************
-
-    timer.start();
 
     setWaitCursor();
 
@@ -486,9 +482,6 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
         return( _APPBREAK_ );
     }
 
-    if ( ( i_MetadataFileMode != _AUTO_ ) && ( timer.elapsed() > 10000 ) )
-        QMessageBox::information( this, getApplicationName( true ), tr( "Metadata template has been created." ) );
-
     return( _NOERROR_ );
 }
 
@@ -611,6 +604,8 @@ void MainWindow::doCreateMetadataTemplate()
     QString     s_FilenameMetadata			= "";
     QString     s_FilenameParameterImport	= "";
 
+    QTime       timer;
+
     QDateTime   datetime = QDateTime::currentDateTime();
 
 // *************************************************************************************
@@ -650,6 +645,10 @@ void MainWindow::doCreateMetadataTemplate()
 
         if ( gb_writeParameterImportFile == true )
             err = createImportParameterFile( s_FilenameParameterImport );
+
+// *************************************************************************************
+
+        timer.start();
 
         initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Creating metadata template files..." ) );
 
@@ -691,10 +690,20 @@ void MainWindow::doCreateMetadataTemplate()
 
             QString s_Message = tr( "A list of missing parameter(s) has been created. See\n\n" ) +
                                 fi.completeBaseName() + tr( "." ) + fi.suffix() + tr( "\n\n" ) +
-                                tr( "After completing this list " ) +
-                                tr( "create an issue and upload the parameter import file." );
+                                tr( "After completing this list create an issue and upload " ) +
+                                tr( "the parameter import file." );
 
             QMessageBox::information( this, getApplicationName( true ), s_Message );
+        }
+        else
+        {
+            if ( ( gi_MetadataFileMode != _AUTO_ ) && ( timer.elapsed() > 10000 ) )
+            {
+                if ( gsl_FilenameList.count() == 1 )
+                    QMessageBox::information( this, getApplicationName( true ), tr( "Metadata template has been created." ) );
+                else
+                    QMessageBox::information( this, getApplicationName( true ), tr( "Metadata templates have been created." ) );
+            }
         }
 
         setStatusBar( tr( "Done" ), 2 );
