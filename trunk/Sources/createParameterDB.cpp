@@ -40,11 +40,11 @@ int MainWindow::getNumParameterQuerys()
 
 void MainWindow::doCreateParameterDB()
 {
-    int         i				= 0;
+    int         i				    = 0;
+    int         err				    = 0;
+    int         i_stopProgress	    = 0;
 
-    int         err				= _NOERROR_;
-
-    int         i_stopProgress	= 0;
+    QString     s_FilenameBackupPDB = "";
 
     QStringList sl_FilenameIn;
 
@@ -57,12 +57,18 @@ void MainWindow::doCreateParameterDB()
         QFileInfo fi( gs_FilenamePDB );
 
         if ( fi.exists() == false )
+        {
             QDir().mkdir( QDir::toNativeSeparators( fi.absolutePath() ) );
+        }
         else
         {
             QFile PDBfile( gs_FilenamePDB );
             PDBfile.remove();
         }
+
+        s_FilenameBackupPDB = fi.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
+
+// **********************************************************************************************
 
         initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
 
@@ -91,6 +97,7 @@ void MainWindow::doCreateParameterDB()
     if ( ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
+        err = concatenateFiles( s_FilenameBackupPDB, sl_FilenameIn, tr( "Creating backup of parameter database..." ), 1, false );
 
         gi_NumOfParametersInPDB = 0;
 
@@ -98,9 +105,23 @@ void MainWindow::doCreateParameterDB()
     }
     else
     {
-        setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+        if ( QFileInfo( s_FilenameBackupPDB ).exists() == true )
+        {
+            sl_FilenameIn.clear();
+            sl_FilenameIn.append( s_FilenameBackupPDB );
 
-        err = -143;
+            err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Restoring parameter database..." ), 1, false );
+
+            err = -143;
+
+            setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+        }
+        else
+        {
+            err = -144;
+
+            setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+        }
     }
 
 // **********************************************************************************************
@@ -117,61 +138,79 @@ void MainWindow::doCreateParameterDB()
 
 void MainWindow::doMergeParameterDB()
 {
-    int		i					= 0;
-    int		err					= 0;
-    int		i_stopProgress		= 0;
+    int		i                       = 0;
+    int		err                     = 0;
+    int		i_stopProgress          = 0;
+
+    QString     s_FilenameBackupPDB = "";
 
     QStringList sl_FilenameIn;
 
 // **********************************************************************************************
 
-    QFileInfo fi( gs_FilenamePDB );
+    gi_NumOfParameterFiles = getNumParameterQuerys();
 
-    if ( fi.exists() == false )
-        QDir().mkdir( QDir::toNativeSeparators( fi.absolutePath() ) );
-
-// **********************************************************************************************
-
-    initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
-
-    while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
+    if ( gi_NumOfParameterFiles > 0 )
     {
-        QString s_FilenameParameterQuery = QString( "Parameter%1" ).arg( i+1 );
-        QString s_FilenameParameter      = fi.absolutePath() + "/" + s_FilenameParameterQuery + ".txt";
+        QFileInfo fi( gs_FilenamePDB );
 
-        if ( i < gi_NumOfParameterFiles-1 )
+        if ( fi.exists() == false )
         {
-            QFile outfile( s_FilenameParameter );
-
-            if ( outfile.exists() == false )
-                err = -142;
-            else
-                sl_FilenameIn.append( s_FilenameParameter );
+            QDir().mkdir( QDir::toNativeSeparators( fi.absolutePath() ) );
         }
         else
         {
-            QFile outfile( s_FilenameParameter );
-
-            if ( outfile.exists() == true )
-                outfile.remove();
-
-            QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
-
-            downloadFile( s_DDI_URL, s_FilenameParameter );
-
-            sl_FilenameIn.append( s_FilenameParameter );
+            QFile PDBfile( gs_FilenamePDB );
+            PDBfile.remove();
         }
 
-        i_stopProgress = incFileProgress( gi_NumOfParameterFiles, ++i );
-    }
-
-    resetFileProgress( gi_NumOfParameterFiles );
+        s_FilenameBackupPDB = fi.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
 
 // **********************************************************************************************
 
-    if ( ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
+        initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
+
+        while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
+        {
+            QString s_FilenameParameterQuery = QString( "Parameter%1" ).arg( i+1 );
+            QString s_FilenameParameter      = fi.absolutePath() + "/" + s_FilenameParameterQuery + ".txt";
+
+            if ( i < gi_NumOfParameterFiles-1 )
+            {
+                QFile outfile( s_FilenameParameter );
+
+                if ( outfile.exists() == false )
+                    err = -142;
+                else
+                    sl_FilenameIn.append( s_FilenameParameter );
+            }
+            else
+            {
+                QFile outfile( s_FilenameParameter );
+
+                if ( outfile.exists() == true )
+                    outfile.remove();
+
+                QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/curator/Parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/curator/Parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
+
+                downloadFile( s_DDI_URL, s_FilenameParameter );
+
+                if ( QFileInfo( s_FilenameParameter ).size() > 41 ) // Header contains 41 Bytes
+                    sl_FilenameIn.append( s_FilenameParameter );
+            }
+
+            i_stopProgress = incFileProgress( gi_NumOfParameterFiles, ++i );
+        }
+
+        resetFileProgress( gi_NumOfParameterFiles );
+    }
+
+// **********************************************************************************************
+
+    if ( ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
+        err = concatenateFiles( s_FilenameBackupPDB, sl_FilenameIn, tr( "Creating backup of parameter database..." ), 1, false );
 
         gi_NumOfParametersInPDB = 0;
 
@@ -179,7 +218,23 @@ void MainWindow::doMergeParameterDB()
     }
     else
     {
-        setStatusBar( tr( "Refreshing parameter database was canceled" ), 2 );
+        if ( QFileInfo( s_FilenameBackupPDB ).exists() == true )
+        {
+            sl_FilenameIn.clear();
+            sl_FilenameIn.append( s_FilenameBackupPDB );
+
+            err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Restoring parameter database..." ), 1, false );
+
+            err = -143;
+
+            setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+        }
+        else
+        {
+            err = -144;
+
+            setStatusBar( tr( "Refreshing parameter database was canceled, try again!" ), 2 );
+        }
     }
 
 // **********************************************************************************************

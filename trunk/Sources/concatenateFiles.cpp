@@ -67,7 +67,7 @@ int MainWindow::concatenateFiles( const QString& s_FilenameOut, const QStringLis
                 tout << sl_Input.at( i++ ) << endl;
 
             if ( b_deleteOriginalFiles == true )
-                QFile::remove(sl_FilenameIn.at( j ) );
+                QFile::remove( sl_FilenameIn.at( j ) );
         }
         else
         {
