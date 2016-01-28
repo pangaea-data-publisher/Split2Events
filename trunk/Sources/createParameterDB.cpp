@@ -76,7 +76,7 @@ void MainWindow::doCreateParameterDB()
         {
             QString s_FilenameParameterQuery = QString( "Parameter%1" ).arg( i+1 );
             QString s_FilenameParameter      = fi.absolutePath() + "/" + s_FilenameParameterQuery + ".txt";
-            QString s_DDI_URL                = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
+            QString s_DDI_URL                = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
             downloadFile( s_DDI_URL, s_FilenameParameter );
 
@@ -191,7 +191,7 @@ void MainWindow::doMergeParameterDB()
                 if ( outfile.exists() == true )
                     outfile.remove();
 
-                QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=/parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=/parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
+                QString s_DDI_URL = QLatin1String( "http://www.pangaea.de/ddi/xxx.tab?retr=parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
                 downloadFile( s_DDI_URL, s_FilenameParameter );
 
