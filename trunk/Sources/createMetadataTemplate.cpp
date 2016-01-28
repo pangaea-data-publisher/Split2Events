@@ -139,12 +139,15 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
             if ( F_ptr[i].digits > 0 )
             {
                 if ( F_ptr[i].integer <= 1 )
+                {
                     s_Format.append( "#0." );
+                }
                 else
                 {
                     s_Format.fill( '#', F_ptr[i].integer - 1 );
                     s_Format.append( "0." );
                 }
+
                 for ( j=1; j<=F_ptr[i].digits; j++ )
                     s_Format.append( "0" );
             }
@@ -364,19 +367,14 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 
                     i_DataType = 2;  // Parameter is a text parameter
 
-                    if ( s_Unit.isEmpty() == false )
-                    {
+                    if ( ( s_Unit.isEmpty() == false ) || ( s_ParameterName.endsWith( " ratio") == true ) )
                         i_DataType = 1;
-
-                        s_Unit.replace( "+/-", "±" );
-                        s_Unit.replace( "my", "µ" );
-                        s_Unit.replace( "deg ", "°" );
-                        s_Unit.replace( "deg", "°" );
-                    }
 
                     tpar << s_ParameterName << "\t";
 
                     s_ParameterAbbreviation.replace( " ", "\t" );
+                    s_ParameterAbbreviation.replace( " forma ", " f " );
+                    s_ParameterAbbreviation.replace( ", biomass as carbon", " C" );
 
                     int i_NumOfSections = NumOfSections( s_ParameterAbbreviation );
 
@@ -388,10 +386,17 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
                         }
                         else
                         {
-                            if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ).length() < 5 ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "p.," ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "male" ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "larvae" ) )
-                                tpar << s_ParameterAbbreviation.section( "\t", 0, 0 );
-                            else
+                            if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "cf." ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "aff." ) )
+                            {
                                 tpar << s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) << ".";
+                            }
+                            else
+                            {
+                                if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ).length() < 5 ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "p.," ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "male" ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "larvae" ) )
+                                    tpar << s_ParameterAbbreviation.section( "\t", 0, 0 );
+                                else
+                                    tpar << s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) << ".";
+                            }
                         }
 
                         for ( j=1; j<i_NumOfSections; j++ )
