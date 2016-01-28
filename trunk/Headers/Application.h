@@ -151,6 +151,7 @@ public:
     QString findParameterByName( const structParameter ParameterList[], const QString& Parameter );
     QString findParameterByID( const structParameter ParameterList[], const QString& Parameter );
     QString buildParameter( const QString& ParameterMF, const QString& EventLabel );
+    QString buildNewParameterEntry( const QString& Parameter );
 
     QString createDir( const QString& Filename, const int NumOfFiles, const bool emtpyDir = true );
     QString buildOutputString( const QString& Data, const bool EmptyColumn[] );

@@ -7,6 +7,89 @@
 // *************************************************************************************
 // *************************************************************************************
 // *************************************************************************************
+// 2016-01-08
+
+QString MainWindow::buildNewParameterEntry( const QString& s_Parameter )
+{
+    int     i_DataType              = 2;  // Parameter is a text parameter
+    int     i_NumOfSections         = 0;
+
+    QString s_ParameterName         = "";
+    QString s_ParameterAbbreviation = "";
+    QString s_Unit                  = "";
+    QString s_ParameterNew          =  s_Parameter.section( "@", 0, 0 ).simplified();
+
+// *************************************************************************************
+
+    s_ParameterNew.replace( " [", "\t" );
+    s_ParameterNew.replace( "[", "\t" );
+    s_ParameterNew.replace( "]", "" );
+
+    s_ParameterName			= s_ParameterNew.section( "\t", 0, 0 );
+    s_ParameterAbbreviation	= s_ParameterNew.section( "\t", 0, 0 );
+    s_Unit					= s_ParameterNew.section( "\t", 1, 1 );
+
+// *************************************************************************************
+// special parameter abbreviations
+
+    s_ParameterAbbreviation.replace( "forma", "f" );
+    s_ParameterAbbreviation.replace( "length", "l" );
+    s_ParameterAbbreviation.replace( "biomass as carbon", "C" );
+    s_ParameterAbbreviation.replace( "biomass", "biom" );
+    s_ParameterAbbreviation.replace( "dry mass", "dm" );
+    s_ParameterAbbreviation.replace( "wet mass", "wm" );
+    s_ParameterAbbreviation.replace( "mass", "m" );
+    s_ParameterAbbreviation.replace( "female", "f" );
+    s_ParameterAbbreviation.replace( "male", "m" );
+    s_ParameterAbbreviation.replace( "larvae", "larv" );
+    s_ParameterAbbreviation.replace( " ratio", "" );
+
+    s_ParameterAbbreviation.replace( ", ", "\t" );
+
+// *************************************************************************************
+// data type
+
+    if ( ( s_Unit.isEmpty() == false ) || ( s_ParameterName.endsWith( " ratio") == true ) )
+        i_DataType = 1;
+
+// *************************************************************************************
+
+    s_ParameterNew  = s_ParameterName + "\t";
+
+    i_NumOfSections = NumOfSections( s_ParameterAbbreviation );
+
+    switch ( i_NumOfSections )
+    {
+        case 1:
+            s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
+        break;
+
+        case 2:
+            if ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "p." ) == false ) // sp. and spp.
+                s_ParameterNew.append( QString( " %1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
+            else
+                s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
+            break;
+
+        default:
+            if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "cf." ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "aff." ) )
+                s_ParameterNew.append( QString( " %1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
+            else
+                s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
+            break;
+    }
+
+    for ( int i=1; i<i_NumOfSections; i++ )
+        s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", i, i ) ) );
+
+    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t\t%2").arg( s_Unit ).arg( i_DataType ) );
+
+    return( s_ParameterNew );
+}
+
+// *************************************************************************************
+// *************************************************************************************
+// *************************************************************************************
 // 2011-12-07
 
 int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QString& s_FilenameMetadata, const QString& s_FilenameParameterImport,
@@ -26,16 +109,13 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 
     int           i_NumOfDataDescriptionLines       = 0;
     int			  i_NumOfParameters                 = 0;
-    int			  i_DataType                        = 0;
     int           i_HeaderLine                      = 0;
     int           i_minNumOfParameters              = 30;
 
     QString       s_ParameterID                     = "";
     QString		  s_Parameter                       = "";
     QString		  s_ParameterName                   = "";
-    QString		  s_ParameterAbbreviation           = "";
     QString       s_ParameterSearch                 = "";
-    QString		  s_Unit                            = "";
     QString		  s_Format                          = "";
     QString		  s_Factor                          = "";
     QString		  s_Comment                         = "";
@@ -354,61 +434,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
                 s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch );
 
                 if ( ( s_ParameterID == "unknown" ) && ( b_createParameterImportFile == true ) )
-                {
-                    QString s_ParameterNew = s_Parameter.section( "@", 0, 0 ).simplified();
-
-                    s_ParameterNew.replace( " [", "\t" );
-                    s_ParameterNew.replace( "[", "\t" );
-                    s_ParameterNew.replace( "]", "" );
-
-                    s_ParameterName			= s_ParameterNew.section( "\t", 0, 0 );
-                    s_ParameterAbbreviation	= s_ParameterNew.section( "\t", 0, 0 );
-                    s_Unit					= s_ParameterNew.section( "\t", 1, 1 );
-
-                    i_DataType = 2;  // Parameter is a text parameter
-
-                    if ( ( s_Unit.isEmpty() == false ) || ( s_ParameterName.endsWith( " ratio") == true ) )
-                        i_DataType = 1;
-
-                    tpar << s_ParameterName << "\t";
-
-                    s_ParameterAbbreviation.replace( " ", "\t" );
-                    s_ParameterAbbreviation.replace( " forma ", " f " );
-                    s_ParameterAbbreviation.replace( ", biomass as carbon", " C" );
-
-                    int i_NumOfSections = NumOfSections( s_ParameterAbbreviation );
-
-                    if ( i_NumOfSections > 1 )
-                    {
-                        if ( s_ParameterAbbreviation.section( "\t", 0, 0 ).endsWith( "," ) )
-                        {
-                            tpar << s_ParameterAbbreviation.section( "\t", 0, 0 );
-                        }
-                        else
-                        {
-                            if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "cf." ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "aff." ) )
-                            {
-                                tpar << s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) << ".";
-                            }
-                            else
-                            {
-                                if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ).length() < 5 ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "p.," ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "male" ) == true ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "larvae" ) )
-                                    tpar << s_ParameterAbbreviation.section( "\t", 0, 0 );
-                                else
-                                    tpar << s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) << ".";
-                            }
-                        }
-
-                        for ( j=1; j<i_NumOfSections; j++ )
-                            tpar << " " << s_ParameterAbbreviation.section( "\t", j, j );
-                    }
-                    else
-                    {
-                        tpar << s_ParameterAbbreviation;
-                    }
-
-                    tpar << "\t" << s_Unit << "\t\t\t\t\t\t\t" << i_DataType << endl;
-                }
+                    tpar << buildNewParameterEntry( s_Parameter ) << endl;
             }
 
             if ( i_MetadataFileMode == _AUTO_ )
