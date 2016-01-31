@@ -81,7 +81,7 @@ void MainWindow::savePreferences()
     settings.setValue( "OverwriteDataset", gb_overwriteDataset );
     settings.setValue( "UseFilenameInAsEventLabel", gb_useFilenameInAsEventLabel );
     settings.setValue( "WriteParameterImportFile", gb_writeParameterImportFile );
-
+    settings.setValue( "MatchAgainstWoRMS", gb_match_against_WoRMS );
     settings.setValue( "NumberOfParameterFiles", gi_NumOfParameterFiles );
     settings.setValue( "ShowParameterImportFileCreatedMessage", gb_showParameterImportFileCreatedMessage );
     settings.setValue( "MergeNewParameters", gb_mergeNewParameters );
@@ -186,6 +186,7 @@ void MainWindow::loadPreferences()
     gb_overwriteDataset                         = settings.value( "OverwriteDataset", false ).toBool();
     gb_useFilenameInAsEventLabel                = settings.value( "UseFilenameInAsEventLabel", false ).toBool();
     gb_writeParameterImportFile                 = settings.value( "WriteParameterImportFile", false ).toBool();
+    gb_match_against_WoRMS                      = settings.value( "MatchAgainstWoRMS", true ).toBool();
 
     gi_NumOfParameterFiles                      = settings.value( "NumberOfParameterFiles", 0 ).toInt();
     gb_showParameterImportFileCreatedMessage    = settings.value( "ShowParameterImportFileCreatedMessage", true ).toBool();

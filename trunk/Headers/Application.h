@@ -130,6 +130,7 @@ public:
     bool        gb_showParameterImportFileCreatedMessage;
     bool        gb_firstProgramStart;
     bool        gb_createAdditionMetadataOptions;
+    bool        gb_match_against_WoRMS;
 
     bool isEmptyColumn( const QStringList& Input, const int ColumnNo );
     bool isNewEvent( const QStringList& Input, const int i );
@@ -138,7 +139,7 @@ public:
     int resetDataList( const QStringList& Input, const int HeaderLine, const int DataLine, QStringList& Data );
     int isEmptyDataItem( const QString& Output, const int i, const int emptyDataItem );
     int readParameterDB( const QString& FilenamePDB, structParameter *Parameter );
-    int createImportParameterFile( const QString& FilenameParameterImport );
+    int createImportParameterFile( const QString& FilenameParameterImport, const bool match_against_WoRMS );
     int readDataDescription( const QStringList& Input, QStringList& DataDescription, int& HeaderLine, int& DataLine );
     int readMetadataFile( const QString& FilenameMetadata, QStringList& Parameter, QStringList& DataSetComment, QStringList& FurtherDetailsReferenceList, QStringList& FurtherDetailsDatasetList, QStringList& OtherVersionReferenceList, QStringList& OtherVersionDatasetList );
     int readDataHeaderLine( const QString& Header, QStringList& ListParameter );
@@ -151,7 +152,7 @@ public:
     QString findParameterByName( const structParameter ParameterList[], const QString& Parameter );
     QString findParameterByID( const structParameter ParameterList[], const QString& Parameter );
     QString buildParameter( const QString& ParameterMF, const QString& EventLabel );
-    QString buildNewParameterEntry( const QString& Parameter );
+    QString buildNewParameterEntry( const QString& Parameter, const bool match_against_WoRMS );
 
     QString createDir( const QString& Filename, const int NumOfFiles, const bool emtpyDir = true );
     QString buildOutputString( const QString& Data, const bool EmptyColumn[] );
@@ -166,8 +167,8 @@ public:
 
     int createMetadataTemplate(const QString& FilenameIn, const QString& FilenameMetadata, const QString& FilenameParameterImport,
                                const int Codec, const structParameter ParameterList[], const QString& PI,
-                               const int MetadataFileMode, const bool createParameterImportFile, const bool createAdditionMetadataOptions,
-                               const int NumOfFiles );
+                               const int MetadataFileMode, const bool createParameterImportFile, const bool match_against_WoRMS,
+                               const bool createAdditionMetadataOptions, const int NumOfFiles );
 
     int writeDataDescription( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
                               const QString& baseName, const QString& EventLabel, const QString& MinorLabel,

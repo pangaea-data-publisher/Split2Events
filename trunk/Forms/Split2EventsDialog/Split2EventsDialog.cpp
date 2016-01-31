@@ -753,6 +753,11 @@ void MainWindow::doSplit2EventsDialog()
     else
         dialog.writeParameterImportFileCheckBox->setChecked( false );
 
+    if ( gb_match_against_WoRMS == true )
+        dialog.addSpeciesNamesCheckBox->setChecked( true );
+    else
+        dialog.addSpeciesNamesCheckBox->setChecked( false );
+
     dialog.adjustSize();
     dialog.move( posDialog );
     dialog.resize( sizeDialog );
@@ -859,6 +864,11 @@ void MainWindow::doSplit2EventsDialog()
             gb_writeParameterImportFile = true;
         else
             gb_writeParameterImportFile = false;
+
+        if ( dialog.addSpeciesNamesCheckBox->isChecked() )
+            gb_match_against_WoRMS = true;
+        else
+            gb_match_against_WoRMS = false;
 
 // ****************************************************************************
 

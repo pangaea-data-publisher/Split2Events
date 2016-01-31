@@ -62,7 +62,6 @@ SOURCES = ./Sources/ApplicationMainWindow.cpp \
     ./Sources/concatenateFiles.cpp \
     ./Sources/createMetadataTemplate.cpp \
     ./Sources/createImportParameterFile.cpp \
-    ./Sources/doMetadataTemplateOptionsDialog.cpp \
     ./Sources/doSplit2Events.cpp \
     ./Sources/Split2Events.cpp \
     ./Sources/readMetadataFile.cpp \

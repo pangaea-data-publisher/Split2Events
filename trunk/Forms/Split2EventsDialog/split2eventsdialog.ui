@@ -347,7 +347,7 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.Helvetica Neue DeskInterface'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
@@ -457,8 +457,8 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Options</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0" colspan="2">
+      <layout class="QGridLayout" name="gridLayout_20">
+       <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_15">
          <property name="title">
           <string>Data import file creation options</string>
@@ -521,7 +521,7 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_6">
          <property name="title">
           <string>Handle out of range values</string>
@@ -558,7 +558,7 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_16">
          <property name="title">
           <string>Metadata file options</string>
@@ -588,12 +588,12 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
+       <item row="3" column="0">
         <widget class="QGroupBox" name="groupBox_17">
          <property name="title">
           <string>Create metadata template options</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_20">
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
            <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
             <property name="text">
@@ -601,10 +601,17 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
+            <property name="text">
+             <string>add column with species names to parameter import file for WoRMS matching</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="4" column="0">
         <spacer>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -735,12 +742,13 @@ p, li { white-space: pre-wrap; }
   <tabstop>findByPosisitionRadioButton</tabstop>
   <tabstop>findByNameRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
-  <tabstop>CreateMetadataTemplatePushButton</tabstop>
+  <tabstop>addSpeciesNamesCheckBox</tabstop>
   <tabstop>NewProjectPushButton</tabstop>
   <tabstop>SaveProjectPushButton</tabstop>
   <tabstop>LoadProjectPushButton</tabstop>
   <tabstop>OK_pushButton</tabstop>
   <tabstop>Cancel_pushButton</tabstop>
+  <tabstop>CreateMetadataTemplatePushButton</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>

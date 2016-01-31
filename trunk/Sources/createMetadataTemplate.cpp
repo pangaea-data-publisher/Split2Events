@@ -9,7 +9,7 @@
 // *************************************************************************************
 // 2016-01-08
 
-QString MainWindow::buildNewParameterEntry( const QString& s_Parameter )
+QString MainWindow::buildNewParameterEntry( const QString& s_Parameter, const bool b_match_against_WoRMS )
 {
     int     i_DataType              = 2;  // Parameter is a text parameter
     int     i_NumOfSections         = 0;
@@ -32,57 +32,104 @@ QString MainWindow::buildNewParameterEntry( const QString& s_Parameter )
 // *************************************************************************************
 // special parameter abbreviations
 
-    s_ParameterAbbreviation.replace( "forma", "f" );
-    s_ParameterAbbreviation.replace( "length", "l" );
-    s_ParameterAbbreviation.replace( "biomass as carbon", "C" );
-    s_ParameterAbbreviation.replace( "biomass", "biom" );
-    s_ParameterAbbreviation.replace( "dry mass", "dm" );
-    s_ParameterAbbreviation.replace( "wet mass", "wm" );
-    s_ParameterAbbreviation.replace( "mass", "m" );
-    s_ParameterAbbreviation.replace( "female", "f" );
-    s_ParameterAbbreviation.replace( "male", "m" );
-    s_ParameterAbbreviation.replace( "larvae", "larv" );
-    s_ParameterAbbreviation.replace( " ratio", "" );
+    s_ParameterAbbreviation.replace( "forma", "f@" );
+    s_ParameterAbbreviation.replace( "length", "l@" );
+    s_ParameterAbbreviation.replace( "biomass as carbon", "C@" );
+    s_ParameterAbbreviation.replace( "biomass", "biom@" );
+    s_ParameterAbbreviation.replace( "dry mass", "dm@" );
+    s_ParameterAbbreviation.replace( "wet mass", "wm@" );
+    s_ParameterAbbreviation.replace( "mass", "m@" );
+    s_ParameterAbbreviation.replace( "fractionated", "frac@" );
+    s_ParameterAbbreviation.replace( "fragments", "fragm@" );
 
-    s_ParameterAbbreviation.replace( ", ", "\t" );
+    s_ParameterAbbreviation.replace( "copepodites", "c@" );
+    s_ParameterAbbreviation.replace( "c1", "c1@" );
+    s_ParameterAbbreviation.replace( "c2", "c2@" );
+    s_ParameterAbbreviation.replace( "c3", "c3@" );
+    s_ParameterAbbreviation.replace( "c4", "c4@" );
+    s_ParameterAbbreviation.replace( "c5", "c5@" );
+    s_ParameterAbbreviation.replace( "nauplii", "naup@" );
+    s_ParameterAbbreviation.replace( "adult", "ad@" );
+    s_ParameterAbbreviation.replace( "female", "f@" );
+    s_ParameterAbbreviation.replace( "male", "m@" );
+    s_ParameterAbbreviation.replace( "larvae", "larv@" );
+    s_ParameterAbbreviation.replace( "juvenile", "juv@" );
+
+    s_ParameterAbbreviation.replace( "-type", "-T@" );
+    s_ParameterAbbreviation.replace( "planktic", "plankt@" );
+    s_ParameterAbbreviation.replace( "bentic", "bent@" );
+    s_ParameterAbbreviation.replace( "other", "oth@" );
+    s_ParameterAbbreviation.replace( "cover", "cov@" );
+    s_ParameterAbbreviation.replace( "cf.", "cf.@" );
+    s_ParameterAbbreviation.replace( "aff.", "aff.@" );
+    s_ParameterAbbreviation.replace( "d13C", "d13C@" );
+    s_ParameterAbbreviation.replace( "d18O", "d18O@" );
+
+    s_ParameterAbbreviation.replace( "fraction", "fr@@" );
+    s_ParameterAbbreviation.replace( "per unit mass organic carbon", "OC@@" );
+    s_ParameterAbbreviation.replace( "per unit mass total organic carbon", "/TOC@@" );
+    s_ParameterAbbreviation.replace( "per unit sediment mass", "/sed@@" );
+    s_ParameterAbbreviation.replace( "spp.", "spp.@@" );
+    s_ParameterAbbreviation.replace( "sp.", "sp.@@" );
+    s_ParameterAbbreviation.replace( "cyst", "cyst@@" );
+    s_ParameterAbbreviation.replace( "maximal", "max@@" );
+    s_ParameterAbbreviation.replace( "minimal", "min@@" );
+    s_ParameterAbbreviation.replace( "maximum", "max@@" );
+    s_ParameterAbbreviation.replace( "minimum", "min@@" );
+    s_ParameterAbbreviation.replace( "standard deviation", "std dev@@" );
+    s_ParameterAbbreviation.replace( "indeterminata", "indet@@" );
 
 // *************************************************************************************
 // data type
 
-    if ( ( s_Unit.isEmpty() == false ) || ( s_ParameterName.endsWith( " ratio") == true ) )
+    if ( s_Unit.isEmpty() == false )
         i_DataType = 1;
+
+    if ( s_ParameterName.endsWith( "ratio") == true )
+    {
+        s_ParameterAbbreviation.replace( "ratio", "@@" );
+        i_DataType = 1;
+    }
 
 // *************************************************************************************
 
-    s_ParameterNew  = s_ParameterName + "\t";
+    s_ParameterAbbreviation.replace( ",", "" );
+    s_ParameterAbbreviation.replace( " /", "/" );
+    s_ParameterAbbreviation.replace( "/ ", "/" );
+
+    s_ParameterAbbreviation.replace( " ", "\t" );
 
     i_NumOfSections = NumOfSections( s_ParameterAbbreviation );
 
-    switch ( i_NumOfSections )
+    if ( i_NumOfSections == 2 )
+        s_ParameterAbbreviation.append( "\t@" );
+    else
+        s_ParameterAbbreviation.append( "\t" );
+
+    s_ParameterNew = s_ParameterName;
+
+    if ( s_ParameterAbbreviation.section( "\t", 1, 1 ).contains( "@@")  == true )
     {
-        case 1:
-            s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
-        break;
-
-        case 2:
-            if ( s_ParameterAbbreviation.section( "\t", 1, 1 ).endsWith( "p." ) == false ) // sp. and spp.
-                s_ParameterNew.append( QString( " %1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
-            else
-                s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
-            break;
-
-        default:
-            if ( ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "cf." ) || ( s_ParameterAbbreviation.section( "\t", 1, 1 ) == "aff." ) )
-                s_ParameterNew.append( QString( " %1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
-            else
-                s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
-            break;
+        s_ParameterNew.append( QString( "\t%1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
+    }
+    else
+    {
+        if ( s_ParameterAbbreviation.contains( "@" ) == false )
+            s_ParameterNew.append( QString( "\t%1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
+        else
+            s_ParameterNew.append( QString( "\t%1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
     }
 
     for ( int i=1; i<i_NumOfSections; i++ )
         s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", i, i ) ) );
 
-    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t\t%2").arg( s_Unit ).arg( i_DataType ) );
+    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t\t%2\t\t\t").arg( s_Unit ).arg( i_DataType ) );
+
+    s_ParameterNew.replace( "@", "" );
+    s_ParameterNew.replace( " \t", "\t" );
+
+    if ( b_match_against_WoRMS == true )
+        s_ParameterNew.append( QString( "\t%1" ).arg( s_ParameterName.section( ",", 0, 0 ) ) );
 
     return( s_ParameterNew );
 }
@@ -93,9 +140,9 @@ QString MainWindow::buildNewParameterEntry( const QString& s_Parameter )
 // 2011-12-07
 
 int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QString& s_FilenameMetadata, const QString& s_FilenameParameterImport,
-                                        const int i_Codec, const structParameter p_ParameterList[], const QString& s_PI,
-                                        const int i_MetadataFileMode, const bool b_createParameterImportFile, const bool b_createAdditionMetadataOptions,
-                                        const int i_NumOfFiles )
+                                        const int i_Codec, const structParameter p_ParameterList[], const QString& s_PI, const int i_MetadataFileMode,
+                                        const bool b_createParameterImportFile, const bool b_match_against_WoRMS,
+                                        const bool b_createAdditionMetadataOptions, const int i_NumOfFiles )
 
 {
     int			  err                               = _NOERROR_;
@@ -434,7 +481,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
                 s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch );
 
                 if ( ( s_ParameterID == "unknown" ) && ( b_createParameterImportFile == true ) )
-                    tpar << buildNewParameterEntry( s_Parameter ) << endl;
+                    tpar << buildNewParameterEntry( s_Parameter, b_match_against_WoRMS ) << endl;
             }
 
             if ( i_MetadataFileMode == _AUTO_ )
@@ -674,8 +721,10 @@ void MainWindow::doCreateMetadataTemplate()
             break;
         }
 
+        s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_test" ) + ".txt";
+
         if ( gb_writeParameterImportFile == true )
-            err = createImportParameterFile( s_FilenameParameterImport );
+            err = createImportParameterFile( s_FilenameParameterImport, gb_match_against_WoRMS );
 
 // *************************************************************************************
 
@@ -698,7 +747,7 @@ void MainWindow::doCreateMetadataTemplate()
             }
 
             err = createMetadataTemplate( gsl_FilenameList.at( i ), s_FilenameMetadata, s_FilenameParameterImport, gi_Codec, gp_Parameter,
-                                          gs_PI, gi_MetadataFileMode, gb_writeParameterImportFile,
+                                          gs_PI, gi_MetadataFileMode, gb_writeParameterImportFile, gb_match_against_WoRMS,
                                           gb_createAdditionMetadataOptions, gsl_FilenameList.count() );
 
             i_stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );

@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // **********************************************************************************************
 
-int MainWindow::createImportParameterFile( const QString& s_FilenameParameterImport )
+int MainWindow::createImportParameterFile( const QString& s_FilenameParameterImport, const bool b_match_against_WoRMS )
 {
     QFile fout( s_FilenameParameterImport );
 
@@ -17,8 +17,12 @@ int MainWindow::createImportParameterFile( const QString& s_FilenameParameterImp
 
     QTextStream tout( &fout );
 
-//  tout << tr( "// See http://wiki.pangaea.de/wiki/Parameter for details" ) << endl << endl;
-    tout << tr( "ParameterName\tAbbreviation\tUnit\tParameterGroupID\tDataGroup\tLowerLimit\tUpperLimit\tDefaultFormat\tDefaultMethodID\tDefaultDataType\tReferenceID\tDescription\tURL Parameter" ) << endl;
+    tout << tr( "ParameterName\tAbbreviation\tUnit\tParameterGroupID\tDataGroup\tLowerLimit\tUpperLimit\tDefaultFormat\tDefaultMethodID\tDefaultDataType\tReferenceID\tDescription\tURL Parameter" );
+
+    if ( b_match_against_WoRMS == true )
+        tout << tr( "\tSpecies name" );
+
+    tout << endl;
 
     fout.close();
 

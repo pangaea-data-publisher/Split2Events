@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>722</width>
-    <height>203</height>
+    <height>224</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,6 +50,13 @@
        <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
         <property name="text">
          <string>write parameter import file. After completing &quot;imp_Parameter.txt&quot; create an issue (http://issues.pangaea.de).</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
+        <property name="text">
+         <string>add column with species names to parameter import file for WoRMS matching</string>
         </property>
        </widget>
       </item>
@@ -96,6 +103,7 @@
   <tabstop>findByPosisitionRadioButton</tabstop>
   <tabstop>findByNameRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
+  <tabstop>addSpeciesNamesCheckBox</tabstop>
   <tabstop>OK_pushButton</tabstop>
   <tabstop>Cancel_pushButton</tabstop>
  </tabstops>
