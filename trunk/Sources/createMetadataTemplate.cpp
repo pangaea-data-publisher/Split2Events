@@ -721,7 +721,7 @@ void MainWindow::doCreateMetadataTemplate()
             break;
         }
 
-        s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_test" ) + ".txt";
+//      s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_test" ) + ".txt";
 
         if ( gb_writeParameterImportFile == true )
             err = createImportParameterFile( s_FilenameParameterImport, gb_match_against_WoRMS );
