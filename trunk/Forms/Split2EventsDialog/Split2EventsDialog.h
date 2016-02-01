@@ -22,6 +22,7 @@ private slots:
     void LoadProject();
     void enableOKButton();
     void CreateMetadataTemplatePushButtonClicked();
+    void enableAddSpeciesColumnCheckbox();
 };
 
 #endif

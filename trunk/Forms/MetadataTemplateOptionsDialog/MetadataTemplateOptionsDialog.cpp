@@ -7,8 +7,22 @@ MetadataTemplateOptionsDialog::MetadataTemplateOptionsDialog( QWidget *parent ) 
 {
     setupUi( this );
 
-    connect(OK_pushButton, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(Cancel_pushButton, SIGNAL(clicked()), this, SLOT(reject()));
+    connect( OK_pushButton, SIGNAL( clicked() ), this, SLOT(accept() ) );
+    connect( Cancel_pushButton, SIGNAL( clicked() ), this, SLOT(reject() ) );
+    connect( writeParameterImportFileCheckBox, SIGNAL( toggled( bool ) ), this, SLOT( enableAddSpeciesColumnCheckbox() ) );
+
+}
+
+// ****************************************************************************
+// ****************************************************************************
+// ****************************************************************************
+
+void MetadataTemplateOptionsDialog::enableAddSpeciesColumnCheckbox()
+{
+    if ( this->writeParameterImportFileCheckBox->isChecked() == true )
+        this->addSpeciesNamesCheckBox->setEnabled( true );
+    else
+        this->addSpeciesNamesCheckBox->setEnabled( false );
 }
 
 // ****************************************************************************
@@ -40,9 +54,15 @@ void MainWindow::doMetadataTemplateOptionsDialog()
     }
 
     if ( gb_writeParameterImportFile == true )
+    {
         dialog.writeParameterImportFileCheckBox->setChecked( true );
+        dialog.addSpeciesNamesCheckBox->setEnabled( true );
+    }
     else
+    {
         dialog.writeParameterImportFileCheckBox->setChecked( false );
+        dialog.addSpeciesNamesCheckBox->setEnabled( false );
+    }
 
     if ( gb_match_against_WoRMS == true )
         dialog.addSpeciesNamesCheckBox->setChecked( true );
@@ -72,10 +92,13 @@ void MainWindow::doMetadataTemplateOptionsDialog()
         else
             gb_writeParameterImportFile = false;
 
-        if ( dialog.addSpeciesNamesCheckBox->isChecked() )
-            gb_match_against_WoRMS = true;
-        else
-            gb_match_against_WoRMS = false;
+        if ( gb_writeParameterImportFile == true )
+        {
+            if ( dialog.addSpeciesNamesCheckBox->isChecked() )
+                gb_match_against_WoRMS = true;
+            else
+                gb_match_against_WoRMS = false;
+        }
 
         doCreateMetadataTemplate();
         break;

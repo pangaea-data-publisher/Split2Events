@@ -11,6 +11,9 @@ class MetadataTemplateOptionsDialog : public QDialog, public Ui::MetadataTemplat
 
 public:
     MetadataTemplateOptionsDialog( QWidget *parent = 0 );
+
+private slots:
+    void enableAddSpeciesColumnCheckbox();
 };
 
 #endif

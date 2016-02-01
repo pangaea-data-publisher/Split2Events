@@ -7,12 +7,12 @@ Split2EventsDialog::Split2EventsDialog( QWidget *parent ) : QDialog( parent )
 {
     setupUi( this );
 
-    connect( OK_pushButton, SIGNAL( clicked()), this, SLOT( accept() ) );
-    connect( Cancel_pushButton, SIGNAL( clicked()), this, SLOT( reject() ) );
+    connect( OK_pushButton, SIGNAL( clicked() ), this, SLOT( accept() ) );
+    connect( Cancel_pushButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
     connect( NewProjectPushButton, SIGNAL( clicked() ), this, SLOT( NewProject() ) );
     connect( SaveProjectPushButton, SIGNAL( clicked() ), this, SLOT( SaveProject() ) );
     connect( LoadProjectPushButton, SIGNAL( clicked() ), this, SLOT( LoadProject() ) );
-    connect( CreateMetadataTemplatePushButton, SIGNAL( clicked()), this, SLOT( CreateMetadataTemplatePushButtonClicked() ) );
+    connect( CreateMetadataTemplatePushButton, SIGNAL( clicked() ), this, SLOT( CreateMetadataTemplatePushButtonClicked() ) );
 
     connect( PrincipalInvestigatorLineEdit, SIGNAL( selectionChanged() ), this, SLOT( enableOKButton() ) );
     connect( AuthorLineEdit, SIGNAL( selectionChanged() ), this, SLOT( enableOKButton() ) );
@@ -25,6 +25,7 @@ Split2EventsDialog::Split2EventsDialog( QWidget *parent ) : QDialog( parent )
     connect( SourceReferenceLineEdit, SIGNAL( selectionChanged() ), this, SLOT( enableOKButton() ) );
     connect( SourceDatasetLineEdit, SIGNAL( selectionChanged() ), this, SLOT( enableOKButton() ) );
     connect( writeHeaderCheckBox, SIGNAL( clicked() ), this, SLOT( enableOKButton() ) );
+    connect( writeParameterImportFileCheckBox, SIGNAL( toggled( bool ) ), this, SLOT( enableAddSpeciesColumnCheckbox() ) );
 }
 
 // ****************************************************************************
@@ -40,11 +41,23 @@ void Split2EventsDialog::CreateMetadataTemplatePushButtonClicked()
 // ****************************************************************************
 // ****************************************************************************
 
+void Split2EventsDialog::enableAddSpeciesColumnCheckbox()
+{
+    if ( this->writeParameterImportFileCheckBox->isChecked() == true )
+        this->addSpeciesNamesCheckBox->setEnabled( true );
+    else
+        this->addSpeciesNamesCheckBox->setEnabled( false );
+}
+
+// ****************************************************************************
+// ****************************************************************************
+// ****************************************************************************
+
 void Split2EventsDialog::enableOKButton()
 {
     bool b_OK = true;
 
-    if ( this->writeHeaderCheckBox->isChecked() )
+    if ( this->writeHeaderCheckBox->isChecked() == true )
     {
         if ( this->DatasetTitleTextEdit->toPlainText().length() > 255 )
             b_OK = false;
@@ -749,9 +762,15 @@ void MainWindow::doSplit2EventsDialog()
     }
 
     if ( gb_writeParameterImportFile == true )
+    {
         dialog.writeParameterImportFileCheckBox->setChecked( true );
+        dialog.addSpeciesNamesCheckBox->setEnabled( true );
+    }
     else
+    {
         dialog.writeParameterImportFileCheckBox->setChecked( false );
+        dialog.addSpeciesNamesCheckBox->setEnabled( false );
+    }
 
     if ( gb_match_against_WoRMS == true )
         dialog.addSpeciesNamesCheckBox->setChecked( true );
@@ -865,10 +884,13 @@ void MainWindow::doSplit2EventsDialog()
         else
             gb_writeParameterImportFile = false;
 
-        if ( dialog.addSpeciesNamesCheckBox->isChecked() )
-            gb_match_against_WoRMS = true;
-        else
-            gb_match_against_WoRMS = false;
+        if ( gb_writeParameterImportFile == true )
+        {
+            if ( dialog.addSpeciesNamesCheckBox->isChecked() )
+                gb_match_against_WoRMS = true;
+            else
+                gb_match_against_WoRMS = false;
+        }
 
 // ****************************************************************************
 
