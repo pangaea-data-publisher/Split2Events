@@ -18,7 +18,8 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                               const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                               const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                               const QString& s_SourceReference, const QString& s_SourceDataset,
-                              const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status, const int i_Login,
+                              const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+                              const int i_Status, const int i_Login,
                               const bool b_writeHeader, const bool b_splitFile, const int i_OutOfRangeValue,
                               const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
                               const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
@@ -106,7 +107,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                            sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                            sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                            s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                           s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login, b_writeHeader, b_splitFile,
+                                           s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, s_Issue, i_Status, i_Login, b_writeHeader, b_splitFile,
                                            b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                            i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
 
@@ -128,7 +129,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                    sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                    sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                    s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status,
+                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, s_Issue, i_Status,
                                    i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                    i_TopologicType, b_overwriteDataset, b_markSmallFile, i_NumOfSavedDataLines+j, i_OutOfRangeValue, i_NumOfFiles );
 
@@ -154,7 +155,7 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
                                    sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                                    sl_SourceReference, sl_SourceDataset, s_Author, s_Source, s_DatasetTitle, s_ExportFilename,
                                    s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset, s_OtherVersionReference, s_OtherVersionDataset,
-                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status,
+                                   s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, s_Issue, i_Status,
                                    i_Login, b_writeHeader, b_splitFile, b_useFilenameInAsEventLabel, b_makeFilenameUnique, b_hasManyEvents, i_MetadataFileMode,
                                    i_TopologicType, b_overwriteDataset, b_markSmallFile, n, i_OutOfRangeValue, i_NumOfFiles );
 
@@ -193,7 +194,8 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                                      const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                                      const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                                      const QString& s_SourceReference, const QString& s_SourceDataset,
-                                     const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status, const int i_Login,
+                                     const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+                                     const int i_Status, const int i_Login,
                                      const bool b_writeHeader, const bool b_splitFile, const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
                                      const bool b_hasManyEventsIn, const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
                                      const bool b_markSmallFile, const int i_NumOfSavedDataLines, const int i_OutOfRangeValue, const int i_NumOfFiles )
@@ -302,7 +304,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                           sl_FurtherDetailsReference, sl_FurtherDetailsDataset, sl_OtherVersionReference, sl_OtherVersionDataset,
                           sl_SourceReference, sl_SourceDataset, s_Author, s_Source,
                           s_DatasetTitle, s_ExportFilename, s_Reference, s_Project, s_DataSetComment, s_FurtherDetailsReference, s_FurtherDetailsDataset,
-                          s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, i_Status, i_Login,
+                          s_OtherVersionReference, s_OtherVersionDataset, s_SourceReference, s_SourceDataset, s_PI, s_User, s_Parent, s_Issue, i_Status, i_Login,
                           b_useFilenameInAsEventLabel, b_hasManyEvents, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
         writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
@@ -629,8 +631,8 @@ int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, c
                                       const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
                                       const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
                                       const QString& s_SourceReference, const QString& s_SourceDataset,
-                                      const QString& s_PI, const QString& s_User, const QString& s_Parent, const int i_Status,
-                                      const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
+                                      const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+                                      const int i_Status, const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
    int     j                             = 0;
@@ -848,6 +850,11 @@ int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, c
 // start of metaheader
 
    tout << OpenDataDescriptionHeader();
+
+// *************************************************************************************
+// Issue
+
+   tout << Issue( s_Issue );
 
 // *************************************************************************************
 // Parent

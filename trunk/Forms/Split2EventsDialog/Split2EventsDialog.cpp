@@ -174,6 +174,7 @@ void Split2EventsDialog::LoadProject()
         this->SourceReferenceLineEdit->setText( settings.value( "SourceReference", "" ).toString() );
         this->SourceDatasetLineEdit->setText( settings.value( "SourceDataset", "" ).toString() );
         this->ParentLineEdit->setText( settings.value( "Parent", "" ).toString() );
+        this->IssueLineEdit->setText( settings.value( "Issue", "" ).toString() );
         this->UserLineEdit->setText( settings.value( "User", "" ).toString() );
 
         this->TopologicTypeComboBox->setCurrentIndex( settings.value( "TopologicType", 1 ).toInt() );
@@ -294,6 +295,7 @@ void Split2EventsDialog::SaveProject()
         settings.setValue( "SourceReference", this->SourceReferenceLineEdit->text() );
         settings.setValue( "SourceDataset", this->SourceDatasetLineEdit->text() );
         settings.setValue( "Parent", this->ParentLineEdit->text() );
+        settings.setValue( "Issue", this->IssueLineEdit->text() );
         settings.setValue( "User", this->UserLineEdit->text() );
 
         settings.setValue( "TopologicType", this->TopologicTypeComboBox->currentIndex() );
@@ -377,6 +379,7 @@ void Split2EventsDialog::NewProject()
     this->SourceReferenceLineEdit->setText( "" );
     this->SourceDatasetLineEdit->setText( "" );
     this->ParentLineEdit->setText( "" );
+    this->IssueLineEdit->setText( "" );
     this->UserLineEdit->setText( "" );
 
     this->TopologicTypeComboBox->setCurrentIndex( _NOTSPECIFIED_ );
@@ -675,6 +678,7 @@ void MainWindow::doSplit2EventsDialog()
     dialog.SourceReferenceLineEdit->setText( gs_SourceReference );
     dialog.SourceDatasetLineEdit->setText( gs_SourceDataset );
     dialog.ParentLineEdit->setText( gs_Parent );
+    dialog.IssueLineEdit->setText( gs_Issue );
     dialog.UserLineEdit->setText( gs_User );
 
     dialog.TopologicTypeComboBox->setCurrentIndex( gi_TopologicType );
@@ -800,6 +804,7 @@ void MainWindow::doSplit2EventsDialog()
         gs_DatasetTitle             = dialog.DatasetTitleTextEdit->toPlainText();
         gs_ExportFilename       	= dialog.ExportFilenameLineEdit->text();
         gs_Parent     				= dialog.ParentLineEdit->text();
+        gs_Issue                    = dialog.IssueLineEdit->text();
         gs_User     				= dialog.UserLineEdit->text();
         gs_DataSetComment           = dialog.DataSetCommentTextEdit->toPlainText();
         gs_FurtherDetailsReference  = dialog.FurtherDetailsReferenceLineEdit->text();

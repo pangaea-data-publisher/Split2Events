@@ -106,6 +106,7 @@ public:
     QString     gs_OtherVersionDataset;
     QString     gs_SourceReference;
     QString     gs_SourceDataset;
+    QString     gs_Issue;
     QString     gs_User;
     QString     gs_Parent;
 
@@ -183,7 +184,7 @@ public:
                               const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                               const QString& OtherVersionReference, const QString& OtherVersionDataset,
                               const QString& SourceReference, const QString& SourceDataset,
-                              const QString& PI, const QString& User, const QString& Parent,
+                              const QString& PI, const QString& User, const QString& Parent, const QString& Issue,
                               const int Status, const int Login, const bool useFilenameInAsEventLabel, const bool hasManyEvents,
                               const int MetadataFileMode, const int TopologicType, const bool overwriteDataset );
 
@@ -212,22 +213,24 @@ public:
                              const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                              const QString& OtherVersionReference, const QString& OtherVersionDataset,
                              const QString& SourceReference, const QString& SourceDataset,
-                             const QString& PI, const QString& User, const QString& Parent, const int Status, const int Login,
+                             const QString& PI, const QString& User, const QString& Parent, const QString& Issue, const int Status, const int Login,
                              const bool writeHeader, const bool splitFile, const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
                              const bool hasManyEvents, const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,
                              const bool markSmallFile, const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
 
     int Split2Events( const QString& FilenameIn, const int Codec, const int Extension,
-                      const QStringList& ParameterList, const QStringList& DataSetCommentList,
+                      const QStringList& ParameterList,
+                      const QStringList& DataSetCommentList,
                       const QStringList& FurtherDetailsReferenceList, const QStringList& FurtherDetailsDatasetList,
                       const QStringList& OtherVersionReferenceList, const QStringList& OtherVersionDatasetList,
                       const QStringList& SourceReferenceList, const QStringList& SourceDatasetList,
-                      const QString& Author, const QString& Source, const QString& DatasetTitle, const QString& ExportFilename,
-                      const QString& Reference, const QString& Project, const QString& DataSetComment,
+                      const QString& Author, const QString& Source, const QString& DatasetTitle,
+                      const QString& ExportFilename, const QString& Reference,
+                      const QString& Project, const QString& DataSetComment,
                       const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
                       const QString& OtherVersionReference, const QString& OtherVersionDataset,
                       const QString& SourceReference, const QString& SourceDataset,
-                      const QString& PI, const QString& User, const QString& s_Parent, const int Status, const int Login,
+                      const QString& PI, const QString& User, const QString& Parent, const QString& Issue, const int Status, const int Login,
                       const bool writeHeader, const bool splitFile, const int OutOfRangeValue,
                       const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
                       const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,
@@ -254,6 +257,7 @@ public:
     QString StatusID( const QString& StatusID = "-999" );
     QString UserIDs( const QString& UserIDs = "-999" );
     QString LoginID( const QString& LoginID = "-999" );
+    QString Issue( const QString& Issue = "" );
 
     QString num2str( const int num ) { return( QString::number( num ) ); }
     QString num2str( const float num ) { return( QString::number( num ) ); }

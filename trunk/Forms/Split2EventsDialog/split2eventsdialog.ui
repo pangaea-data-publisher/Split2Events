@@ -457,8 +457,45 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Options</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_20">
-       <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_27">
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Handle out of range values</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="ignoreRange_radioButton">
+            <property name="text">
+             <string>ignore range settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="removeValue_radioButton">
+            <property name="text">
+             <string>remove value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="badValue_radioButton">
+            <property name="text">
+             <string>mark as bad</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="questionableValue_radioButton">
+            <property name="text">
+             <string>mark as questionable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_15">
          <property name="title">
           <string>Data import file creation options</string>
@@ -521,44 +558,30 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox_6">
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_17">
          <property name="title">
-          <string>Handle out of range values</string>
+          <string>Create metadata template options</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3">
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="ignoreRange_radioButton">
+           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
             <property name="text">
-             <string>ignore range settings</string>
+             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="removeValue_radioButton">
+           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
             <property name="text">
-             <string>remove value</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="badValue_radioButton">
-            <property name="text">
-             <string>mark as bad</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="questionableValue_radioButton">
-            <property name="text">
-             <string>mark as questionable</string>
+             <string>add column with species names to parameter import file for WoRMS matching</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_16">
          <property name="title">
           <string>Metadata file options</string>
@@ -588,30 +611,39 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QGroupBox" name="groupBox_17">
+       <item row="4" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_22">
          <property name="title">
-          <string>Create metadata template options</string>
+          <string>Issue (PDI)</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_20">
           <item row="0" column="0">
-           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
-            <property name="text">
-             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
+           <widget class="QLineEdit" name="IssueLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
-            <property name="text">
-             <string>add column with species names to parameter import file for WoRMS matching</string>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>701</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <spacer>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -715,8 +747,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>TopologicTypeComboBox</tabstop>
   <tabstop>StatusComboBox</tabstop>
   <tabstop>UnrestrictedRadioButton</tabstop>
-  <tabstop>SignupRequiredRadioButton</tabstop>
   <tabstop>AccessRightsNeededRadioButton</tabstop>
+  <tabstop>SignupRequiredRadioButton</tabstop>
   <tabstop>LoginEventRadioButton</tabstop>
   <tabstop>ExportFilenameLineEdit</tabstop>
   <tabstop>DataSetCommentTextEdit</tabstop>
@@ -743,12 +775,13 @@ p, li { white-space: pre-wrap; }
   <tabstop>findByNameRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
   <tabstop>addSpeciesNamesCheckBox</tabstop>
+  <tabstop>IssueLineEdit</tabstop>
+  <tabstop>CreateMetadataTemplatePushButton</tabstop>
   <tabstop>NewProjectPushButton</tabstop>
   <tabstop>SaveProjectPushButton</tabstop>
   <tabstop>LoadProjectPushButton</tabstop>
   <tabstop>OK_pushButton</tabstop>
   <tabstop>Cancel_pushButton</tabstop>
-  <tabstop>CreateMetadataTemplatePushButton</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>

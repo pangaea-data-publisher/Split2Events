@@ -532,6 +532,26 @@ QString MainWindow::CloseDataDescriptionHeader()
 // **********************************************************************************************
 // **********************************************************************************************
 
+QString MainWindow::Issue( const QString& s_Issue )
+{
+    QString s_OutputStr = "";
+
+    if ( s_Issue.isEmpty() == false )
+    {
+        s_OutputStr = "  ";
+        s_OutputStr.append( "\"Issue\": \"" );
+        s_OutputStr.append( s_Issue );
+        s_OutputStr.append( "\"," );
+        s_OutputStr.append( eol );
+    }
+
+    return( s_OutputStr );
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
 QString MainWindow::ParentID( const QString& s_ParentID )
 {
     QString s_OutputStr = "";
