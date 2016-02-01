@@ -34,6 +34,7 @@ QString MainWindow::buildNewParameterEntry( const QString& s_Parameter, const bo
 
     s_ParameterAbbreviation.replace( "forma", "f@" );
     s_ParameterAbbreviation.replace( "length", "l@" );
+    s_ParameterAbbreviation.replace( "width", "w@" );
     s_ParameterAbbreviation.replace( "biomass as carbon", "C@" );
     s_ParameterAbbreviation.replace( "biomass", "biom@" );
     s_ParameterAbbreviation.replace( "dry mass", "dm@" );
