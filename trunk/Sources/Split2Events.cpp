@@ -239,10 +239,10 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 
     s_FileExtension = tr( ".txt" ); // always txt
 
-    if ( ( b_useFilenameInAsEventLabel == true ) && ( b_splitFile == false ) )
-        s_baseNameEventLabel = s_baseNameFilenameIn;
-    else
+    if ( b_splitFile == true )
         s_baseNameEventLabel = createValidFilename( sl_Data.at( 1 ).section( "\t", 0, 0 ) );
+    else
+        s_baseNameEventLabel = s_baseNameFilenameIn;
 
     if ( b_makeFilenameUnique == true )
         s_FileExtension = QString( "_%1.txt" ).arg( QTime::currentTime().toString( "hhmmsszzz") );
@@ -308,17 +308,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
                           b_useFilenameInAsEventLabel, b_hasManyEvents, i_MetadataFileMode, i_TopologicType, b_overwriteDataset );
 
         writeDataHeader( &fout, i_Codec, sl_Data, sl_MFParameter, i_MetadataFileMode, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, s_EventHeader );
-
-        switch ( i_MetadataFileMode )
-        {
-          case _NOTUSED_:
-            writeData( &fout, i_Codec, sl_Data, b_hasManyEvents, b_EmptyColumn, b_hasEmptyColumn, i_NumOfSavedDataLines, 1, i_NumOfFiles );
-            break;
-
-          default:
-            writeData( &fout, i_Codec, sl_Data, b_hasManyEvents, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, i_NumOfSavedDataLines, i_OutOfRangeValue, i_NumOfFiles );
-            break;
-        }
+        writeData( &fout, i_Codec, sl_Data, b_hasManyEvents, b_EmptyColumn, d_Factor, d_RangeMin, d_RangeMax, i_Digits, s_defaultValue, i_NumOfSavedDataLines, i_OutOfRangeValue, i_NumOfFiles );
     }
     else
     {
@@ -341,6 +331,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
                            const int i_NumOfSavedDataLines, const int i_firstLine, const int i_NumOfFiles )
 {
     QString s_Output        = "";
+    QString s_EventLabel    = "";
 
 // *************************************************************************************
 
@@ -368,6 +359,9 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 
     for ( int i=i_firstLine; i<sl_Data.count(); i++ )
     {
+        if ( sl_Data.at( i ).section( "\t", 0, 0 ).isEmpty() == false )
+            s_EventLabel = sl_Data.at( i ).section( "\t", 0, 0 );
+
         if ( b_hasEmptyColumn == true )
             s_Output = buildOutputString( sl_Data.at( i ), b_EmptyColumn );
         else
@@ -376,9 +370,12 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
         if ( s_Output.isEmpty() == false )
         {
             if ( b_hasManyEvents == true )
-                tout << s_Output << eol;
-            else
-                tout << s_Output.section( "\t", 1, -1 ) << eol;
+            {
+                tout << s_EventLabel << "\t";
+                s_EventLabel.clear();
+            }
+
+            tout << s_Output.section( "\t", 1, -1 ) << eol;
         }
 
         if ( incProgress( i_NumOfFiles, i+i_NumOfSavedDataLines ) == _APPBREAK_ )
@@ -406,6 +403,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
     QString	s_QF                = "";
 
     QString s_Data              = "";
+    QString s_EventLabel        = "";
     QString s_Parameter         = "";
 
     QStringList sl_Output;
@@ -447,6 +445,9 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 
     for ( int i=1; i<sl_Data.count(); i++ )
     {
+        if ( sl_Data.at( i ).section( "\t", 0, 0 ).isEmpty() == false )
+            s_EventLabel = sl_Data.at( i ).section( "\t", 0, 0 );
+
         s_Data = buildOutputString( sl_Data.at( i ) );
 
         if ( s_Data.isEmpty() == false )
@@ -454,7 +455,10 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
             sl_Output.clear();
 
             if ( b_hasManyEvents == true )
-                sl_Output.append( s_Data.section( "\t", 0, 0 ) );
+            {
+                sl_Output.append( s_EventLabel );
+                s_EventLabel.clear();
+            }
 
             for ( int j=1; j<i_NumOfParameters; j++ )
             {
@@ -1275,14 +1279,6 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
 
     switch ( i_MetadataFileMode )
     {
-    case _NOTUSED_:
-        for ( int j=1; j<i_NumOfParameters; j++ )
-        {
-            if ( b_EmptyColumn[j] == false )
-                sl_Header.append( s_Header.section( "\t", j, j ) );
-        }
-        break;
-
     case _BYNAME_:
         for ( int j=1; j<i_NumOfParameters; j++ )
         {

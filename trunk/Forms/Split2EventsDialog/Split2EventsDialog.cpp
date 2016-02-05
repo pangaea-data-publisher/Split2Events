@@ -182,9 +182,6 @@ void Split2EventsDialog::LoadProject()
 
         switch ( settings.value( "MetadataFileMode", _BYNAME_ ).toInt() )
         {
-//      case _NOTUSED_:
-//          this->dontUseMetadataFileRadioButton->setChecked( true );
-//          break;
         case _AUTO_:
             this->useAutoMetadataFileRadioButton->setChecked( true );
             break;
@@ -300,9 +297,6 @@ void Split2EventsDialog::SaveProject()
 
         settings.setValue( "TopologicType", this->TopologicTypeComboBox->currentIndex() );
         settings.setValue( "Status", this->StatusComboBox->currentIndex() );
-
-//      if ( this->dontUseMetadataFileRadioButton->isChecked() )
-//          settings.setValue( "MetadataFileMode", _NOTUSED_ );
 
         if ( this->useAutoMetadataFileRadioButton->isChecked() )
             settings.setValue( "MetadataFileMode", _AUTO_ );
@@ -735,9 +729,6 @@ void MainWindow::doSplit2EventsDialog()
 
     switch ( gi_MetadataFileMode )
     {
-//  case _NOTUSED_:
-//      dialog.dontUseMetadataFileRadioButton->setChecked( true );
-//      break;
     case _AUTO_:
         dialog.useAutoMetadataFileRadioButton->setChecked( true );
         break;
@@ -859,8 +850,6 @@ void MainWindow::doSplit2EventsDialog()
 
 // ****************************************************************************
 
-//      if ( dialog.dontUseMetadataFileRadioButton->isChecked() )
-//          gi_MetadataFileMode = _NOTUSED_;
         if ( dialog.useAutoMetadataFileRadioButton->isChecked() )
             gi_MetadataFileMode = _AUTO_;
         if ( dialog.findByPosisitionRadioButton->isChecked() )

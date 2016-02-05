@@ -43,7 +43,6 @@ void MainWindow::doMetadataTemplateOptionsDialog()
 
     switch ( gi_MetadataFileMode )
     {
-    case _NOTUSED_:
     case _AUTO_:
     case _BYPOSITION_:
         dialog.findByPosisitionRadioButton->setChecked( true );
