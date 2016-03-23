@@ -22,7 +22,7 @@ int main( int argc, char *argv[] )
     QApplication app( argc, argv );
 
     #if defined(Q_OS_MAC)
-        app.setQuitOnLastWindowClosed( false );
+        app.setQuitOnLastWindowClosed( true );
     #endif
 
     QCoreApplication::setOrganizationName("PANGAEA");
@@ -34,6 +34,20 @@ int main( int argc, char *argv[] )
     mainWin.show();
 
     return app.exec();
+}
+
+// **********************************************************************************************
+// **********************************************************************************************
+// **********************************************************************************************
+
+/*! @brief Beendigung des Programms.
+*/
+
+void MainWindow::exitApplication()
+{
+    savePreferences();
+
+    QCoreApplication::quit();
 }
 
 // **********************************************************************************************
@@ -93,7 +107,7 @@ QString MainWindow::getVersion()
 
 // **********************************************************************************************
 
-    s_Url              = QLatin1String( "http://www.pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
+    s_Url              = QLatin1String( "https://pangaea.de/software" ) + "/" + QCoreApplication::applicationName() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
     s_Version_Filename = getDataLocation() + "/" + QCoreApplication::applicationName() + QLatin1String( "_version.txt" );
 
     err = downloadFile( s_Url, s_Version_Filename );

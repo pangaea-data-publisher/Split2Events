@@ -46,7 +46,7 @@ void MainWindow::createActions()
 
     exitAction = new QAction(tr("&Quit"), this);
     exitAction->setShortcut(tr("Ctrl+Q"));
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
     // Tools menu
     Split2EventsAction = new QAction(tr("Create &import file(s)..."), this);
@@ -132,15 +132,8 @@ void MainWindow::createMenus()
     fileMenu->addSeparator();
     fileMenu->addAction( setSettingsAction );
 
-#if defined(Q_OS_LINUX)
     fileMenu->addSeparator();
     fileMenu->addAction( exitAction );
-#endif
-
-#if defined(Q_OS_WIN)
-    fileMenu->addSeparator();
-    fileMenu->addAction( exitAction );
-#endif
 
 // **********************************************************************************************
 
