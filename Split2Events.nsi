@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Split2Events"
-!define PRODUCT_VERSION "12.16"
+!define PRODUCT_VERSION "12.17"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Split2Events.exe"
