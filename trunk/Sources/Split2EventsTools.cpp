@@ -203,6 +203,7 @@ QString MainWindow::buildOutputString( const QString& s_Data )
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "https://" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "hdl:" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "doi:" ) ) == true ) ) )
             s_Output = s_Data.section( "\t", 0, 0 ).section( "@", 0, 0 ) + "\t" + s_Data.section( "\t", 1, 1 );
@@ -259,6 +260,7 @@ QString MainWindow::buildOutputString( const QString& s_Data, const bool b_Empty
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "https://" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "hdl:" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "doi:" ) ) == true ) ) )
             s_Output = s_Data.section( "\t", 0, 0 ).section( "@", 0, 0 ) + "\t" + s_Data.section( "\t", 1, 1 );
@@ -308,6 +310,7 @@ QString MainWindow::buildHeaderOutputString( const QString& s_Data )
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "Universal resource locator" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "URL" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "http://" ) ) == true ) ||
+               ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "https://" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "hdl:" ) ) == true ) ||
                ( s_Data.section( "\t", 1, 1 ).startsWith( tr( "doi:" ) ) == true ) ) )
             s_Output = s_Data.section( "\t", 0, 0 ).section( "@", 0, 0 ) + "\t" + s_Data.section( "\t", 1, 1 );

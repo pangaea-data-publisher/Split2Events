@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>722</width>
+    <width>729</width>
     <height>224</height>
    </rect>
   </property>
@@ -49,7 +49,7 @@
       <item row="0" column="0">
        <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
         <property name="text">
-         <string>write parameter import file. After completing &quot;imp_Parameter.txt&quot; create an issue (http://issues.pangaea.de).</string>
+         <string>write parameter import file. After completing &quot;imp_Parameter.txt&quot; create an issue (https://issues.pangaea.de).</string>
         </property>
        </widget>
       </item>

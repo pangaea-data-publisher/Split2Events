@@ -17,7 +17,7 @@
    #endif
 
     const QString _PROGRAMDOI_           = "doi:10.1594/PANGAEA.835398";
-    const QString _PROGRAMREADME_        = "http://wiki.pangaea.de/wiki/Split2Events";
+    const QString _PROGRAMREADME_        = "https://wiki.pangaea.de/wiki/Split2Events";
 
     const QString _VERSION_              = "12.17";	// Version number, 2016-03-24
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
