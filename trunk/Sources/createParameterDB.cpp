@@ -34,7 +34,7 @@ int MainWindow::getNumParameterQuerys()
 // **********************************************************************************************
 // **********************************************************************************************
 // **********************************************************************************************
-// 02.09.2008
+// 2008-09-02
 
 /*! @brief Erstellt eine neue Parameterdatenbank */
 
@@ -43,10 +43,12 @@ void MainWindow::doCreateParameterDB()
     int         i				    = 0;
     int         err				    = 0;
     int         i_stopProgress	    = 0;
+    int         n                   = 0;
 
     QString     s_FilenameBackupPDB = "";
 
     QStringList sl_FilenameIn;
+    QStringList sl_Input;
 
 // **********************************************************************************************
 
@@ -67,10 +69,14 @@ void MainWindow::doCreateParameterDB()
         }
 
         s_FilenameBackupPDB = fi.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
+        QFileInfo fi_BackupDB( s_FilenameBackupPDB );
 
 // **********************************************************************************************
 
         initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
+
+        if ( fi_BackupDB.exists() == true )
+            n = readFile( s_FilenameBackupPDB, sl_Input, 0 );
 
         while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
         {
@@ -102,6 +108,9 @@ void MainWindow::doCreateParameterDB()
         gi_NumOfParametersInPDB = 0;
 
         setStatusBar( tr( "Done" ), 2 );
+
+        if ( n == readFile( gs_FilenamePDB, sl_Input, 0 ) )
+            err = -145;
     }
     else
     {
@@ -138,13 +147,15 @@ void MainWindow::doCreateParameterDB()
 
 void MainWindow::doMergeParameterDB()
 {
-    int		i                       = 0;
-    int		err                     = 0;
-    int		i_stopProgress          = 0;
+    int         i                   = 0;
+    int         err                 = 0;
+    int         i_stopProgress      = 0;
+    int         n                   = 0;
 
     QString     s_FilenameBackupPDB = "";
 
     QStringList sl_FilenameIn;
+    QStringList sl_Input;
 
 // **********************************************************************************************
 
@@ -165,10 +176,14 @@ void MainWindow::doMergeParameterDB()
         }
 
         s_FilenameBackupPDB = fi.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
+        QFileInfo fi_BackupDB( s_FilenameBackupPDB );
 
 // **********************************************************************************************
 
         initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
+
+        if ( fi_BackupDB.exists() == true )
+            n = readFile( s_FilenameBackupPDB, sl_Input, 0 );
 
         while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
         {
@@ -215,6 +230,9 @@ void MainWindow::doMergeParameterDB()
         gi_NumOfParametersInPDB = 0;
 
         setStatusBar( tr( "Done" ), 2 );
+
+        if ( n == readFile( gs_FilenamePDB, sl_Input, 0 ) )
+            err = -145;
     }
     else
     {

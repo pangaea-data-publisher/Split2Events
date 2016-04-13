@@ -88,6 +88,9 @@ void MainWindow::onError( const int err )
     case -144:
         QMessageBox::information( this, getApplicationName( true ), tr( "One parameter file is missing or empty.\nParameter database cannot be updated.\nTry again after 2 minutes." ) );
         break ;
+    case -145:
+        QMessageBox::information( this, getApplicationName( true ), tr( "Ups. Number of parameters haven't changed. Please check the status of 4D update queue before calling the helpdesk." ) );
+        break ;
     default :
         QMessageBox::information( this, getApplicationName( true ), tr( "Unknown error.\nPlease contact rsieger@pangaea.de" ) );
         break ;
