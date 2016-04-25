@@ -49,7 +49,7 @@ cd '/Volumes/Split2Events'
 rm -rf .fseventsd
 mkdir .fseventsd
 touch .fseventsd/no_log
-cd ~/Development/Distribution
+cd ~/Development/Distribution/Split2Events
 
 echo - verify package
 
@@ -57,3 +57,11 @@ codesign -d '/Volumes/Split2Events/Split2Events.app'
 
 echo
 hdiutil detach '/Volumes/Split2Events'
+
+echo - move application
+
+rm -R /Applications/Split2Events.app
+cp -R Split2Events.app /Applications
+cd ~/Development/Distribution
+
+echo - finished
