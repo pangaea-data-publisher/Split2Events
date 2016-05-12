@@ -371,7 +371,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
         {
             if ( b_hasManyEvents == true )
             {
-                tout << s_EventLabel << "\t";
+                tout << s_EventLabel.section( "@", 0, 0 ) << "\t";
                 s_EventLabel.clear();
             }
 
@@ -456,7 +456,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 
             if ( b_hasManyEvents == true )
             {
-                sl_Output.append( s_EventLabel );
+                sl_Output.append( s_EventLabel.section( "@", 0, 0 ) );
                 s_EventLabel.clear();
             }
 

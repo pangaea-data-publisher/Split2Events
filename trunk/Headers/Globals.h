@@ -19,7 +19,7 @@
     const QString _PROGRAMDOI_           = "doi:10.1594/PANGAEA.835398";
     const QString _PROGRAMREADME_        = "https://wiki.pangaea.de/wiki/Split2Events";
 
-    const QString _VERSION_              = "12.18";	// Version number, 2016-04-13
+    const QString _VERSION_              = "12.19";	// Version number, 2016-05-12
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
     const int   _NOERROR_                = 0;
