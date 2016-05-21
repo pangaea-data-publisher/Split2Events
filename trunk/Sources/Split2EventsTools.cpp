@@ -527,6 +527,7 @@ QString MainWindow::CloseDataDescriptionHeader()
     s_OutputStr.append( eol );
     s_OutputStr.append( "// METAHEADER END" );
     s_OutputStr.append( eol );
+    s_OutputStr.append( eol );
 
     return( s_OutputStr );
 }
