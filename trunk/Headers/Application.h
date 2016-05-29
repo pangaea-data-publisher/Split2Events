@@ -88,6 +88,7 @@ public:
     QString     gs_FilenameFormat;      //!< Bestimmt in die Form des automatisch erzeugten neuen Dateinamens. \%a = aktuelle Actionnumber, \%N = Dateiname.
     QString     gs_Path;                //!< Der zuletzt verwendete Pfad.
     QString     gs_FilenamePDB;         //!< Name der Parameterdatenbank
+    QString     gs_PDBChecksum;         //!< Hash der ParameterDB
     QString     gs_Version;             //!< Aktuelle Version des Programms.
 
     bool        gb_showProgressBar;     //!< Soll der ProgressBar im Fenster unten rechts angezeigt werden?
@@ -349,6 +350,7 @@ private:
     QString getVersion();
     QString setEOLChar( const int EOL );
     QString setExtension( const int Extension );
+    QString getFileChecksum( const QString &FilenameIn );
 
     structParameter *gp_Parameter;
 

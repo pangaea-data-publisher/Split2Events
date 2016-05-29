@@ -91,6 +91,7 @@ void MainWindow::savePreferences()
     settings.setValue( "Codec", gi_Codec );
     settings.setValue( "Extension", gi_Extension );
     settings.setValue( "FilenameOfPDB", gs_FilenamePDB );
+    settings.setValue( "ChecksumOfPDB", gs_PDBChecksum );
 
     settings.endGroup();
 }
@@ -198,6 +199,7 @@ void MainWindow::loadPreferences()
     gi_Codec                                    = settings.value( "Codec", gi_Codec ).toInt();
     gi_Extension                                = settings.value( "Extension", _TXT_ ).toInt();
     gs_FilenamePDB                              = settings.value( "FilenameOfPDB", getDataLocation() + QLatin1String( "/ParameterDB.pdb" ) ).toString();
+    gs_PDBChecksum                              = settings.value( "ChecksumOfPDB", "ffff" ).toString();
 
     settings.endGroup();
 }

@@ -40,24 +40,16 @@ int MainWindow::getNumParameterQuerys()
 
 void MainWindow::doCreateParameterDB()
 {
-    int         err				    = 0;
+    int                i				    = 0;
+    int                err				    = 0;
+    int                i_stopProgress	    = 0;
 
-    int         i				    = 0;
-    int         n                   = 0;
+    QFileInfo          fi_PDB( gs_FilenamePDB );
 
-    int         i_filesizeBackupPDB = 0;
-    int         i_stopProgress	    = 0;
+    QString            s_FilenameBackupPDB = fi_PDB.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
+    QString            s_FileChecksum      = "";
 
-    QString     s_FilenameBackupPDB = "";
-
-    QStringList sl_FilenameIn;
-    QStringList sl_Input;
-
-// **********************************************************************************************
-
-    QFileInfo fi_PDB( gs_FilenamePDB );
-    s_FilenameBackupPDB = fi_PDB.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
-    QFileInfo fi_BackupPDB( s_FilenameBackupPDB );
+    QStringList        sl_FilenameIn;
 
 // **********************************************************************************************
 
@@ -66,24 +58,13 @@ void MainWindow::doCreateParameterDB()
     if ( gi_NumOfParameterFiles > 0 )
     {
         if ( fi_PDB.exists() == false )
-        {
             QDir().mkdir( QDir::toNativeSeparators( fi_PDB.absolutePath() ) );
-        }
         else
-        {
-            QFile PDBfile( gs_FilenamePDB );
-            PDBfile.remove();
-        }
+            QFile::remove( gs_FilenamePDB );
 
 // **********************************************************************************************
 
         initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
-
-        if ( fi_BackupPDB.exists() == true )
-        {
-            n                   = readFile( s_FilenameBackupPDB, sl_Input, 0 );
-            i_filesizeBackupPDB = fi_BackupPDB.size();
-        }
 
         while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
         {
@@ -110,14 +91,25 @@ void MainWindow::doCreateParameterDB()
     if ( ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
-        err = concatenateFiles( s_FilenameBackupPDB, sl_FilenameIn, tr( "Creating backup of parameter database..." ), 1, false );
 
-        gi_NumOfParametersInPDB = 0;
+        if ( err == _NOERROR_ )
+        {
+            s_FileChecksum = getFileChecksum( gs_FilenamePDB );
+
+            if ( s_FileChecksum == gs_PDBChecksum )
+                err = -145;
+
+            gs_PDBChecksum          = s_FileChecksum;
+            gi_NumOfParametersInPDB = 0;
+
+            if ( err == _NOERROR_ )
+            {
+                QFile::remove( s_FilenameBackupPDB );
+                QFile::copy( gs_FilenamePDB, s_FilenameBackupPDB );
+            }
+        }
 
         setStatusBar( tr( "Done" ), 2 );
-
-        if ( ( n == readFile( gs_FilenamePDB, sl_Input, 0 ) ) && ( i_filesizeBackupPDB == fi_PDB.size() ) )
-            err = -145;
     }
     else
     {
@@ -154,24 +146,16 @@ void MainWindow::doCreateParameterDB()
 
 void MainWindow::doMergeParameterDB()
 {
-    int         err				    = 0;
+    int                i				    = 0;
+    int                err				    = 0;
+    int                i_stopProgress	    = 0;
 
-    int         i				    = 0;
-    int         n                   = 0;
+    QFileInfo          fi_PDB( gs_FilenamePDB );
 
-    int         i_filesizeBackupPDB = 0;
-    int         i_stopProgress	    = 0;
+    QString            s_FilenameBackupPDB = fi_PDB.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
+    QString            s_FileChecksum      = "";
 
-    QString     s_FilenameBackupPDB = "";
-
-    QStringList sl_FilenameIn;
-    QStringList sl_Input;
-
-// **********************************************************************************************
-
-    QFileInfo fi_PDB( gs_FilenamePDB );
-    s_FilenameBackupPDB = fi_PDB.absolutePath() + "/" + tr( "ParameterDB_Backup.pdb" );
-    QFileInfo fi_BackupPDB( s_FilenameBackupPDB );
+    QStringList        sl_FilenameIn;
 
 // **********************************************************************************************
 
@@ -180,24 +164,13 @@ void MainWindow::doMergeParameterDB()
     if ( gi_NumOfParameterFiles > 0 )
     {
         if ( fi_PDB.exists() == false )
-        {
             QDir().mkdir( QDir::toNativeSeparators( fi_PDB.absolutePath() ) );
-        }
         else
-        {
-            QFile PDBfile( gs_FilenamePDB );
-            PDBfile.remove();
-        }
+            QFile::remove( gs_FilenamePDB );
 
 // **********************************************************************************************
 
         initFileProgress( gi_NumOfParameterFiles, tr( "ParameterDB.pdb" ), tr( "Refreshing parameter database (download)..." ) );
-
-        if ( fi_BackupPDB.exists() == true )
-        {
-            n                   = readFile( s_FilenameBackupPDB, sl_Input, 0 );
-            i_filesizeBackupPDB = fi_BackupPDB.size();
-        }
 
         while ( ( i < gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
         {
@@ -239,14 +212,25 @@ void MainWindow::doMergeParameterDB()
     if ( ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
-        err = concatenateFiles( s_FilenameBackupPDB, sl_FilenameIn, tr( "Creating backup of parameter database..." ), 1, false );
 
-        gi_NumOfParametersInPDB = 0;
+        if ( err == _NOERROR_ )
+        {
+            s_FileChecksum = getFileChecksum( gs_FilenamePDB );
+
+            if ( s_FileChecksum == gs_PDBChecksum )
+                err = -145;
+
+            gs_PDBChecksum          = s_FileChecksum;
+            gi_NumOfParametersInPDB = 0;
+
+            if ( err == _NOERROR_ )
+            {
+                QFile::remove( s_FilenameBackupPDB );
+                QFile::copy( gs_FilenamePDB, s_FilenameBackupPDB );
+            }
+        }
 
         setStatusBar( tr( "Done" ), 2 );
-
-        if ( ( n == readFile( gs_FilenamePDB, sl_Input, 0 ) ) && ( i_filesizeBackupPDB == fi_PDB.size() ) )
-            err = -145;
     }
     else
     {

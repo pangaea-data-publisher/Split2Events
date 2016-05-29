@@ -118,6 +118,8 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
 
     QStringList sl_Input;
 
+    QByteArray  HashOfFile;
+
 //------------------------------------------------------------------
 
     if ( s_FilenameMetadata.isEmpty() == true )

@@ -10,15 +10,16 @@
 
 int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *p_Parameter )
 {
-    int             n                   = 0;
+    int         n                   = 0;
 
-    int             i_NumOfParameters   = 0;
-    int             i_ParameterID       = 0;
+    int         i_NumOfParameters   = 0;
+    int         i_ParameterID       = 0;
 
-    QString         s_Unit              = "";
+    QString     s_Unit              = "";
 
-    QStringList     sl_Input;
+    QStringList sl_Input;
 
+    QByteArray  HashOfFile;
 //------------------------------------------------------------------
 
     setWaitCursor();
