@@ -2,12 +2,12 @@
 echo
 echo Split2Events
 
-echo - macdeployqt 
+echo - macdeployqt
 
 cd ~/Development/GitHub/Split2Events
 
 rm -R '../../Distribution/Split2Events/Split2Events.app'
-cp -R './build-Split2Events-Desktop_Qt_5_6_0_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
+cp -R './build-Split2Events-Desktop_Qt_5_6_1_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
 cp './trunk/Resources/Info.plist' '../../Distribution/Split2Events/Split2Events.app/Contents/Info.plist'
 
 /Developer/Qt/5.6/clang_64/bin/macdeployqt '../../Distribution/Split2Events/Split2Events.app'
