@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>785</height>
+    <width>930</width>
+    <height>775</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -24,6 +24,81 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_23">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="CreateMetadataTemplatePushButton">
+       <property name="text">
+        <string>Create metadata &amp;template</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NewProjectPushButton">
+       <property name="text">
+        <string>&amp;New</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SaveProjectPushButton">
+       <property name="text">
+        <string>&amp;Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="LoadProjectPushButton">
+       <property name="text">
+        <string>&amp;Load</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="OK_pushButton">
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel_pushButton">
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -33,8 +108,8 @@
       <attribute name="title">
        <string>Mandatory</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_9">
-       <item row="0" column="0" colspan="2">
+      <layout class="QGridLayout" name="gridLayout_17">
+       <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string>PANGAEA staff ID of the principal investigator</string>
@@ -44,20 +119,20 @@
            <widget class="QLineEdit" name="PrincipalInvestigatorLineEdit">
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <spacer>
+           <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
+              <width>184</width>
               <height>20</height>
              </size>
             </property>
@@ -66,17 +141,30 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="1">
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
           <string>PANGAEA institution ID of the source (optional)</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_15">
           <item row="0" column="0">
-           <widget class="QLineEdit" name="SourceLineEdit"/>
+           <widget class="QLineEdit" name="SourceLineEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
-           <spacer>
+           <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -91,7 +179,7 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="3">
+       <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>PANGAEA staff ID(s) of the author(s)</string>
@@ -103,7 +191,7 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
           <string>PANGAEA reference ID(s)</string>
@@ -115,19 +203,19 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item row="2" column="1">
         <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
           <string>PANGAEA project ID(s)</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_17">
+         <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
            <widget class="QLineEdit" name="ProjectLineEdit"/>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="3">
+       <item row="3" column="0" colspan="2">
         <widget class="QGroupBox" name="DatasetTitleGroupBox">
          <property name="maximumSize">
           <size>
@@ -238,7 +326,7 @@
          </layout>
         </widget>
        </item>
-       <item row="4" column="1" rowspan="2" colspan="2">
+       <item row="4" column="1" rowspan="2">
         <widget class="QGroupBox" name="groupBox_13">
          <property name="title">
           <string>Access rights</string>
@@ -316,7 +404,7 @@
          </layout>
         </widget>
        </item>
-       <item row="6" column="0" colspan="3">
+       <item row="6" column="0">
         <widget class="QGroupBox" name="groupBox_7">
          <property name="title">
           <string>Export filename</string>
@@ -328,7 +416,50 @@
          </layout>
         </widget>
        </item>
+       <item row="6" column="1">
+        <widget class="QGroupBox" name="groupBox_22">
+         <property name="title">
+          <string>Issue (PDI)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_20">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="IssueLineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
+      <zorder>groupBox</zorder>
+      <zorder>groupBox_3</zorder>
+      <zorder>groupBox_2</zorder>
+      <zorder>groupBox_4</zorder>
+      <zorder>groupBox_5</zorder>
+      <zorder>DatasetTitleGroupBox</zorder>
+      <zorder>groupBox_11</zorder>
+      <zorder>groupBox_13</zorder>
+      <zorder>groupBox_12</zorder>
+      <zorder>groupBox_7</zorder>
+      <zorder>groupBox_22</zorder>
      </widget>
      <widget class="QWidget" name="tab2">
       <attribute name="title">
@@ -458,43 +589,6 @@ p, li { white-space: pre-wrap; }
        <string>Options</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_27">
-       <item row="1" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBox_6">
-         <property name="title">
-          <string>Handle out of range values</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="ignoreRange_radioButton">
-            <property name="text">
-             <string>ignore range settings</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="removeValue_radioButton">
-            <property name="text">
-             <string>remove value</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="badValue_radioButton">
-            <property name="text">
-             <string>mark as bad</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="questionableValue_radioButton">
-            <property name="text">
-             <string>mark as questionable</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_15">
          <property name="title">
@@ -558,28 +652,18 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBox_17">
-         <property name="title">
-          <string>Create metadata template options</string>
+       <item row="4" column="0">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
-            <property name="text">
-             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
-            <property name="text">
-             <string>add column with species names to parameter import file for WoRMS matching</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_16">
@@ -611,129 +695,69 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBox_22">
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_17">
          <property name="title">
-          <string>Issue (PDI)</string>
+          <string>Create metadata template options</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_20">
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="QLineEdit" name="IssueLineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>16777215</height>
-             </size>
+           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
+            <property name="text">
+             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
+            <property name="text">
+             <string>add column with species names to parameter import file for WoRMS matching</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>701</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="5" column="0">
-        <spacer>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Handle out of range values</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="ignoreRange_radioButton">
+            <property name="text">
+             <string>ignore range settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="removeValue_radioButton">
+            <property name="text">
+             <string>remove value</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="badValue_radioButton">
+            <property name="text">
+             <string>mark as bad</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="questionableValue_radioButton">
+            <property name="text">
+             <string>mark as questionable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QPushButton" name="CreateMetadataTemplatePushButton">
-       <property name="text">
-        <string>Create metadata &amp;template</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="NewProjectPushButton">
-       <property name="text">
-        <string>&amp;New</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="SaveProjectPushButton">
-       <property name="text">
-        <string>&amp;Save</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="LoadProjectPushButton">
-       <property name="text">
-        <string>&amp;Load</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="OK_pushButton">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Cancel_pushButton">
-       <property name="text">
-        <string>&amp;Cancel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
@@ -746,11 +770,18 @@ p, li { white-space: pre-wrap; }
   <tabstop>DatasetTitleTextEdit</tabstop>
   <tabstop>TopologicTypeComboBox</tabstop>
   <tabstop>StatusComboBox</tabstop>
-  <tabstop>UnrestrictedRadioButton</tabstop>
-  <tabstop>AccessRightsNeededRadioButton</tabstop>
-  <tabstop>SignupRequiredRadioButton</tabstop>
-  <tabstop>LoginEventRadioButton</tabstop>
   <tabstop>ExportFilenameLineEdit</tabstop>
+  <tabstop>UnrestrictedRadioButton</tabstop>
+  <tabstop>SignupRequiredRadioButton</tabstop>
+  <tabstop>AccessRightsNeededRadioButton</tabstop>
+  <tabstop>LoginEventRadioButton</tabstop>
+  <tabstop>IssueLineEdit</tabstop>
+  <tabstop>CreateMetadataTemplatePushButton</tabstop>
+  <tabstop>NewProjectPushButton</tabstop>
+  <tabstop>SaveProjectPushButton</tabstop>
+  <tabstop>LoadProjectPushButton</tabstop>
+  <tabstop>OK_pushButton</tabstop>
+  <tabstop>Cancel_pushButton</tabstop>
   <tabstop>DataSetCommentTextEdit</tabstop>
   <tabstop>FurtherDetailsReferenceLineEdit</tabstop>
   <tabstop>OtherVersionReferenceLineEdit</tabstop>
@@ -767,22 +798,15 @@ p, li { white-space: pre-wrap; }
   <tabstop>useFilenameInAsEventLabelCheckBox</tabstop>
   <tabstop>OverwriteDatasetCheckBox</tabstop>
   <tabstop>ignoreRange_radioButton</tabstop>
-  <tabstop>removeValue_radioButton</tabstop>
   <tabstop>badValue_radioButton</tabstop>
+  <tabstop>removeValue_radioButton</tabstop>
   <tabstop>questionableValue_radioButton</tabstop>
+  <tabstop>tabWidget</tabstop>
   <tabstop>useAutoMetadataFileRadioButton</tabstop>
   <tabstop>findByPosisitionRadioButton</tabstop>
-  <tabstop>findByNameRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
   <tabstop>addSpeciesNamesCheckBox</tabstop>
-  <tabstop>IssueLineEdit</tabstop>
-  <tabstop>CreateMetadataTemplatePushButton</tabstop>
-  <tabstop>NewProjectPushButton</tabstop>
-  <tabstop>SaveProjectPushButton</tabstop>
-  <tabstop>LoadProjectPushButton</tabstop>
-  <tabstop>OK_pushButton</tabstop>
-  <tabstop>Cancel_pushButton</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>findByNameRadioButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

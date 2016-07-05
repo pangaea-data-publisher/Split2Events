@@ -169,14 +169,10 @@ QString MainWindow::buildOutputString( const QString& s_Data )
 
     QString s_Output        = "";
 
-    QString test = "";
-
 // *************************************************************************************
 
     for ( int j=2; j<i_NumOfColumns; j++ )
         s_Output.append( "\t" + s_Data.section( "\t", j, j ) );
-
-    test = s_Output;
 
 // *************************************************************************************
 
