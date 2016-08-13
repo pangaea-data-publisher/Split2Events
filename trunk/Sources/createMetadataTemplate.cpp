@@ -445,6 +445,12 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Factor		= "1";
             }
 
+            if ( ( s_ParameterSearch == "oxygen saturation [%]" ) || ( s_ParameterSearch == "oxygen, saturation [%]" ) )
+            {
+                s_ParameterID	= "1883";
+                s_Factor		= "1";
+            }
+
             s_Comment = s_Parameter.section( "@", 1, 1 ).simplified();
 
             if ( s_Comment.isEmpty() == false )

@@ -476,13 +476,15 @@ QString MainWindow::createDir( const QString &s_FilenameIn, const int NumOfFiles
 *   @retval Liste der veraenderten Dateinamen.
 */
 
-QStringList MainWindow::renameFiles( QStringList sl_FilenameIn, const QString &s_searchStr, const QString &s_replaceStr )
+QStringList MainWindow::renameFiles( const QStringList &sl_FilenameIn, const QString &s_searchStr, const QString &s_replaceStr )
 {
     int			i			= 0;
 
     QString		s_Filename	= "";
 
     QStringList	sl_FilenameOut;
+
+// ******************************************************************************
 
     for ( i=0; i<sl_FilenameIn.count(); i++ )
     {
