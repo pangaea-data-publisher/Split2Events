@@ -9,7 +9,7 @@
 // *************************************************************************************
 // 2009-11-06
 
-int MainWindow::readDataDescription( const QStringList& sl_Input, QStringList& sl_DataDescription, int& i_HeaderLine, int& i_DataLine )
+int MainWindow::readDataDescription( const QStringList &sl_Input, QStringList &sl_DataDescription, int& i_HeaderLine, int& i_DataLine )
 {
     int i = 0;
     int n = sl_Input.count();
@@ -77,7 +77,7 @@ int MainWindow::checkEventEntry( const QString &s_EventEntry )
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::readDataHeaderLine( const QString& s_Header, QStringList& sl_ListParameter )
+int MainWindow::readDataHeaderLine( const QString &s_Header, QStringList &sl_ListParameter )
 {
     QString s_Event     = "";
     QString s_Parameter = "";

@@ -12,7 +12,7 @@
 // *************************************************************************************
 // *************************************************************************************
 
-QString MainWindow::getMetadataFilename( const QString& s_firstFilenameIn, const int i_Extension, const int i_NumOfFiles )
+QString MainWindow::getMetadataFilename( const QString &s_firstFilenameIn, const int i_Extension, const int i_NumOfFiles )
 {
     QString s_FilenameMetadata        = "";
     QString s_FilenameMetadataDefault = "";
@@ -106,9 +106,9 @@ QString MainWindow::getMetadataFilename( const QString& s_firstFilenameIn, const
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList& sl_ParameterList, QStringList& sl_DataSetComment,
-                                  QStringList& sl_FurtherDetailsReference, QStringList& sl_FurtherDetailsDataset,
-                                  QStringList& sl_OtherVersionReference, QStringList& sl_OtherVersionDataset )
+int MainWindow::readMetadataFile( const QString &s_FilenameMetadata, QStringList &sl_ParameterList, QStringList &sl_DataSetComment,
+                                  QStringList &sl_FurtherDetailsReference, QStringList &sl_FurtherDetailsDataset,
+                                  QStringList &sl_OtherVersionReference, QStringList &sl_OtherVersionDataset )
 {
     int         i                   = 0;
     int         n                   = 0;
@@ -284,7 +284,7 @@ int MainWindow::readMetadataFile( const QString& s_FilenameMetadata, QStringList
 // *************************************************************************************
 // 2015-05-20
 
-QString MainWindow::trimParameter( const QString& ParameterInStr )
+QString MainWindow::trimParameter( const QString &ParameterInStr )
 {
     int     i_ParameterID   = 0;
 

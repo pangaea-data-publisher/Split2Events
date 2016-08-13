@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // **********************************************************************************************
 
-int MainWindow::readParameterDB( const QString& s_FilenamePDB, structParameter *p_Parameter )
+int MainWindow::readParameterDB( const QString &s_FilenamePDB, structParameter *p_Parameter )
 {
     int         n                   = 0;
 

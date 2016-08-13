@@ -9,7 +9,7 @@
 // *************************************************************************************
 // 2012-07-03
 
-QString MainWindow::findMethod( const QString& s_Comment )
+QString MainWindow::findMethod( const QString &s_Comment )
 {
     QString s_Method = "43"; // not given
 

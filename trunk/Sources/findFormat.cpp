@@ -8,7 +8,7 @@
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::findFormat( const QString& s_FilenameIn, const QStringList& sl_Input,
+int MainWindow::findFormat( const QString &s_FilenameIn, const QStringList &sl_Input,
                             const int i_NumOfParameters, structPFormat Format_ptr[],
                             const int i_NumOfFiles )
 {

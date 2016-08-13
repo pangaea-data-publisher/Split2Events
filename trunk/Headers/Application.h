@@ -134,131 +134,131 @@ public:
     bool        gb_createAdditionMetadataOptions;
     bool        gb_match_against_WoRMS;
 
-    bool isEmptyColumn( const QStringList& Input, const int ColumnNo );
-    bool isNewEvent( const QStringList& Input, const int i );
-    bool findEmptyColumns( const QStringList& Data, const int NumOfColumns, bool EmptyColumn[] );
+    bool isEmptyColumn( const QStringList &Input, const int ColumnNo );
+    bool isNewEvent( const QStringList &Input, const int i );
+    bool findEmptyColumns( const QStringList &Data, const int NumOfColumns, bool EmptyColumn[] );
 
-    int resetDataList( const QStringList& Input, const int HeaderLine, const int DataLine, QStringList& Data );
-    int isEmptyDataItem( const QString& Output, const int i, const int emptyDataItem );
-    int readParameterDB( const QString& FilenamePDB, structParameter *Parameter );
-    int createImportParameterFile( const QString& FilenameParameterImport, const bool match_against_WoRMS );
-    int readDataDescription( const QStringList& Input, QStringList& DataDescription, int& HeaderLine, int& DataLine );
-    int readMetadataFile( const QString& FilenameMetadata, QStringList& Parameter, QStringList& DataSetComment, QStringList& FurtherDetailsReferenceList, QStringList& FurtherDetailsDatasetList, QStringList& OtherVersionReferenceList, QStringList& OtherVersionDatasetList );
-    int readDataHeaderLine( const QString& Header, QStringList& ListParameter );
+    int resetDataList( const QStringList &Input, const int HeaderLine, const int DataLine, QStringList &Data );
+    int isEmptyDataItem( const QString &Output, const int i, const int emptyDataItem );
+    int readParameterDB( const QString &FilenamePDB, structParameter *Parameter );
+    int createImportParameterFile( const QString &FilenameParameterImport, const bool match_against_WoRMS );
+    int readDataDescription( const QStringList &Input, QStringList &DataDescription, int& HeaderLine, int& DataLine );
+    int readMetadataFile( const QString &FilenameMetadata, QStringList &Parameter, QStringList &DataSetComment, QStringList &FurtherDetailsReferenceList, QStringList &FurtherDetailsDatasetList, QStringList &OtherVersionReferenceList, QStringList &OtherVersionDatasetList );
+    int readDataHeaderLine( const QString &Header, QStringList &ListParameter );
     int checkEventEntry( const QString &EventEntry );
     int getNumParameterQuerys();
 
-    int findFormat( const QString& FilenameIn, const QStringList& Input, const int NumOfParameters, structPFormat Format[], const int NumOfFiles );
+    int findFormat( const QString &FilenameIn, const QStringList &Input, const int NumOfParameters, structPFormat Format[], const int NumOfFiles );
 
-    QString findMethod( const QString& Comment );
-    QString findParameterByName( const structParameter ParameterList[], const QString& Parameter );
-    QString findParameterByID( const structParameter ParameterList[], const QString& Parameter );
-    QString buildParameter( const QString& ParameterMF, const QString& EventLabel );
-    QString buildNewParameterEntry( const QString& Parameter, const bool match_against_WoRMS );
+    QString findMethod( const QString &Comment );
+    QString findParameterByName( const structParameter ParameterList[], const QString &Parameter );
+    QString findParameterByID( const structParameter ParameterList[], const QString &Parameter );
+    QString buildParameter( const QString &ParameterMF, const QString &EventLabel );
+    QString buildNewParameterEntry( const QString &Parameter, const bool match_against_WoRMS );
 
-    QString createDir( const QString& Filename, const int NumOfFiles, const bool emtpyDir = true );
-    QString buildOutputString( const QString& Data, const bool EmptyColumn[] );
-    QString buildOutputString( const QString& Data );
-    QString buildHeaderOutputString( const QString& Data );
-    QString buildDataLine( const QStringList& Input, const int i );
-    QString trimParameter( const QString& Parameter );
-    QString createValidFilename( const QString& String );
-    QString getMetadataFilename( const QString& firstFilenameIn, const int Extension, const int NumOfFiles );
+    QString createDir( const QString &Filename, const int NumOfFiles, const bool emtpyDir = true );
+    QString buildOutputString( const QString &Data, const bool EmptyColumn[] );
+    QString buildOutputString( const QString &Data );
+    QString buildHeaderOutputString( const QString &Data );
+    QString buildDataLine( const QStringList &Input, const int i );
+    QString trimParameter( const QString &Parameter );
+    QString createValidFilename( const QString &String );
+    QString getMetadataFilename( const QString &firstFilenameIn, const int Extension, const int NumOfFiles );
     QString getParameterDDIFilename();
-    QStringList addColumns( const QStringList& Input, const int NumOfColumns );
+    QStringList addColumns( const QStringList &Input, const int NumOfColumns );
 
-    int createMetadataTemplate(const QString& FilenameIn, const QString& FilenameMetadata, const QString& FilenameParameterImport,
-                               const int Codec, const structParameter ParameterList[], const QString& PI,
+    int createMetadataTemplate(const QString &FilenameIn, const QString &FilenameMetadata, const QString &FilenameParameterImport,
+                               const int Codec, const structParameter ParameterList[], const QString &PI,
                                const int MetadataFileMode, const bool createParameterImportFile, const bool match_against_WoRMS,
                                const bool createAdditionMetadataOptions, const int NumOfFiles );
 
     int writeDataDescription( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
-                              const QString& baseName, const QString& EventLabel, const QString& MinorLabel,
-                              const QStringList& DSParameter, const QStringList& MFParameter,
-                              const QStringList& DataSetCommentList,
-                              const QStringList& FurtherDetailsReferenceList, const QStringList& FurtherDetailsDatasetList,
-                              const QStringList& OtherVersionReferenceList, const QStringList& OtherVersionDatasetList,
-                              const QStringList& SourceReferenceList, const QStringList& SourceDatasetList,
-                              const QString& Author, const QString& Source, const QString& DatasetTitle,
-                              const QString& ExportFilename, const QString& Reference,
-                              const QString& Project, const QString& DataSetComment,
-                              const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
-                              const QString& OtherVersionReference, const QString& OtherVersionDataset,
-                              const QString& SourceReference, const QString& SourceDataset,
-                              const QString& PI, const QString& User, const QString& Parent, const QString& Issue,
+                              const QString &baseName, const QString &EventLabel, const QString &MinorLabel,
+                              const QStringList &DSParameter, const QStringList &MFParameter,
+                              const QStringList &DataSetCommentList,
+                              const QStringList &FurtherDetailsReferenceList, const QStringList &FurtherDetailsDatasetList,
+                              const QStringList &OtherVersionReferenceList, const QStringList &OtherVersionDatasetList,
+                              const QStringList &SourceReferenceList, const QStringList &SourceDatasetList,
+                              const QString &Author, const QString &Source, const QString &DatasetTitle,
+                              const QString &ExportFilename, const QString &Reference,
+                              const QString &Project, const QString &DataSetComment,
+                              const QString &FurtherDetailsReference, const QString &FurtherDetailsDataset,
+                              const QString &OtherVersionReference, const QString &OtherVersionDataset,
+                              const QString &SourceReference, const QString &SourceDataset,
+                              const QString &PI, const QString &User, const QString &Parent, const QString &Issue,
                               const int Status, const int Login, const bool useFilenameInAsEventLabel, const bool hasManyEvents,
                               const int MetadataFileMode, const int TopologicType, const bool overwriteDataset );
 
-    int writeDataHeader( QIODevice *outDevice, const int Codec, const QStringList& Data, const QStringList& MFParameter,
+    int writeDataHeader( QIODevice *outDevice, const int Codec, const QStringList &Data, const QStringList &MFParameter,
                          const int MetadataFileMode, const bool EmptyColumn[], double Factor[], double  RangeMin[],
-                         double RangeMax[], int Digits[], QString defaultValue[], const QString& EventHeader );
+                         double RangeMax[], int Digits[], QString defaultValue[], const QString &EventHeader );
 
-    int writeData( QIODevice *outDevice, const int Codec, const QStringList& Data,
+    int writeData( QIODevice *outDevice, const int Codec, const QStringList &Data,
                    const bool hasManyEvents, const bool EmptyColumn[], const bool hasEmptyColumn,
                    const int NumOfSavedDataLines, const int firstLine, const int NumOfFiles );
 
-    int writeData( QIODevice *outDevice, const int Codec, const QStringList& Data,
+    int writeData( QIODevice *outDevice, const int Codec, const QStringList &Data,
                    const bool hasManyEvents, const bool EmptyColumn[],
                    double Factor[], double RangeMin[], double RangeMax[], int Digits[], QString defaultValue[],
                    const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
 
-    int writeDataImportFile( const QString& FilenameIn, const QString& OutputPath, const int Codec, const int Extension, const QStringList& Data,
-                             const QStringList& DSParameter, const QStringList& MFParameter,
-                             const QStringList& DataSetCommentList,
-                             const QStringList& FurtherDetailsReferenceList, const QStringList& FurtherDetailsDatasetList,
-                             const QStringList& OtherVersionReferenceList, const QStringList& OtherVersionDatasetList,
-                             const QStringList& SourceReferenceList, const QStringList& SourceDatasetList,
-                             const QString& Author, const QString& Source, const QString& DatasetTitle,
-                             const QString& ExportFilename, const QString& Reference,
-                             const QString& Project, const QString& DataSetComment,
-                             const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
-                             const QString& OtherVersionReference, const QString& OtherVersionDataset,
-                             const QString& SourceReference, const QString& SourceDataset,
-                             const QString& PI, const QString& User, const QString& Parent, const QString& Issue, const int Status, const int Login,
+    int writeDataImportFile( const QString &FilenameIn, const QString &OutputPath, const int Codec, const int Extension, const QStringList &Data,
+                             const QStringList &DSParameter, const QStringList &MFParameter,
+                             const QStringList &DataSetCommentList,
+                             const QStringList &FurtherDetailsReferenceList, const QStringList &FurtherDetailsDatasetList,
+                             const QStringList &OtherVersionReferenceList, const QStringList &OtherVersionDatasetList,
+                             const QStringList &SourceReferenceList, const QStringList &SourceDatasetList,
+                             const QString &Author, const QString &Source, const QString &DatasetTitle,
+                             const QString &ExportFilename, const QString &Reference,
+                             const QString &Project, const QString &DataSetComment,
+                             const QString &FurtherDetailsReference, const QString &FurtherDetailsDataset,
+                             const QString &OtherVersionReference, const QString &OtherVersionDataset,
+                             const QString &SourceReference, const QString &SourceDataset,
+                             const QString &PI, const QString &User, const QString &Parent, const QString &Issue, const int Status, const int Login,
                              const bool writeHeader, const bool splitFile, const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
                              const bool hasManyEvents, const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,
                              const bool markSmallFile, const int NumOfSavedDataLines, const int OutOfRangeValue, const int NumOfFiles );
 
-    int Split2Events( const QString& FilenameIn, const int Codec, const int Extension,
-                      const QStringList& ParameterList,
-                      const QStringList& DataSetCommentList,
-                      const QStringList& FurtherDetailsReferenceList, const QStringList& FurtherDetailsDatasetList,
-                      const QStringList& OtherVersionReferenceList, const QStringList& OtherVersionDatasetList,
-                      const QStringList& SourceReferenceList, const QStringList& SourceDatasetList,
-                      const QString& Author, const QString& Source, const QString& DatasetTitle,
-                      const QString& ExportFilename, const QString& Reference,
-                      const QString& Project, const QString& DataSetComment,
-                      const QString& FurtherDetailsReference, const QString& FurtherDetailsDataset,
-                      const QString& OtherVersionReference, const QString& OtherVersionDataset,
-                      const QString& SourceReference, const QString& SourceDataset,
-                      const QString& PI, const QString& User, const QString& Parent, const QString& Issue, const int Status, const int Login,
+    int Split2Events( const QString &FilenameIn, const int Codec, const int Extension,
+                      const QStringList &ParameterList,
+                      const QStringList &DataSetCommentList,
+                      const QStringList &FurtherDetailsReferenceList, const QStringList &FurtherDetailsDatasetList,
+                      const QStringList &OtherVersionReferenceList, const QStringList &OtherVersionDatasetList,
+                      const QStringList &SourceReferenceList, const QStringList &SourceDatasetList,
+                      const QString &Author, const QString &Source, const QString &DatasetTitle,
+                      const QString &ExportFilename, const QString &Reference,
+                      const QString &Project, const QString &DataSetComment,
+                      const QString &FurtherDetailsReference, const QString &FurtherDetailsDataset,
+                      const QString &OtherVersionReference, const QString &OtherVersionDataset,
+                      const QString &SourceReference, const QString &SourceDataset,
+                      const QString &PI, const QString &User, const QString &Parent, const QString &Issue, const int Status, const int Login,
                       const bool writeHeader, const bool splitFile, const int OutOfRangeValue,
                       const bool useFilenameInAsEventLabel, const bool makeFilenameUnique,
                       const int MetadataFileMode, const int TopologicType, const bool overwriteDataset,
                       const bool markSmallFile, const int FileNo, const int NumOfFiles );
 
-    int concatenateFiles( const QString& FilenameOut, const QStringList FilenameIn, const QString& ProgressMessage, const int SkipNFirstLines, const bool deleteOriginalFiles );
+    int concatenateFiles( const QString &FilenameOut, const QStringList &FilenameIn, const QString &ProgressMessage, const int SkipNFirstLines, const bool deleteOriginalFiles );
 
     QString OpenDataDescriptionHeader();
     QString CloseDataDescriptionHeader();
-    QString ParentID( const QString& ParentID = "-999" );
-    QString DataSetID( const QString& DatasetID = "-999" );
-    QString AuthorIDs( const QString& AuthorIDs = "-999" );
-    QString SourceID( const QString& SourceID = "-999" );
-    QString DatasetTitle( const QString& DatasetTitel = "" );
-    QString Reference( const QString &ReferenceID = "-999", const int ReferenceTypeID = -999, const QString& RelationType = "X", const QString& EventLabel = "" );
-    QString ExportFilename( const QString& ExportFilename = "" );
-    QString EventLabel( const QString& EventLabel = "" );
-    QString Parameter( const QString& ParameterID = "-999", const QString& PIID = "506", const QString& MethodID = "43", const QString& Format = "", const QString& Comment = "" );
-    QString Parameter( const QString& Parameter = "-999" );
-    QString Parameter( const QStringList Parameter );
-    QString DatasetComment( const QString& DatasetComment = "" );
-    QString ProjectIDs( const QString& ProjectID = "-999" );
-    QString TopologicTypeID( const QString& TopologicTypeID = "-999" );
-    QString StatusID( const QString& StatusID = "-999" );
-    QString UserIDs( const QString& UserIDs = "-999" );
-    QString LoginID( const QString& LoginID = "-999" );
-    QString Issue( const QString& Issue = "" );
+    QString ParentID( const QString &ParentID = "-999" );
+    QString DataSetID( const QString &DatasetID = "-999" );
+    QString AuthorIDs( const QString &AuthorIDs = "-999" );
+    QString SourceID( const QString &SourceID = "-999" );
+    QString DatasetTitle( const QString &DatasetTitel = "" );
+    QString Reference( const QString &ReferenceID = "-999", const int ReferenceTypeID = -999, const QString &RelationType = "X", const QString &EventLabel = "" );
+    QString ExportFilename( const QString &ExportFilename = "" );
+    QString EventLabel( const QString &EventLabel = "" );
+    QString Parameter( const QString &ParameterID = "-999", const QString &PIID = "506", const QString &MethodID = "43", const QString &Format = "", const QString &Comment = "" );
+    QString Parameter( const QString &Parameter = "-999" );
+    QString Parameter( const QStringList &Parameter );
+    QString DatasetComment( const QString &DatasetComment = "" );
+    QString ProjectIDs( const QString &ProjectID = "-999" );
+    QString TopologicTypeID( const QString &TopologicTypeID = "-999" );
+    QString StatusID( const QString &StatusID = "-999" );
+    QString UserIDs( const QString &UserIDs = "-999" );
+    QString LoginID( const QString &LoginID = "-999" );
+    QString Issue( const QString &Issue = "" );
 
     QString num2str( const int num ) { return( QString::number( num ) ); }
     QString num2str( const float num ) { return( QString::number( num ) ); }
@@ -276,7 +276,7 @@ signals:
 private slots:
     int  chooseFile();
     int  chooseFiles();
-    int  chooseFolder( const QString& Folder = "" );
+    int  chooseFolder( const QString &Folder = "" );
     int  saveFile();
     int  saveFileAs();
 
@@ -297,16 +297,16 @@ private slots:
 
 private:
     QStringList expandCommandline();
-    QStringList renameFiles( const QStringList Filename, const QString &searchStr, const QString &replaceStr );
+    QStringList renameFiles( const QStringList &Filename, const QString &searchStr, const QString &replaceStr );
     bool buildFilename( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QString &Filename, QString &FilenameIn, QString &FilenameOut );
-    bool containsBinaryFile( const QStringList FilenameList );
+    bool containsBinaryFile( const QStringList &FilenameList );
     bool existsFirstFile( const int ActionNumber, const QString &FilenameFormat, const int Extension, QStringList &FilenameList );
     bool isEmptyLine( const QString &String );
     bool check7z();
     int NumOfSections( const QString &String );
     int addToFilenameList( QStringList &FilenameList, const QString &Filename, const bool showAllFiles = true, const bool decompressFile = false );
     int calcFileSizeClass( const QString &FilenameIn, const int NumOfFiles, const int lowerLimit = 100, const int upperLimit = 1000 );
-    int copyStringList( const QStringList InStringList, QStringList &OutStringList, const QString &s_Pattern = "*" );
+    int copyStringList( const QStringList &InStringList, QStringList &OutStringList, const QString &s_Pattern = "*" );
     int emptyDir( const QString &Dir );
     int decompressFile( const QString &Filename, const bool delZipFile = false );
     int incFileProgress( const int NumOfFiles, const int FileNumber );
@@ -318,12 +318,12 @@ private:
     void appendItem( QStringList &List, const QString &Item, const QString &SS = "", const QString &RS = "" );
     void compressFile( const QString &FilenameIn );
     void clearFilenameList( int &ActionNumber, QStringList &FilenameList );
-    void clearList( QStringList& List );
+    void clearList( QStringList &List );
     void clearMessage();
     void createActions();
     void createMenus();
     void createStatusBar( const bool showProgressBar );
-    void enableMenuItems( const QStringList FilenameList );
+    void enableMenuItems( const QStringList &FilenameList );
     void endTool( const int err, const int stopProgress, int &ActionNumber, const QString &FilenameFormat, const int Extension, QStringList &FilenameList, const QString &doneMessage = "Done", const QString &canceledMessage = "Converter was canceled", const bool clearList = false, const bool incActionNumber = true );
     void initFileProgress( const int NumOfFiles, const QString &FilenameIn, const QString &MessageText );
     void initProgress( const int NumOfFiles, const QString &Filename, const QString &MessageText, const int totalNumberOfSteps );
@@ -336,10 +336,10 @@ private:
     void setNormalCursor();
     void setStatusBar( const QString &Message = "", const int seconds = 0 );
     void setStatusBarFileInProgress( const QString &Filename, const QString &Message = "", const int i_seconds = 0 );
-    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList FilenameList );
+    void setWTitle( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList &FilenameList );
     void setWaitCursor();
-    void showFilenameList( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList FilenameList );
-    void showList( const QStringList List );
+    void showFilenameList( const int ActionNumber, const QString &FilenameFormat, const int Extension, const QStringList &FilenameList );
+    void showList( const QStringList &List );
     void showMessage( const QString &Message, QStringList &MessageList );
     void wait( const int msec );
 

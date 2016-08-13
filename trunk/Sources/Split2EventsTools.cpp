@@ -13,7 +13,7 @@
 // *************************************************************************************
 // 2015-06-26
 
-QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString& s_EventLabel )
+QString MainWindow::buildParameter( const QString &s_ParameterMF, const QString &s_EventLabel )
 {
     QString q           = "\"";
     QString qe          = "\": ";
@@ -86,7 +86,7 @@ QString MainWindow::buildParameter( const QString& s_ParameterMF, const QString&
 // *************************************************************************************
 // 2009-11-06
 
-bool MainWindow::isNewEvent( const QStringList& sl_Input, const int i )
+bool MainWindow::isNewEvent( const QStringList &sl_Input, const int i )
 {
     if ( i <= 1 )
         return( false );
@@ -102,7 +102,7 @@ bool MainWindow::isNewEvent( const QStringList& sl_Input, const int i )
 // *************************************************************************************
 // 2009-11-05
 
-int MainWindow::resetDataList( const QStringList& sl_Input, const int i_HeaderLine, const int i_FirstDataLine, QStringList& sl_Data )
+int MainWindow::resetDataList( const QStringList &sl_Input, const int i_HeaderLine, const int i_FirstDataLine, QStringList &sl_Data )
 {
     int         i_NumOfColumns      = 0;
 
@@ -141,7 +141,7 @@ int MainWindow::resetDataList( const QStringList& sl_Input, const int i_HeaderLi
 // *************************************************************************************
 // 2011-12-07
 
-QString MainWindow::buildDataLine( const QStringList& sl_Input, const int i )
+QString MainWindow::buildDataLine( const QStringList &sl_Input, const int i )
 {
     int     i_NumOfColumns = NumOfSections( sl_Input.at( i ) );
 
@@ -163,7 +163,7 @@ QString MainWindow::buildDataLine( const QStringList& sl_Input, const int i )
 // *************************************************************************************
 // 2011-12-07
 
-QString MainWindow::buildOutputString( const QString& s_Data )
+QString MainWindow::buildOutputString( const QString &s_Data )
 {
     int     i_NumOfColumns  = NumOfSections( s_Data );
 
@@ -217,7 +217,7 @@ QString MainWindow::buildOutputString( const QString& s_Data )
 // *************************************************************************************
 // 2009-11-05
 
-QString MainWindow::buildOutputString( const QString& s_Data, const bool b_EmptyColumn[] )
+QString MainWindow::buildOutputString( const QString &s_Data, const bool b_EmptyColumn[] )
 {
     int     i_NumOfColumns  = NumOfSections( s_Data );
 
@@ -274,7 +274,7 @@ QString MainWindow::buildOutputString( const QString& s_Data, const bool b_Empty
 // *************************************************************************************
 // 2009-11-05
 
-QString MainWindow::buildHeaderOutputString( const QString& s_Data )
+QString MainWindow::buildHeaderOutputString( const QString &s_Data )
 {
     QString s_Output = s_Data.section( "\t", 2 );
 
@@ -324,7 +324,7 @@ QString MainWindow::buildHeaderOutputString( const QString& s_Data )
 // *************************************************************************************
 // 2009-11-05
 
-bool MainWindow::findEmptyColumns( const QStringList& sl_Data, const int i_NumOfColumns, bool b_EmptyColumn[] )
+bool MainWindow::findEmptyColumns( const QStringList &sl_Data, const int i_NumOfColumns, bool b_EmptyColumn[] )
 {
     for ( int j=0; j<i_NumOfColumns; j++ )
         b_EmptyColumn[j] = isEmptyColumn( sl_Data, j );
@@ -343,7 +343,7 @@ bool MainWindow::findEmptyColumns( const QStringList& sl_Data, const int i_NumOf
 // *************************************************************************************
 // 2009-11-04
 
-bool MainWindow::isEmptyColumn( const QStringList& sl_Input, const int i_ColumnNo )
+bool MainWindow::isEmptyColumn( const QStringList &sl_Input, const int i_ColumnNo )
 {
     for ( int i=1; i<sl_Input.count(); i++ )
         if ( ( sl_Input.at( i ).section( "\t", i_ColumnNo, i_ColumnNo ).trimmed().isEmpty() == false ) && ( sl_Input.at( i ).section( "\t", i_ColumnNo, i_ColumnNo ) != "@is empty@" ) )
@@ -357,7 +357,7 @@ bool MainWindow::isEmptyColumn( const QStringList& sl_Input, const int i_ColumnN
 // *************************************************************************************
 // 2009-11-05
 
-int MainWindow::isEmptyDataItem( const QString& s_Output, const int i, const int i_emptyDataItem )
+int MainWindow::isEmptyDataItem( const QString &s_Output, const int i, const int i_emptyDataItem )
 {
     if ( i_emptyDataItem > 0 )
         return( i_emptyDataItem );
@@ -373,7 +373,7 @@ int MainWindow::isEmptyDataItem( const QString& s_Output, const int i, const int
 // *************************************************************************************
 // 2009-11-04
 
-QStringList MainWindow::addColumns( const QStringList& sl_Input, const int i_NumOfColumns )
+QStringList MainWindow::addColumns( const QStringList &sl_Input, const int i_NumOfColumns )
 {
     QString         s_Line = "";
 
@@ -399,7 +399,7 @@ QStringList MainWindow::addColumns( const QStringList& sl_Input, const int i_Num
 // *************************************************************************************
 // 27.4.2004
 
-QString MainWindow::createValidFilename( const QString& InputStr )
+QString MainWindow::createValidFilename( const QString &InputStr )
 {
     QString Filename = InputStr;
 
@@ -428,7 +428,7 @@ QString MainWindow::createValidFilename( const QString& InputStr )
 // *************************************************************************************
 // *************************************************************************************
 
-QString MainWindow::createDir( const QString& s_FilenameIn, const int NumOfFiles, const bool b_emptyDir )
+QString MainWindow::createDir( const QString &s_FilenameIn, const int NumOfFiles, const bool b_emptyDir )
 {
     QFileInfo fi( s_FilenameIn );
 
@@ -476,7 +476,7 @@ QString MainWindow::createDir( const QString& s_FilenameIn, const int NumOfFiles
 *   @retval Liste der veraenderten Dateinamen.
 */
 
-QStringList MainWindow::renameFiles( QStringList sl_FilenameIn, const QString& s_searchStr, const QString& s_replaceStr )
+QStringList MainWindow::renameFiles( QStringList sl_FilenameIn, const QString &s_searchStr, const QString &s_replaceStr )
 {
     int			i			= 0;
 
@@ -532,7 +532,7 @@ QString MainWindow::CloseDataDescriptionHeader()
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Issue( const QString& s_Issue )
+QString MainWindow::Issue( const QString &s_Issue )
 {
     QString s_OutputStr = "";
 
@@ -552,7 +552,7 @@ QString MainWindow::Issue( const QString& s_Issue )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ParentID( const QString& s_ParentID )
+QString MainWindow::ParentID( const QString &s_ParentID )
 {
     QString s_OutputStr = "";
 
@@ -572,7 +572,7 @@ QString MainWindow::ParentID( const QString& s_ParentID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DataSetID( const QString& s_DatasetID )
+QString MainWindow::DataSetID( const QString &s_DatasetID )
 {
     QString s_OutputStr = "";
 
@@ -592,7 +592,7 @@ QString MainWindow::DataSetID( const QString& s_DatasetID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
+QString MainWindow::AuthorIDs( const QString &s_AuthorIDs )
 {
     QString s_OutputStr = "";
 
@@ -614,7 +614,7 @@ QString MainWindow::AuthorIDs( const QString& s_AuthorIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::SourceID( const QString& s_SourceID )
+QString MainWindow::SourceID( const QString &s_SourceID )
 {
     QString s_OutputStr = "";
 
@@ -634,7 +634,7 @@ QString MainWindow::SourceID( const QString& s_SourceID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DatasetTitle( const QString& s_DatasetTitle )
+QString MainWindow::DatasetTitle( const QString &s_DatasetTitle )
 {
     QString s_OutputStr     = "";
     QString sd_DatasetTitle = s_DatasetTitle;
@@ -658,7 +658,7 @@ QString MainWindow::DatasetTitle( const QString& s_DatasetTitle )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Reference( const QString& s_ReferenceID, const int i_RelationTypeID, const QString& s_ReferenceType, const QString& s_EventLabel )
+QString MainWindow::Reference( const QString &s_ReferenceID, const int i_RelationTypeID, const QString &s_ReferenceType, const QString &s_EventLabel )
 {
     QString s_OutputStr = "";
 
@@ -679,7 +679,7 @@ QString MainWindow::Reference( const QString& s_ReferenceID, const int i_Relatio
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ExportFilename( const QString& s_ExportFilename )
+QString MainWindow::ExportFilename( const QString &s_ExportFilename )
 {
     QString s_OutputStr = "";
 
@@ -699,7 +699,7 @@ QString MainWindow::ExportFilename( const QString& s_ExportFilename )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::EventLabel( const QString& s_EventLabel )
+QString MainWindow::EventLabel( const QString &s_EventLabel )
 {
     QString s_OutputStr = "";
 
@@ -719,7 +719,7 @@ QString MainWindow::EventLabel( const QString& s_EventLabel )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Parameter( const QString& s_ParameterID, const QString& s_PIID, const QString& s_MethodID, const QString& s_Format, const QString& s_Comment )
+QString MainWindow::Parameter( const QString &s_ParameterID, const QString &s_PIID, const QString &s_MethodID, const QString &s_Format, const QString &s_Comment )
 {
     QString s_OutputStr = "";
 
@@ -747,7 +747,7 @@ QString MainWindow::Parameter( const QString& s_ParameterID, const QString& s_PI
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::Parameter( const QStringList sl_Parameter )
+QString MainWindow::Parameter( const QStringList &sl_Parameter )
 {
     int     NumOfParameters = sl_Parameter.count() - 1;
 
@@ -785,7 +785,7 @@ QString MainWindow::Parameter( const QStringList sl_Parameter )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::DatasetComment( const QString& s_DatasetComment )
+QString MainWindow::DatasetComment( const QString &s_DatasetComment )
 {
     QString s_OutputStr = "";
     QString sd_DatasetComment = s_DatasetComment;
@@ -809,7 +809,7 @@ QString MainWindow::DatasetComment( const QString& s_DatasetComment )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
+QString MainWindow::ProjectIDs( const QString &s_ProjectIDs )
 {
     QString s_OutputStr = "";
 
@@ -831,7 +831,7 @@ QString MainWindow::ProjectIDs( const QString& s_ProjectIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::TopologicTypeID( const QString& s_TopologicTypeID )
+QString MainWindow::TopologicTypeID( const QString &s_TopologicTypeID )
 {
     QString s_OutputStr = "";
 
@@ -851,7 +851,7 @@ QString MainWindow::TopologicTypeID( const QString& s_TopologicTypeID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::StatusID( const QString& s_StatusID )
+QString MainWindow::StatusID( const QString &s_StatusID )
 {
     QString s_OutputStr = "";
 
@@ -871,7 +871,7 @@ QString MainWindow::StatusID( const QString& s_StatusID )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::UserIDs( const QString& s_UserIDs )
+QString MainWindow::UserIDs( const QString &s_UserIDs )
 {
     QString s_OutputStr = "";
 
@@ -893,7 +893,7 @@ QString MainWindow::UserIDs( const QString& s_UserIDs )
 // **********************************************************************************************
 // **********************************************************************************************
 
-QString MainWindow::LoginID( const QString& s_LoginID )
+QString MainWindow::LoginID( const QString &s_LoginID )
 {
     QString s_OutputStr = "  ";
 

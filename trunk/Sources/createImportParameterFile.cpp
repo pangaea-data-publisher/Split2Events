@@ -8,7 +8,7 @@
 // **********************************************************************************************
 // **********************************************************************************************
 
-int MainWindow::createImportParameterFile( const QString& s_FilenameParameterImport, const bool b_match_against_WoRMS )
+int MainWindow::createImportParameterFile( const QString &s_FilenameParameterImport, const bool b_match_against_WoRMS )
 {
     QFile fout( s_FilenameParameterImport );
 

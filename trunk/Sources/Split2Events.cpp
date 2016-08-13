@@ -8,17 +8,17 @@
 
 #include "Application.h"
 
-int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, const int i_Extension,
-                              const QStringList& sl_MFParameter, const QStringList& sl_DataSetComment,
-                              const QStringList& sl_FurtherDetailsReference, const QStringList& sl_FurtherDetailsDataset,
-                              const QStringList& sl_OtherVersionReference, const QStringList& sl_OtherVersionDataset,
-                              const QStringList& sl_SourceReference, const QStringList& sl_SourceDataset,
-                              const QString& s_Author, const QString& s_Source, const QString& s_DatasetTitle, const QString& s_ExportFilename,
-                              const QString& s_Reference, const QString& s_Project, const QString& s_DataSetComment,
-                              const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
-                              const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
-                              const QString& s_SourceReference, const QString& s_SourceDataset,
-                              const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+int MainWindow::Split2Events( const QString &s_FilenameIn, const int i_Codec, const int i_Extension,
+                              const QStringList &sl_MFParameter, const QStringList &sl_DataSetComment,
+                              const QStringList &sl_FurtherDetailsReference, const QStringList &sl_FurtherDetailsDataset,
+                              const QStringList &sl_OtherVersionReference, const QStringList &sl_OtherVersionDataset,
+                              const QStringList &sl_SourceReference, const QStringList &sl_SourceDataset,
+                              const QString &s_Author, const QString &s_Source, const QString &s_DatasetTitle, const QString &s_ExportFilename,
+                              const QString &s_Reference, const QString &s_Project, const QString &s_DataSetComment,
+                              const QString &s_FurtherDetailsReference, const QString &s_FurtherDetailsDataset,
+                              const QString &s_OtherVersionReference, const QString &s_OtherVersionDataset,
+                              const QString &s_SourceReference, const QString &s_SourceDataset,
+                              const QString &s_PI, const QString &s_User, const QString &s_Parent, const QString &s_Issue,
                               const int i_Status, const int i_Login,
                               const bool b_writeHeader, const bool b_splitFile, const int i_OutOfRangeValue,
                               const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
@@ -182,19 +182,19 @@ int MainWindow::Split2Events( const QString& s_FilenameIn, const int i_Codec, co
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const QString& s_OutputPath, const int i_Codec, const int i_Extension,
-                                     const QStringList& sl_Data, const QStringList& sl_DSParameter, const QStringList& sl_MFParameter,
-                                     const QStringList& sl_DataSetComment,
-                                     const QStringList& sl_FurtherDetailsReference, const QStringList& sl_FurtherDetailsDataset,
-                                     const QStringList& sl_OtherVersionReference, const QStringList& sl_OtherVersionDataset,
-                                     const QStringList& sl_SourceReference, const QStringList& sl_SourceDataset,
-                                     const QString& s_Author, const QString& s_Source, const QString& s_DatasetTitle,
-                                     const QString& s_ExportFilename, const QString& s_Reference,
-                                     const QString& s_Project, const QString& s_DataSetComment,
-                                     const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
-                                     const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
-                                     const QString& s_SourceReference, const QString& s_SourceDataset,
-                                     const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+int MainWindow::writeDataImportFile( const QString &s_baseNameFilenameIn, const QString &s_OutputPath, const int i_Codec, const int i_Extension,
+                                     const QStringList &sl_Data, const QStringList &sl_DSParameter, const QStringList &sl_MFParameter,
+                                     const QStringList &sl_DataSetComment,
+                                     const QStringList &sl_FurtherDetailsReference, const QStringList &sl_FurtherDetailsDataset,
+                                     const QStringList &sl_OtherVersionReference, const QStringList &sl_OtherVersionDataset,
+                                     const QStringList &sl_SourceReference, const QStringList &sl_SourceDataset,
+                                     const QString &s_Author, const QString &s_Source, const QString &s_DatasetTitle,
+                                     const QString &s_ExportFilename, const QString &s_Reference,
+                                     const QString &s_Project, const QString &s_DataSetComment,
+                                     const QString &s_FurtherDetailsReference, const QString &s_FurtherDetailsDataset,
+                                     const QString &s_OtherVersionReference, const QString &s_OtherVersionDataset,
+                                     const QString &s_SourceReference, const QString &s_SourceDataset,
+                                     const QString &s_PI, const QString &s_User, const QString &s_Parent, const QString &s_Issue,
                                      const int i_Status, const int i_Login,
                                      const bool b_writeHeader, const bool b_splitFile, const bool b_useFilenameInAsEventLabel, const bool b_makeFilenameUnique,
                                      const bool b_hasManyEventsIn, const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset,
@@ -326,7 +326,7 @@ int MainWindow::writeDataImportFile( const QString& s_baseNameFilenameIn, const 
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data,
+int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList &sl_Data,
                            const bool b_hasManyEvents, const bool b_EmptyColumn[], const bool b_hasEmptyColumn,
                            const int i_NumOfSavedDataLines, const int i_firstLine, const int i_NumOfFiles )
 {
@@ -389,7 +389,7 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data,
+int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStringList &sl_Data,
                            const bool b_hasManyEvents, const bool b_EmptyColumn[],
                            double d_Factor[], double  d_RangeMin[], double d_RangeMax[],
                            int i_Digits[], QString s_defaultValue[],
@@ -623,19 +623,19 @@ int MainWindow::writeData( QIODevice *outDevice, const int i_Codec, const QStrin
 // 2015-04-11 - new format of data description block
 
 int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, const bool b_EmptyColumn[],
-                                      const QString& s_baseNameFilenameIn, const QString& s_EventLabel, const QString& s_MinorLabel,
-                                      const QStringList& sl_DSParameter, const QStringList& sl_MFParameter,
-                                      const QStringList& sl_DataSetComment,
-                                      const QStringList& sl_FurtherDetailsReference, const QStringList &sl_FurtherDetailsDataset,
-                                      const QStringList& sl_OtherVersionReference, const QStringList& sl_OtherVersionDataset,
-                                      const QStringList& sl_SourceReference, const QStringList& sl_SourceDataset,
-                                      const QString& s_Author, const QString& s_Source, const QString& s_DatasetTitle,
-                                      const QString& s_ExportFilename, const QString& s_Reference,
-                                      const QString& s_Project, const QString& s_DataSetComment,
-                                      const QString& s_FurtherDetailsReference, const QString& s_FurtherDetailsDataset,
-                                      const QString& s_OtherVersionReference, const QString& s_OtherVersionDataset,
-                                      const QString& s_SourceReference, const QString& s_SourceDataset,
-                                      const QString& s_PI, const QString& s_User, const QString& s_Parent, const QString& s_Issue,
+                                      const QString &s_baseNameFilenameIn, const QString &s_EventLabel, const QString &s_MinorLabel,
+                                      const QStringList &sl_DSParameter, const QStringList &sl_MFParameter,
+                                      const QStringList &sl_DataSetComment,
+                                      const QStringList &sl_FurtherDetailsReference, const QStringList &sl_FurtherDetailsDataset,
+                                      const QStringList &sl_OtherVersionReference, const QStringList &sl_OtherVersionDataset,
+                                      const QStringList &sl_SourceReference, const QStringList &sl_SourceDataset,
+                                      const QString &s_Author, const QString &s_Source, const QString &s_DatasetTitle,
+                                      const QString &s_ExportFilename, const QString &s_Reference,
+                                      const QString &s_Project, const QString &s_DataSetComment,
+                                      const QString &s_FurtherDetailsReference, const QString &s_FurtherDetailsDataset,
+                                      const QString &s_OtherVersionReference, const QString &s_OtherVersionDataset,
+                                      const QString &s_SourceReference, const QString &s_SourceDataset,
+                                      const QString &s_PI, const QString &s_User, const QString &s_Parent, const QString &s_Issue,
                                       const int i_Status, const int i_Login, const bool b_useFilenameInAsEventLabel, const bool b_hasManyEvents,
                                       const int i_MetadataFileMode, const int i_TopologicType, const bool b_overwriteDataset )
 {
@@ -1219,10 +1219,10 @@ int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, c
 // *************************************************************************************
 // *************************************************************************************
 
-int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const QStringList& sl_Data, const QStringList& sl_MFParameter,
+int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const QStringList &sl_Data, const QStringList &sl_MFParameter,
                                  const int i_MetadataFileMode, const bool b_EmptyColumn[],
                                  double d_Factor[], double  d_RangeMin[], double d_RangeMax[],
-                                 int i_Digits[], QString s_defaultValue[], const QString& s_EventHeader )
+                                 int i_Digits[], QString s_defaultValue[], const QString &s_EventHeader )
 {
    #if defined(Q_OS_LINUX)
        const char eol = '\n';

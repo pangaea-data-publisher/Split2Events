@@ -9,7 +9,7 @@
 // *************************************************************************************
 // 2016-01-08
 
-QString MainWindow::buildNewParameterEntry( const QString& s_Parameter, const bool b_match_against_WoRMS )
+QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bool b_match_against_WoRMS )
 {
     int     i_DataType              = 2;  // Parameter is a text parameter
     int     i_NumOfSections         = 0;
@@ -140,8 +140,8 @@ QString MainWindow::buildNewParameterEntry( const QString& s_Parameter, const bo
 // *************************************************************************************
 // 2011-12-07
 
-int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QString& s_FilenameMetadata, const QString& s_FilenameParameterImport,
-                                        const int i_Codec, const structParameter p_ParameterList[], const QString& s_PI, const int i_MetadataFileMode,
+int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QString &s_FilenameMetadata, const QString &s_FilenameParameterImport,
+                                        const int i_Codec, const structParameter p_ParameterList[], const QString &s_PI, const int i_MetadataFileMode,
                                         const bool b_createParameterImportFile, const bool b_match_against_WoRMS,
                                         const bool b_createAdditionMetadataOptions, const int i_NumOfFiles )
 
@@ -568,7 +568,7 @@ int MainWindow::createMetadataTemplate( const QString& s_FilenameIn, const QStri
 // *************************************************************************************
 // *************************************************************************************
 
-QString MainWindow::findParameterByName(const structParameter p_ParameterList[], const QString& s_ParameterIn )
+QString MainWindow::findParameterByName(const structParameter p_ParameterList[], const QString &s_ParameterIn )
 {
     QString s_ParameterID           = "unknown";
 
@@ -642,7 +642,7 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
 // *************************************************************************************
 // *************************************************************************************
 
-QString MainWindow::findParameterByID( const structParameter p_ParameterList[], const QString& s_Parameter )
+QString MainWindow::findParameterByID( const structParameter p_ParameterList[], const QString &s_Parameter )
 {
     int     i_NumOfParametersInPDB  = p_ParameterList[0].ParameterID.toInt();
     int     i_ParameterID           = s_Parameter.section( "@", 0, 0 ).toInt();
