@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Split2Events"
-!define PRODUCT_VERSION "12.23"
+!define PRODUCT_VERSION "12.24"
 !define PRODUCT_PUBLISHER "PANGAEA"
 !define PRODUCT_WEB_SITE "http://www.pangaea.de"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Split2Events.exe"
@@ -48,6 +48,7 @@ RequestExecutionLevel admin
 Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Split2Events.exe"
+  File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\curl.exe"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Qt5Core.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Qt5Gui.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\Qt5Network.dll"
@@ -55,8 +56,6 @@ Section "MainSection" SEC01
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\libgcc_s_dw2-1.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\libstdc++-6.dll"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\libwinpthread-1.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\libeay32.dll"
-  File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\ssleay32.dll"
 
   SetOutPath "$INSTDIR\platforms"
   File "C:\Users\rsieger\Documents\Development\Distribution\Split2Events\platforms\qminimal.dll"
@@ -107,6 +106,7 @@ FunctionEnd
 
 Section Uninstall
   Delete "$INSTDIR\Split2Events.exe"
+  Delete "$INSTDIR\curl.exe"
   Delete "$INSTDIR\Qt5Core.dll"
   Delete "$INSTDIR\Qt5Gui.dll"
   Delete "$INSTDIR\Qt5Network.dll"
@@ -114,8 +114,6 @@ Section Uninstall
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\libstdc++-6.dll"
   Delete "$INSTDIR\libwinpthread-1.dll"
-  Delete "$INSTDIR\libeay32.dll"
-  Delete "$INSTDIR\ssleay32.dll"  
   Delete "$INSTDIR\platforms\qminimal.dll"
   Delete "$INSTDIR\platforms\qwindows.dll"
   Delete "$INSTDIR\uninst.exe"

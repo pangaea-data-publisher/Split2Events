@@ -15,12 +15,9 @@ int MainWindow::getNumParameterQuerys()
 // **********************************************************************************************
 // get number of parameter querys
 
-    QFile outfile( getParameterDDIFilename() );
+    removeFile( getParameterDDIFilename() );
 
-    if ( outfile.exists() == true )
-        outfile.remove();
-
-    downloadFile( QLatin1String( "https://pangaea.de/software/Split2Events/ParameterDDI.txt" ), getParameterDDIFilename() );
+    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/software/Split2Events/ParameterDDI.txt" ), getParameterDDIFilename() );
 
     if ( ( n = readFile( getParameterDDIFilename(), sl_Input ) ) > 0 ) // System encoding
     {
@@ -72,7 +69,7 @@ void MainWindow::doCreateParameterDB()
             QString s_FilenameParameter      = fi_PDB.absolutePath() + "/" + s_FilenameParameterQuery + ".txt";
             QString s_DDI_URL                = QLatin1String( "https://pangaea.de/ddi/xxx.tab?retr=parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
-            downloadFile( s_DDI_URL, s_FilenameParameter );
+            downloadFile( findCurl(), s_DDI_URL, s_FilenameParameter );
 
             if ( ( i < gi_NumOfParameterFiles-1 ) && ( QFileInfo( s_FilenameParameter ).size() > 730000 ) )
                 sl_FilenameIn.append( s_FilenameParameter );
@@ -195,7 +192,7 @@ void MainWindow::doMergeParameterDB()
 
                 QString s_DDI_URL = QLatin1String( "https://pangaea.de/ddi/xxx.tab?retr=parameter/" ) + s_FilenameParameterQuery + QLatin1String( ".retr&conf=parameter/ParameterListOrderByID.conf&format=textfile&charset=UTF-8" );
 
-                downloadFile( s_DDI_URL, s_FilenameParameter );
+                downloadFile( findCurl(), s_DDI_URL, s_FilenameParameter );
 
                 if ( QFileInfo( s_FilenameParameter ).size() > 41 ) // Header contains 41 Bytes
                     sl_FilenameIn.append( s_FilenameParameter );
