@@ -3,7 +3,6 @@
 /* Dr. Rainer Sieger          */
 
 #include <QLoggingCategory>
-#include <QCryptographicHash>
 
 #include "Application.h"
 #include "../Forms/AboutDialog/AboutDialog.h"
@@ -1103,7 +1102,7 @@ void MainWindow::compressFile( const QString &s_Filename, const int mode, const 
             #endif
 
             #if defined(Q_OS_WIN)
-                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_Filename ) + "\""
+                s_arg = "\"" + QDir::toNativeSeparators( s_Program ) + "\" a -tzip \"" + QDir::toNativeSeparators( fi.absolutePath() + "/" + fi.completeBaseName() + ".zip" ) + "\"" + " \"" + QDir::toNativeSeparators( s_Filename ) + "\"";
             #endif
         }
 
@@ -2351,7 +2350,7 @@ QString MainWindow::findZip( const int mode )
         }
         else
         {
-            s_Program = fi_7z64exe.absoluteFilePath() );
+            s_Program = fi_7z64exe.absoluteFilePath();
         }
     }
     else
@@ -2416,7 +2415,7 @@ QString MainWindow::findUnzip( const int mode )
         }
         else
         {
-            s_Program = fi_7z64exe.absoluteFilePath() );
+            s_Program = fi_7z64exe.absoluteFilePath();
         }
     }
     else
