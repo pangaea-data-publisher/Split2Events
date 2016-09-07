@@ -10,16 +10,16 @@
 
 int MainWindow::readParameterDB( const QString &s_FilenamePDB, structParameter *p_Parameter )
 {
-    int         n                   = 0;
+    int         n                     = 0;
 
-    int         i_NumOfParameters   = 0;
-    int         i_ParameterID       = 0;
+    int         i_NumOfParameterFiles = 0;
+    int         i_NumOfParameters     = 0;
+    int         i_ParameterID         = 0;
 
-    QString     s_Unit              = "";
+    QString     s_Unit                = "";
 
     QStringList sl_Input;
 
-    QByteArray  HashOfFile;
 //------------------------------------------------------------------
 
     setWaitCursor();
@@ -33,7 +33,8 @@ int MainWindow::readParameterDB( const QString &s_FilenamePDB, structParameter *
         return( -101 );
     }
 
-    i_NumOfParameters = sl_Input.at( n-1 ).section( "\t", 0, 0 ).toInt();
+    i_NumOfParameterFiles = getNumParameterQuerys();
+    i_NumOfParameters     = sl_Input.at( n-1 ).section( "\t", 0, 0 ).toInt();
 
     if ( i_NumOfParameters > _MAX_NUM_OF_PARAMETERS_ )
     {
@@ -41,6 +42,14 @@ int MainWindow::readParameterDB( const QString &s_FilenamePDB, structParameter *
         setStatusBar( tr( "" ) );
 
         return( -141 );
+    }
+
+    if ( i_NumOfParameters < ( i_NumOfParameterFiles-1 )*20000 )
+    {
+        setNormalCursor();
+        setStatusBar( tr( "" ) );
+
+        return( -143 );
     }
 
 //------------------------------------------------------------------
