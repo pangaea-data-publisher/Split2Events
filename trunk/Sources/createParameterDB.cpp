@@ -17,7 +17,7 @@ int MainWindow::getNumParameterQuerys()
 
     removeFile( getParameterDDIFilename() );
 
-    downloadFile( findCurl(), QLatin1String( "https://pangaea.de/software/Split2Events/ParameterDDI.txt" ), getParameterDDIFilename() );
+    downloadFile( findCurl(), QLatin1String( "https://store.pangaea.de/software/Split2Events/ParameterDDI.txt" ), getParameterDDIFilename() );
 
     if ( ( n = readFile( getParameterDDIFilename(), sl_Input ) ) > 0 ) // System encoding
     {
