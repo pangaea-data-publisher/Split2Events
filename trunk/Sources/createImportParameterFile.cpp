@@ -17,7 +17,7 @@ int MainWindow::createImportParameterFile( const QString &s_FilenameParameterImp
 
     QTextStream tout( &fout );
 
-    tout << tr( "ParameterName\tAbbreviation\tUnit\tParameterGroupID\tDataGroup\tLowerLimit\tUpperLimit\tDefaultFormat\tDefaultMethodID\tDefaultDataType\tReferenceID\tDescription\tURL Parameter" );
+    tout << tr( "ParameterName\tAbbreviation\tUnit\tDataGroup\tLowerLimit\tUpperLimit\tDefaultFormat\tDefaultMethodID\tDefaultDataType\tReferenceID\tDescription\tURL Parameter" );
 
     if ( b_match_against_WoRMS == true )
         tout << tr( "\tSpecies name" );

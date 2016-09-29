@@ -124,7 +124,7 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
     for ( int i=1; i<i_NumOfSections; i++ )
         s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", i, i ) ) );
 
-    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t\t%2\t\t\t").arg( s_Unit ).arg( i_DataType ) );
+    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t%2\t\t\t").arg( s_Unit ).arg( i_DataType ) );
 
     s_ParameterNew.replace( "@", "" );
     s_ParameterNew.replace( " \t", "\t" );
