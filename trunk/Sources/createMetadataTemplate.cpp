@@ -130,7 +130,7 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
     s_ParameterNew.replace( " \t", "\t" );
 
     if ( b_match_against_WoRMS == true )
-        s_ParameterNew.append( QString( "\t%1" ).arg( s_ParameterName.section( ",", 0, 0 ) ) );
+        s_ParameterNew.append( QString( "http://www.marinespecies.org/aphia.php?p=taxdetails&id=xxx\t%1" ).arg( s_ParameterName.section( ",", 0, 0 ) ) );
 
     return( s_ParameterNew );
 }
@@ -171,6 +171,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
     QStringList   sl_DataDescription;
     QStringList	  sl_ListParameter;
+    QStringList   sl_ListParameterNew;
     QStringList   sl_Input;
 
     structPFormat F_ptr[_MAX_NUM_OF_COLUMNS_+1];
@@ -198,15 +199,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
     if ( !fmeta.open( QIODevice::WriteOnly | QIODevice::Text ) )
         return( -120 );
 
-    QFile fpar( s_FilenameParameterImport );
-    if ( !fpar.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
-    {
-        fmeta.close();
-        return( -121 );
-    }
-
     QTextStream tmeta( &fmeta );
-    QTextStream tpar( &fpar );
 
     switch ( i_Codec )
     {
@@ -215,17 +208,14 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
     case _APPLEROMAN_:
         tmeta.setCodec( QTextCodec::codecForName( "Apple Roman" ) );
-        tpar.setCodec( QTextCodec::codecForName( "Apple Roman" ) );
         break;
 
     case _LATIN1_:
         tmeta.setCodec( QTextCodec::codecForName( "ISO 8859-1" ) );
-        tpar.setCodec( QTextCodec::codecForName( "ISO 8859-1" ) );
         break;
 
     default:
         tmeta.setCodec( QTextCodec::codecForName( "UTF-8" ) );
-        tpar.setCodec( QTextCodec::codecForName( "UTF-8" ) );
         break;
     }
 
@@ -488,7 +478,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch );
 
                 if ( ( s_ParameterID == "unknown" ) && ( b_createParameterImportFile == true ) )
-                    tpar << buildNewParameterEntry( s_Parameter, b_match_against_WoRMS ) << endl;
+                    sl_ListParameterNew.append( buildNewParameterEntry( s_Parameter, b_match_against_WoRMS ) ) ;
             }
 
             if ( i_MetadataFileMode == _AUTO_ )
@@ -556,10 +546,52 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
     tmeta << tr( "[EOF]" ) << endl;
 
     fmeta.close();
-    fpar.close();
 
-    if ( b_createParameterImportFile == false )
-        fpar.remove();
+// **********************************************************************************************
+
+    if ( b_createParameterImportFile == true )
+    {
+        QFile fpar( s_FilenameParameterImport );
+        if ( !fpar.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
+            return( -121 );
+
+        QTextStream tpar( &fpar );
+
+        switch ( i_Codec )
+        {
+        case _SYSTEM_: // nothing
+            break;
+
+        case _APPLEROMAN_:
+            tpar.setCodec( QTextCodec::codecForName( "Apple Roman" ) );
+            break;
+
+        case _LATIN1_:
+            tpar.setCodec( QTextCodec::codecForName( "ISO 8859-1" ) );
+            break;
+
+        default:
+            tpar.setCodec( QTextCodec::codecForName( "UTF-8" ) );
+            break;
+        }
+
+        sl_ListParameterNew.sort();
+
+        tpar << sl_ListParameterNew.at( 0 ) << endl;
+
+        if ( sl_ListParameterNew.count() > 1 )
+        {
+            for( int i=1; i<sl_ListParameterNew.count(); i++ )
+            {
+                if ( sl_ListParameterNew.at( i ) != sl_ListParameterNew.at( i-1 ) )
+                    tpar << sl_ListParameterNew.at( i ) << endl;
+            }
+        }
+
+        fpar.close();
+    }
+
+// *************************************************************************************
 
     if ( i_stopProgress == _APPBREAK_ )
     {
