@@ -142,7 +142,7 @@ public:
     int resetDataList( const QStringList &Input, const int HeaderLine, const int DataLine, QStringList &Data );
     int isEmptyDataItem( const QString &Output, const int i, const int emptyDataItem );
     int readParameterDB( const QString &FilenamePDB, structParameter *Parameter );
-    int createImportParameterFile( const QString &FilenameParameterImport, const bool match_against_WoRMS );
+    int createImportParameterFile( const QString &FilenameParameterImport, const int Codec, const bool match_against_WoRMS, QStringList &ListParameterNew );
     int readDataDescription( const QStringList &Input, QStringList &DataDescription, int& HeaderLine, int& DataLine );
     int readMetadataFile( const QString &FilenameMetadata, QStringList &Parameter, QStringList &DataSetComment, QStringList &FurtherDetailsReferenceList, QStringList &FurtherDetailsDatasetList, QStringList &OtherVersionReferenceList, QStringList &OtherVersionDatasetList );
     int readDataHeaderLine( const QString &Header, QStringList &ListParameter );
@@ -168,10 +168,10 @@ public:
     QString getParameterDDIFilename();
     QStringList addColumns( const QStringList &Input, const int NumOfColumns );
 
-    int createMetadataTemplate(const QString &FilenameIn, const QString &FilenameMetadata, const QString &FilenameParameterImport,
-                               const int Codec, const structParameter ParameterList[], const QString &PI,
-                               const int MetadataFileMode, const bool createParameterImportFile, const bool match_against_WoRMS,
-                               const bool createAdditionMetadataOptions, const int NumOfFiles );
+    int createMetadataTemplate( const QString &FilenameIn, const QString &FilenameMetadata, const int Codec,
+                                const structParameter ParameterList[], const QString &PI, const int MetadataFileMode,
+                                const bool createAdditionMetadataOptions, QStringList &ListParameterNew,
+                                const bool match_against_WoRMS, const int NumOfFiles );
 
     int writeDataDescription( QIODevice *outDevice, const int Codec, const bool EmptyColumn[],
                               const QString &baseName, const QString &EventLabel, const QString &MinorLabel,

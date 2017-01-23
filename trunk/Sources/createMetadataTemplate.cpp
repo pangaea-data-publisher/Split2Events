@@ -140,10 +140,10 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
 // *************************************************************************************
 // 2011-12-07
 
-int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QString &s_FilenameMetadata, const QString &s_FilenameParameterImport,
-                                        const int i_Codec, const structParameter p_ParameterList[], const QString &s_PI, const int i_MetadataFileMode,
-                                        const bool b_createParameterImportFile, const bool b_match_against_WoRMS,
-                                        const bool b_createAdditionMetadataOptions, const int i_NumOfFiles )
+int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QString &s_FilenameMetadata, const int i_Codec,
+                                        const structParameter p_ParameterList[], const QString &s_PI, const int i_MetadataFileMode,
+                                        const bool b_createAdditionMetadataOptions, QStringList &sl_ListParameterNew,
+                                        const bool b_match_against_WoRMS, const int i_NumOfFiles )
 
 {
     int			  err                               = _NOERROR_;
@@ -171,7 +171,6 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
     QStringList   sl_DataDescription;
     QStringList	  sl_ListParameter;
-    QStringList   sl_ListParameterNew;
     QStringList   sl_Input;
 
     structPFormat F_ptr[_MAX_NUM_OF_COLUMNS_+1];
@@ -477,7 +476,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
                 s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch );
 
-                if ( ( s_ParameterID == "unknown" ) && ( b_createParameterImportFile == true ) )
+                if ( s_ParameterID == "unknown" )
                     sl_ListParameterNew.append( buildNewParameterEntry( s_Parameter, b_match_against_WoRMS ) ) ;
             }
 
@@ -548,50 +547,6 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
     fmeta.close();
 
 // **********************************************************************************************
-
-    if ( b_createParameterImportFile == true )
-    {
-        QFile fpar( s_FilenameParameterImport );
-        if ( !fpar.open( QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append ) )
-            return( -121 );
-
-        QTextStream tpar( &fpar );
-
-        switch ( i_Codec )
-        {
-        case _SYSTEM_: // nothing
-            break;
-
-        case _APPLEROMAN_:
-            tpar.setCodec( QTextCodec::codecForName( "Apple Roman" ) );
-            break;
-
-        case _LATIN1_:
-            tpar.setCodec( QTextCodec::codecForName( "ISO 8859-1" ) );
-            break;
-
-        default:
-            tpar.setCodec( QTextCodec::codecForName( "UTF-8" ) );
-            break;
-        }
-
-        sl_ListParameterNew.sort();
-
-        tpar << sl_ListParameterNew.at( 0 ) << endl;
-
-        if ( sl_ListParameterNew.count() > 1 )
-        {
-            for( int i=1; i<sl_ListParameterNew.count(); i++ )
-            {
-                if ( sl_ListParameterNew.at( i ) != sl_ListParameterNew.at( i-1 ) )
-                    tpar << sl_ListParameterNew.at( i ) << endl;
-            }
-        }
-
-        fpar.close();
-    }
-
-// *************************************************************************************
 
     if ( i_stopProgress == _APPBREAK_ )
     {
@@ -721,6 +676,8 @@ void MainWindow::doCreateMetadataTemplate()
     QString     s_FilenameMetadata			= "";
     QString     s_FilenameParameterImport	= "";
 
+    QStringList sl_ListParameterNew;
+
     QTime       timer;
 
     QDateTime   datetime = QDateTime::currentDateTime();
@@ -746,8 +703,14 @@ void MainWindow::doCreateMetadataTemplate()
             gi_NumOfParametersInPDB = readParameterDB( gs_FilenamePDB, gp_Parameter );
     }
 
+// *************************************************************************************
+
     if ( ( gi_NumOfParametersInPDB > 0 ) && ( err == _NOERROR_ ) )
     {
+        timer.start();
+
+        initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Creating metadata template files..." ) );
+
         QFileInfo fi = QFileInfo( gsl_FilenameList.at( 0 ) );
 
         switch ( gi_Extension )
@@ -759,17 +722,6 @@ void MainWindow::doCreateMetadataTemplate()
             s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_" ) + datetime.toString( "yyyyMMddhhmmss" ) + ".txt";
             break;
         }
-
-//      s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_test" ) + ".txt";
-
-        if ( gb_writeParameterImportFile == true )
-            err = createImportParameterFile( s_FilenameParameterImport, gb_match_against_WoRMS );
-
-// *************************************************************************************
-
-        timer.start();
-
-        initFileProgress( gsl_FilenameList.count(), gsl_FilenameList.at( 0 ), tr( "Creating metadata template files..." ) );
 
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( i_stopProgress == 0 ) )
         {
@@ -785,9 +737,9 @@ void MainWindow::doCreateMetadataTemplate()
                 break;
             }
 
-            err = createMetadataTemplate( gsl_FilenameList.at( i ), s_FilenameMetadata, s_FilenameParameterImport, gi_Codec, gp_Parameter,
-                                          gs_PI, gi_MetadataFileMode, gb_writeParameterImportFile, gb_match_against_WoRMS,
-                                          gb_createAdditionMetadataOptions, gsl_FilenameList.count() );
+            err = createMetadataTemplate( gsl_FilenameList.at( i ), s_FilenameMetadata, gi_Codec, gp_Parameter,
+                                          gs_PI, gi_MetadataFileMode, gb_createAdditionMetadataOptions, sl_ListParameterNew,
+                                          gb_match_against_WoRMS, gsl_FilenameList.count() );
 
             i_stopProgress = incFileProgress( gsl_FilenameList.count(), ++i );
         }
@@ -795,37 +747,46 @@ void MainWindow::doCreateMetadataTemplate()
         resetFileProgress( gsl_FilenameList.count() );
     }
 
+// *************************************************************************************
+
     if ( gi_NumOfParametersInPDB < 0 )
         err = gi_NumOfParametersInPDB;
 
     if ( i_stopProgress == _APPBREAK_ )
         err = _APPBREAK_;
 
+// *************************************************************************************
+
     if ( ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
-        if ( ( gb_writeParameterImportFile == true ) && ( gb_showParameterImportFileCreatedMessage == true ) )
+        if ( ( gb_writeParameterImportFile == true ) && ( sl_ListParameterNew.count() > 0 ) )
         {
-            QFileInfo fi( s_FilenameParameterImport );
+            err = createImportParameterFile( s_FilenameParameterImport, gi_Codec, gb_match_against_WoRMS, sl_ListParameterNew );
 
-            QString s_Message = tr( "A list of missing parameter(s) has been created. See\n\n" ) +
-                                fi.completeBaseName() + tr( "." ) + fi.suffix() + tr( "\n\n" ) +
-                                tr( "After completing this list create an issue and upload " ) +
-                                tr( "the parameter import file." );
-
-            QMessageBox::information( this, getApplicationName( true ), s_Message );
-        }
-        else
-        {
-            if ( ( gi_MetadataFileMode != _AUTO_ ) && ( timer.elapsed() > 10000 ) )
+            if ( gb_showParameterImportFileCreatedMessage == true )
             {
-                if ( gsl_FilenameList.count() == 1 )
-                    QMessageBox::information( this, getApplicationName( true ), tr( "Metadata template has been created." ) );
-                else
-                    QMessageBox::information( this, getApplicationName( true ), tr( "Metadata templates have been created." ) );
-            }
-        }
+                QFileInfo fi( s_FilenameParameterImport );
 
-        setStatusBar( tr( "Done" ), 2 );
+                QString s_Message = tr( "A list of missing parameter(s) has been created. See\n\n" ) +
+                                    fi.completeBaseName() + tr( "." ) + fi.suffix() + tr( "\n\n" ) +
+                                    tr( "After completing this list create an issue and upload " ) +
+                                    tr( "the parameter import file." );
+
+                QMessageBox::information( this, getApplicationName( true ), s_Message );
+            }
+            else
+            {
+                if ( ( gi_MetadataFileMode != _AUTO_ ) && ( timer.elapsed() > 10000 ) )
+                {
+                    if ( gsl_FilenameList.count() == 1 )
+                        QMessageBox::information( this, getApplicationName( true ), tr( "Metadata template has been created." ) );
+                    else
+                        QMessageBox::information( this, getApplicationName( true ), tr( "Metadata templates have been created." ) );
+                }
+            }
+
+            setStatusBar( tr( "Done" ), 2 );
+        }
     }
     else
     {
