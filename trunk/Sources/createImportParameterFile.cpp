@@ -70,13 +70,15 @@ int MainWindow::createImportParameterFile( const QString &s_FilenameParameterImp
 
 QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bool b_match_against_WoRMS )
 {
-    int     i_DataType              = 2;  // Parameter is a text parameter
-    int     i_NumOfSections         = 0;
+    int     i_DataType                   = 2;  // Parameter is a text parameter
+    int     i_NumOfSections              = 0;
 
-    QString s_ParameterName         = "";
-    QString s_ParameterAbbreviation = "";
-    QString s_Unit                  = "";
-    QString s_ParameterNew          =  s_Parameter.section( "@", 0, 0 ).simplified();
+    QString s_ParameterName              = "";
+    QString s_ParameterAbbreviation      = "";
+    QString s_ParameterAbbreviationMajor = "";
+    QString s_ParameterAbbreviationMinor = "";
+    QString s_Unit                       = "";
+    QString s_ParameterNew               =  s_Parameter.section( "@", 0, 0 ).simplified();
 
 // *************************************************************************************
 
@@ -89,103 +91,101 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
     s_Unit					= s_ParameterNew.section( "\t", 1, 1 );
 
 // *************************************************************************************
-// special parameter abbreviations
-
-    s_ParameterAbbreviation.replace( "forma", "f@" );
-    s_ParameterAbbreviation.replace( "length", "l@" );
-    s_ParameterAbbreviation.replace( "width", "w@" );
-    s_ParameterAbbreviation.replace( "biomass as carbon", "C@" );
-    s_ParameterAbbreviation.replace( "biomass", "biom@" );
-    s_ParameterAbbreviation.replace( "dry mass", "dm@" );
-    s_ParameterAbbreviation.replace( "wet mass", "wm@" );
-    s_ParameterAbbreviation.replace( "mass", "m@" );
-    s_ParameterAbbreviation.replace( "fractionated", "frac@" );
-    s_ParameterAbbreviation.replace( "fragments", "fragm@" );
-
-    s_ParameterAbbreviation.replace( "copepodites", "c@" );
-    s_ParameterAbbreviation.replace( "c1", "c1@" );
-    s_ParameterAbbreviation.replace( "c2", "c2@" );
-    s_ParameterAbbreviation.replace( "c3", "c3@" );
-    s_ParameterAbbreviation.replace( "c4", "c4@" );
-    s_ParameterAbbreviation.replace( "c5", "c5@" );
-    s_ParameterAbbreviation.replace( "nauplii", "naup@" );
-    s_ParameterAbbreviation.replace( "adult", "ad@" );
-    s_ParameterAbbreviation.replace( "female", "f@" );
-    s_ParameterAbbreviation.replace( "male", "m@" );
-    s_ParameterAbbreviation.replace( "larvae", "larv@" );
-    s_ParameterAbbreviation.replace( "juvenile", "juv@" );
-
-    s_ParameterAbbreviation.replace( "-type", "-T@" );
-    s_ParameterAbbreviation.replace( "planktic", "plankt@" );
-    s_ParameterAbbreviation.replace( "bentic", "bent@" );
-    s_ParameterAbbreviation.replace( "other", "oth@" );
-    s_ParameterAbbreviation.replace( "cover", "cov@" );
-    s_ParameterAbbreviation.replace( "cf.", "cf.@" );
-    s_ParameterAbbreviation.replace( "aff.", "aff.@" );
-    s_ParameterAbbreviation.replace( "d13C", "d13C@" );
-    s_ParameterAbbreviation.replace( "d18O", "d18O@" );
-
-    s_ParameterAbbreviation.replace( "fraction", "fr@@" );
-    s_ParameterAbbreviation.replace( "per unit mass organic carbon", "OC@@" );
-    s_ParameterAbbreviation.replace( "per unit mass total organic carbon", "/TOC@@" );
-    s_ParameterAbbreviation.replace( "per unit sediment mass", "/sed@@" );
-    s_ParameterAbbreviation.replace( "spp.", "spp.@@" );
-    s_ParameterAbbreviation.replace( "sp.", "sp.@@" );
-    s_ParameterAbbreviation.replace( "cyst", "cyst@@" );
-    s_ParameterAbbreviation.replace( "maximal", "max@@" );
-    s_ParameterAbbreviation.replace( "minimal", "min@@" );
-    s_ParameterAbbreviation.replace( "maximum", "max@@" );
-    s_ParameterAbbreviation.replace( "minimum", "min@@" );
-    s_ParameterAbbreviation.replace( "standard deviation", "std dev@@" );
-    s_ParameterAbbreviation.replace( "indeterminata", "indet@@" );
-
-// *************************************************************************************
-// data type
+// set data type
 
     if ( s_Unit.isEmpty() == false )
         i_DataType = 1;
 
     if ( s_ParameterName.endsWith( "ratio") == true )
-    {
-        s_ParameterAbbreviation.replace( "ratio", "@@" );
         i_DataType = 1;
+
+    if ( s_ParameterName.endsWith( "relative") == true )
+        i_DataType = 1;
+
+// *************************************************************************************
+// special parameter abbreviations
+
+    s_ParameterAbbreviation.replace( "forma", "f" );
+    s_ParameterAbbreviation.replace( "length", "l" );
+    s_ParameterAbbreviation.replace( "width", "w" );
+    s_ParameterAbbreviation.replace( "biomass as carbon", "C" );
+    s_ParameterAbbreviation.replace( "biomass", "biom" );
+    s_ParameterAbbreviation.replace( "dry mass", "dm" );
+    s_ParameterAbbreviation.replace( "wet mass", "wm" );
+    s_ParameterAbbreviation.replace( "mass", "m" );
+    s_ParameterAbbreviation.replace( "fractionated", "frac" );
+    s_ParameterAbbreviation.replace( "fragments", "fragm" );
+
+    s_ParameterAbbreviation.replace( "copepodites", "c" );
+    s_ParameterAbbreviation.replace( "nauplii", "naup" );
+    s_ParameterAbbreviation.replace( "adult", "ad" );
+    s_ParameterAbbreviation.replace( "female", "f" );
+    s_ParameterAbbreviation.replace( "male", "m" );
+    s_ParameterAbbreviation.replace( "larvae", "larv" );
+    s_ParameterAbbreviation.replace( "juvenile", "juv" );
+
+    s_ParameterAbbreviation.replace( "-type", "-T" );
+    s_ParameterAbbreviation.replace( "planktic", "plankt" );
+    s_ParameterAbbreviation.replace( "bentic", "bent" );
+    s_ParameterAbbreviation.replace( "other", "oth" );
+    s_ParameterAbbreviation.replace( "cover", "cov" );
+    s_ParameterAbbreviation.replace( "volume", "vol" );
+    s_ParameterAbbreviation.replace( "relative", "rel" );
+    s_ParameterAbbreviation.replace( "ratio", "" );
+
+    s_ParameterAbbreviation.replace( "fraction", "fr" );
+    s_ParameterAbbreviation.replace( "per unit mass organic carbon", "OC" );
+    s_ParameterAbbreviation.replace( "per unit mass total organic carbon", "/TOC" );
+    s_ParameterAbbreviation.replace( "per unit sediment mass", "/sed" );
+    s_ParameterAbbreviation.replace( "spp.", "spp." );
+    s_ParameterAbbreviation.replace( "sp.", "sp." );
+    s_ParameterAbbreviation.replace( "cyst", "cyst" );
+    s_ParameterAbbreviation.replace( "maximal", "max" );
+    s_ParameterAbbreviation.replace( "minimal", "min" );
+    s_ParameterAbbreviation.replace( "maximum", "max" );
+    s_ParameterAbbreviation.replace( "minimum", "min" );
+    s_ParameterAbbreviation.replace( "standard deviation", "std dev" );
+    s_ParameterAbbreviation.replace( "indeterminata", "indet" );
+
+    s_ParameterAbbreviation.replace( ", ", "," );
+    s_ParameterAbbreviation.replace( " /", "/" );
+    s_ParameterAbbreviation.replace( "/ ", "/" );
+
+    s_ParameterAbbreviationMajor = s_ParameterAbbreviation.section( ",", 0, 0 );
+    s_ParameterAbbreviationMinor = s_ParameterAbbreviation.section( ",", 1 );
+
+// *************************************************************************************
+
+    switch ( s_ParameterAbbreviationMajor.count( " " ) )
+    {
+    case 0:
+        s_ParameterAbbreviation = s_ParameterAbbreviationMajor;
+        break;
+
+    default:
+        i_NumOfSections         = s_ParameterAbbreviationMajor.count( " " ) + 1;
+        s_ParameterAbbreviation = s_ParameterAbbreviationMajor.section( " ", 0, 0 ).left( 1 ) + tr( "." );
+
+        for ( int i=1; i< i_NumOfSections; i++ )
+            s_ParameterAbbreviation.append( tr( " " ) + s_ParameterAbbreviationMajor.section( " ", i, i ) );
+
+        break;
+    }
+
+    if ( s_ParameterAbbreviationMinor.isEmpty() == false )
+    {
+        s_ParameterAbbreviationMinor.replace( ",", " " );
+
+        s_ParameterAbbreviation.append( tr( " " ) );
+        s_ParameterAbbreviation.append( s_ParameterAbbreviationMinor );
     }
 
 // *************************************************************************************
 
-    s_ParameterAbbreviation.replace( ", ", "@" );
-    s_ParameterAbbreviation.replace( " /", "/" );
-    s_ParameterAbbreviation.replace( "/ ", "/" );
-
-    s_ParameterAbbreviation.replace( " ", "\t" );
-
-    i_NumOfSections = NumOfSections( s_ParameterAbbreviation );
-
-    if ( i_NumOfSections == 2 )
-        s_ParameterAbbreviation.append( "\t@" );
-    else
-        s_ParameterAbbreviation.append( "\t" );
-
     s_ParameterNew = s_ParameterName;
 
-    if ( s_ParameterAbbreviation.section( "\t", 1, 1 ).contains( "@@")  == true )
-    {
-        s_ParameterNew.append( QString( "\t%1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
-    }
-    else
-    {
-        if ( ( s_ParameterAbbreviation.contains( "@" ) == false ) || ( i_NumOfSections == 1 ) || ( s_ParameterAbbreviation.section( "\t", 0, 0 ).length() < 6 ) )
-            s_ParameterNew.append( QString( "\t%1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
-        else
-            s_ParameterNew.append( QString( "\t%1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
-    }
+    s_ParameterNew.append( QString( "\t%1\t%2\t\t\t\t\t\t%3\t\t\t").arg( s_ParameterAbbreviation ).arg( s_Unit ).arg( i_DataType ) );
 
-    for ( int i=1; i<i_NumOfSections; i++ )
-        s_ParameterNew.append( QString( " %1").arg( s_ParameterAbbreviation.section( "\t", i, i ) ) );
-
-    s_ParameterNew.append( QString( "\t%1\t\t\t\t\t\t%2\t\t\t").arg( s_Unit ).arg( i_DataType ) );
-
-    s_ParameterNew.replace( "@", "" );
     s_ParameterNew.replace( " \t", "\t" );
 
     if ( b_match_against_WoRMS == true )
