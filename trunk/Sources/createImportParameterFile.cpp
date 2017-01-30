@@ -153,7 +153,7 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
 
 // *************************************************************************************
 
-    s_ParameterAbbreviation.replace( ",", "" );
+    s_ParameterAbbreviation.replace( ", ", "@" );
     s_ParameterAbbreviation.replace( " /", "/" );
     s_ParameterAbbreviation.replace( "/ ", "/" );
 
@@ -174,7 +174,7 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
     }
     else
     {
-        if ( ( s_ParameterAbbreviation.contains( "@" ) == false ) || ( i_NumOfSections == 1 ) )
+        if ( ( s_ParameterAbbreviation.contains( "@" ) == false ) || ( i_NumOfSections == 1 ) || ( s_ParameterAbbreviation.section( "\t", 0, 0 ).length() < 6 ) )
             s_ParameterNew.append( QString( "\t%1").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ) ) );
         else
             s_ParameterNew.append( QString( "\t%1.").arg( s_ParameterAbbreviation.section( "\t", 0, 0 ).left( 1 ) ) );
