@@ -105,51 +105,58 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
 // *************************************************************************************
 // special parameter abbreviations
 
-    s_ParameterAbbreviation.replace( "forma", "f" );
-    s_ParameterAbbreviation.replace( "length", "l" );
-    s_ParameterAbbreviation.replace( "width", "w" );
-    s_ParameterAbbreviation.replace( "biomass as carbon", "C" );
-    s_ParameterAbbreviation.replace( "biomass", "biom" );
-    s_ParameterAbbreviation.replace( "dry mass", "dm" );
-    s_ParameterAbbreviation.replace( "wet mass", "wm" );
-    s_ParameterAbbreviation.replace( "mass", "m" );
-    s_ParameterAbbreviation.replace( "fractionated", "frac" );
-    s_ParameterAbbreviation.replace( "fragments", "fragm" );
+    s_ParameterAbbreviation.replace( "per unit mass organic carbon", ",OC" );
+    s_ParameterAbbreviation.replace( "per unit mass total organic carbon", ",/TOC" );
+    s_ParameterAbbreviation.replace( "per unit sediment mass", ",/sed" );
+    s_ParameterAbbreviation.replace( "biomass as carbon", ",C" );
+    s_ParameterAbbreviation.replace( "biomass", ",biom" );
+    s_ParameterAbbreviation.replace( "biovolume", ",biovol" );
+    s_ParameterAbbreviation.replace( "dry mass", ",dm" );
+    s_ParameterAbbreviation.replace( "wet mass", ",wm" );
+    s_ParameterAbbreviation.replace( "mass", ",m" );
+    s_ParameterAbbreviation.replace( "fractionated", ",frac" );
+    s_ParameterAbbreviation.replace( "fragments", ",fragm" );
+    s_ParameterAbbreviation.replace( "forma", ",f" );
+    s_ParameterAbbreviation.replace( "length", ",l" );
+    s_ParameterAbbreviation.replace( "width", ",w" );
+    s_ParameterAbbreviation.replace( "copepodites", ",c" );
+    s_ParameterAbbreviation.replace( "nauplii", ",naup" );
+    s_ParameterAbbreviation.replace( "adult", ",ad" );
+    s_ParameterAbbreviation.replace( "female", ",f" );
+    s_ParameterAbbreviation.replace( "male", ",m" );
+    s_ParameterAbbreviation.replace( "larvae", ",larv" );
+    s_ParameterAbbreviation.replace( "juvenile", ",juv" );
+    s_ParameterAbbreviation.replace( "volume", ",vol" );
+    s_ParameterAbbreviation.replace( "relative", ",rel" );
+    s_ParameterAbbreviation.replace( "fraction", ",fr" );
+    s_ParameterAbbreviation.replace( "spp.", ",spp." );
+    s_ParameterAbbreviation.replace( "sp.", ",sp." );
+    s_ParameterAbbreviation.replace( "cyst", ",cyst" );
+    s_ParameterAbbreviation.replace( "maximal", ",max" );
+    s_ParameterAbbreviation.replace( "minimal", ",min" );
+    s_ParameterAbbreviation.replace( "maximum", ",max" );
+    s_ParameterAbbreviation.replace( "minimum", ",min" );
+    s_ParameterAbbreviation.replace( "standard deviation", ",std dev" );
+    s_ParameterAbbreviation.replace( "indeterminata", ",indet" );
+    s_ParameterAbbreviation.replace( "planktic", ",plankt" );
+    s_ParameterAbbreviation.replace( "bentic", ",bent" );
+    s_ParameterAbbreviation.replace( "other", ",oth" );
+    s_ParameterAbbreviation.replace( "cover", ",cov" );
+    s_ParameterAbbreviation.replace( "cf.", ",cf." );
+    s_ParameterAbbreviation.replace( "aff.", ",aff." );
+    s_ParameterAbbreviation.replace( "d13C", ",d13C" );
+    s_ParameterAbbreviation.replace( "d18O", ",d18O" );
 
-    s_ParameterAbbreviation.replace( "copepodites", "c" );
-    s_ParameterAbbreviation.replace( "nauplii", "naup" );
-    s_ParameterAbbreviation.replace( "adult", "ad" );
-    s_ParameterAbbreviation.replace( "female", "f" );
-    s_ParameterAbbreviation.replace( "male", "m" );
-    s_ParameterAbbreviation.replace( "larvae", "larv" );
-    s_ParameterAbbreviation.replace( "juvenile", "juv" );
-
-    s_ParameterAbbreviation.replace( "-type", "-T" );
-    s_ParameterAbbreviation.replace( "planktic", "plankt" );
-    s_ParameterAbbreviation.replace( "bentic", "bent" );
-    s_ParameterAbbreviation.replace( "other", "oth" );
-    s_ParameterAbbreviation.replace( "cover", "cov" );
-    s_ParameterAbbreviation.replace( "volume", "vol" );
-    s_ParameterAbbreviation.replace( "relative", "rel" );
     s_ParameterAbbreviation.replace( "ratio", "" );
+    s_ParameterAbbreviation.replace( "-type", "-T" );
 
-    s_ParameterAbbreviation.replace( "fraction", "fr" );
-    s_ParameterAbbreviation.replace( "per unit mass organic carbon", "OC" );
-    s_ParameterAbbreviation.replace( "per unit mass total organic carbon", "/TOC" );
-    s_ParameterAbbreviation.replace( "per unit sediment mass", "/sed" );
-    s_ParameterAbbreviation.replace( "spp.", "spp." );
-    s_ParameterAbbreviation.replace( "sp.", "sp." );
-    s_ParameterAbbreviation.replace( "cyst", "cyst" );
-    s_ParameterAbbreviation.replace( "maximal", "max" );
-    s_ParameterAbbreviation.replace( "minimal", "min" );
-    s_ParameterAbbreviation.replace( "maximum", "max" );
-    s_ParameterAbbreviation.replace( "minimum", "min" );
-    s_ParameterAbbreviation.replace( "standard deviation", "std dev" );
-    s_ParameterAbbreviation.replace( "indeterminata", "indet" );
-
+    s_ParameterAbbreviation.replace( " ,", "," );
     s_ParameterAbbreviation.replace( ", ", "," );
+    s_ParameterAbbreviation.replace( ",,", "," );
     s_ParameterAbbreviation.replace( " /", "/" );
     s_ParameterAbbreviation.replace( "/ ", "/" );
+
+    s_ParameterAbbreviation      = s_ParameterAbbreviation.simplified();
 
     s_ParameterAbbreviationMajor = s_ParameterAbbreviation.section( ",", 0, 0 );
     s_ParameterAbbreviationMinor = s_ParameterAbbreviation.section( ",", 1 );
