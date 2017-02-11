@@ -239,6 +239,18 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Comment       = "for details see: http://icu-project.org/apiref/icu4j/com/ibm/icu/text/SimpleDateFormat.html";
             }
 
+            if ( ( s_ParameterSearch == "date/time start" ) || ( s_ParameterSearch == "date/time start []" ) )
+            {
+                s_ParameterID	= "152460";
+                s_Format		= "yyyy-MM-dd'T'HH:mm";
+            }
+
+            if ( ( s_ParameterSearch == "date/time end" ) || ( s_ParameterSearch == "date/time end []" ) )
+            {
+                s_ParameterID	= "150986";
+                s_Format		= "yyyy-MM-dd'T'HH:mm";
+            }
+
             if ( s_ParameterSearch == "depth, bathymetric [m]")
             {
                 s_ParameterID	= "2268";
