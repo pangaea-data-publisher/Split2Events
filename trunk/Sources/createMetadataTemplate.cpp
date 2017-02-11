@@ -232,7 +232,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                     s_Format.append( ".00" );
             }
 
-            if ( s_ParameterSearch == "date/time" )
+            if ( ( s_ParameterSearch == "date/time" ) || ( s_ParameterSearch == "date/time []" ) )
             {
                 s_ParameterID	= "1599";
                 s_Format		= "yyyy-MM-dd'T'HH:mm";
