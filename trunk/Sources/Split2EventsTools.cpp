@@ -47,7 +47,7 @@ QString MainWindow::buildParameter( const QString &s_ParameterMF, const QString 
     if ( s_ParameterMF.section( "\t", 2, 2 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 2, 2 ) == "999999" )
-            s_Parameter.append( ", " + q + "PI_ID" + qe + "@PP@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+            s_Parameter.append( ", " + q + "PI_ID" + qe + "@PP@" + s_EventLabel + "@" );
         else
             s_Parameter.append( ", " + q + "PI_ID" + qe + s_ParameterMF.section( "\t", 2, 2 ) );
     }
@@ -55,7 +55,7 @@ QString MainWindow::buildParameter( const QString &s_ParameterMF, const QString 
     if ( s_ParameterMF.section( "\t", 3, 3 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 3, 3 ) == "999999" )
-            s_Parameter.append( ", " + q + "MethodID" + qe + "@PM@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" );
+            s_Parameter.append( ", " + q + "MethodID" + qe + "@PM@" + s_EventLabel + "@" );
         else
             s_Parameter.append( ", " + q + "MethodID" + qe + s_ParameterMF.section( "\t", 3, 3 ) );
     }
@@ -63,7 +63,7 @@ QString MainWindow::buildParameter( const QString &s_ParameterMF, const QString 
     if ( s_ParameterMF.section( "\t", 4, 4 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 4, 4 ) == "999999" )
-            s_Parameter.append( ", " + q + "Comment" + qe + q + "@PC@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" + q );
+            s_Parameter.append( ", " + q + "Comment" + qe + q + "@PC@" + s_EventLabel + "@" + q );
         else
             s_Parameter.append( ", " + q + "Comment" + qe + q + s_ParameterMF.section( "\t", 4, 4 ) + q );
     }
@@ -71,7 +71,7 @@ QString MainWindow::buildParameter( const QString &s_ParameterMF, const QString 
     if ( s_ParameterMF.section( "\t", 5, 5 ).isEmpty() == false )
     {
         if (  s_ParameterMF.section( "\t", 5, 5 ) == "999999" )
-            s_Parameter.append( ", " + q + "Format" + qe + q + "@PF@" + s_EventLabel + "@" + s_ParameterMF.section( "\t", 1, 1 ) + "@" + q );
+            s_Parameter.append( ", " + q + "Format" + qe + q + "@PF@" + s_EventLabel + "@" + q );
         else
             s_Parameter.append( ", " + q + "Format" + qe + q + s_ParameterMF.section( "\t", 5, 5 ) + q );
     }
