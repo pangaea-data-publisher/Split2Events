@@ -7,10 +7,10 @@ echo - macdeployqt
 cd ~/Development/GitHub/Split2Events
 
 rm -R '../../Distribution/Split2Events/Split2Events.app'
-cp -R './build-Split2Events-Desktop_Qt_5_8_0_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
+cp -R './build-Split2Events-Desktop_Qt_5_9_0_clang_64bit-Release/Split2Events.app' '../../Distribution/Split2Events/Split2Events.app'
 cp './trunk/Resources/Info.plist' '../../Distribution/Split2Events/Split2Events.app/Contents/Info.plist'
 
-/Developer/Qt/5.8/clang_64/bin/macdeployqt '../../Distribution/Split2Events/Split2Events.app'
+/Developer/Qt/5.9/clang_64/bin/macdeployqt '../../Distribution/Split2Events/Split2Events.app'
 
 echo - code signing
 
