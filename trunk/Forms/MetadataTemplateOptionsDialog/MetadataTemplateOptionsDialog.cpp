@@ -45,10 +45,13 @@ void MainWindow::doMetadataTemplateOptionsDialog()
     {
     case _AUTO_:
     case _BYPOSITION_:
-        dialog.findByPosisitionRadioButton->setChecked( true );
+        dialog.findByPositionRadioButton->setChecked( true );
+        break;
+    case _BYNAMEABBR_:
+        dialog.findByNameOrAbbreviationRadioButton->setChecked( true );
         break;
     case _BYNAME_:
-        dialog.findByNameRadioButton->setChecked( true );
+        dialog.findByNameOnlyRadioButton->setChecked( true );
         break;
     }
 
@@ -80,10 +83,13 @@ void MainWindow::doMetadataTemplateOptionsDialog()
     switch ( dialog.exec() )
     {
     case QDialog::Accepted:
-        if ( dialog.findByPosisitionRadioButton->isChecked() )
+        if ( dialog.findByPositionRadioButton->isChecked() )
             gi_MetadataFileMode = _BYPOSITION_;
 
-        if ( dialog.findByNameRadioButton->isChecked() )
+        if ( dialog.findByNameOrAbbreviationRadioButton->isChecked() )
+            gi_MetadataFileMode = _BYNAMEABBR_;
+
+        if ( dialog.findByNameOnlyRadioButton->isChecked() )
             gi_MetadataFileMode = _BYNAME_;
 
         if ( dialog.writeParameterImportFileCheckBox->isChecked() )

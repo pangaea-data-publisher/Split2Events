@@ -23,82 +23,7 @@
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout_23">
-   <item row="1" column="0">
-    <layout class="QHBoxLayout">
-     <item>
-      <widget class="QPushButton" name="CreateMetadataTemplatePushButton">
-       <property name="text">
-        <string>Create metadata &amp;template</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="NewProjectPushButton">
-       <property name="text">
-        <string>&amp;New</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="SaveProjectPushButton">
-       <property name="text">
-        <string>&amp;Save</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="LoadProjectPushButton">
-       <property name="text">
-        <string>&amp;Load</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="OK_pushButton">
-       <property name="text">
-        <string>&amp;OK</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Cancel_pushButton">
-       <property name="text">
-        <string>&amp;Cancel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
+  <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -539,8 +464,8 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -650,12 +575,12 @@ p, li { white-space: pre-wrap; }
        <string>Options</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_27">
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_15">
          <property name="title">
           <string>Data import file creation options</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_1">
+         <layout class="QGridLayout" name="gridLayout_28">
           <item row="0" column="0">
            <widget class="QCheckBox" name="splitFileCheckBox">
             <property name="font">
@@ -713,73 +638,7 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
-       <item row="4" column="0">
-        <spacer>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBox_16">
-         <property name="title">
-          <string>Metadata file options</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="useAutoMetadataFileRadioButton">
-            <property name="text">
-             <string>use auto metadata file (set the default method and a suitable format for the data)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="findByNameRadioButton">
-            <property name="text">
-             <string>use metadata file; find parameter by name (if a metadata template is created, a parameter database will be used)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="findByPosisitionRadioButton">
-            <property name="text">
-             <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="groupBox_17">
-         <property name="title">
-          <string>Create metadata template options</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
-            <property name="text">
-             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
-            <property name="text">
-             <string>add column with species names to parameter import file for WoRMS matching</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
+       <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_6">
          <property name="title">
           <string>Handle out of range values</string>
@@ -816,26 +675,181 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_16">
+         <property name="title">
+          <string>Metadata file options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="findByPositionRadioButton">
+            <property name="text">
+             <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="useAutoMetadataFileRadioButton">
+            <property name="text">
+             <string>use auto metadata file (set the default method and a suitable format for the data)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="findByNameOnlyRadioButton">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>use metadata file; find parameter by name only (if a metadata template is created, the parameter database will be used)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="findByNameOrAbbreviationRadioButton">
+            <property name="text">
+             <string>use metadata file; find parameter by name or abbreviation (if a metadata template is created, the parameter database will be used)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="groupBox_17">
+         <property name="title">
+          <string>Create metadata template options</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_23">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="addSpeciesNamesCheckBox">
+            <property name="text">
+             <string>add column with species names to parameter import file for WoRMS matching</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="writeParameterImportFileCheckBox">
+            <property name="text">
+             <string>write parameter import file (After completing this file create an issue (http://issues.pangaea.de) and upload it to the issue.)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <spacer name="VerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>17</width>
+           <height>240</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
    </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="CreateMetadataTemplatePushButton">
+       <property name="text">
+        <string>Create metadata &amp;template</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="NewProjectPushButton">
+       <property name="text">
+        <string>&amp;New</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="SaveProjectPushButton">
+       <property name="text">
+        <string>&amp;Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="LoadProjectPushButton">
+       <property name="text">
+        <string>&amp;Load</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="OK_pushButton">
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel_pushButton">
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>PrincipalInvestigatorLineEdit</tabstop>
-  <tabstop>SourceLineEdit</tabstop>
   <tabstop>AuthorLineEdit</tabstop>
+  <tabstop>SourceLineEdit</tabstop>
   <tabstop>ReferenceLineEdit</tabstop>
   <tabstop>ProjectLineEdit</tabstop>
   <tabstop>DatasetTitleTextEdit</tabstop>
   <tabstop>TopologicTypeComboBox</tabstop>
   <tabstop>StatusComboBox</tabstop>
-  <tabstop>ExportFilenameLineEdit</tabstop>
   <tabstop>UnrestrictedRadioButton</tabstop>
   <tabstop>SignupRequiredRadioButton</tabstop>
   <tabstop>AccessRightsNeededRadioButton</tabstop>
   <tabstop>LoginEventRadioButton</tabstop>
+  <tabstop>ExportFilenameLineEdit</tabstop>
   <tabstop>IssueLineEdit</tabstop>
   <tabstop>CreateMetadataTemplatePushButton</tabstop>
   <tabstop>NewProjectPushButton</tabstop>
@@ -859,15 +873,15 @@ p, li { white-space: pre-wrap; }
   <tabstop>useFilenameInAsEventLabelCheckBox</tabstop>
   <tabstop>OverwriteDatasetCheckBox</tabstop>
   <tabstop>ignoreRange_radioButton</tabstop>
-  <tabstop>badValue_radioButton</tabstop>
   <tabstop>removeValue_radioButton</tabstop>
+  <tabstop>badValue_radioButton</tabstop>
   <tabstop>questionableValue_radioButton</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>useAutoMetadataFileRadioButton</tabstop>
-  <tabstop>findByPosisitionRadioButton</tabstop>
+  <tabstop>findByPositionRadioButton</tabstop>
+  <tabstop>findByNameOrAbbreviationRadioButton</tabstop>
+  <tabstop>findByNameOnlyRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
   <tabstop>addSpeciesNamesCheckBox</tabstop>
-  <tabstop>findByNameRadioButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

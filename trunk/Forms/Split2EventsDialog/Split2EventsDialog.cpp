@@ -186,10 +186,13 @@ void Split2EventsDialog::LoadProject()
             this->useAutoMetadataFileRadioButton->setChecked( true );
             break;
         case _BYPOSITION_:
-            this->findByPosisitionRadioButton->setChecked( true );
+            this->findByPositionRadioButton->setChecked( true );
+            break;
+        case _BYNAMEABBR_:
+            this->findByNameOrAbbreviationRadioButton->setChecked( true );
             break;
         case _BYNAME_:
-            this->findByNameRadioButton->setChecked( true );
+            this->findByNameOnlyRadioButton->setChecked( true );
             break;
         }
 
@@ -301,10 +304,13 @@ void Split2EventsDialog::SaveProject()
         if ( this->useAutoMetadataFileRadioButton->isChecked() )
             settings.setValue( "MetadataFileMode", _AUTO_ );
 
-        if ( this->findByPosisitionRadioButton->isChecked() )
+        if ( this->findByPositionRadioButton->isChecked() )
             settings.setValue( "MetadataFileMode", _BYPOSITION_ );
 
-        if ( this->findByNameRadioButton->isChecked() )
+        if ( this->findByNameOrAbbreviationRadioButton->isChecked() )
+            settings.setValue( "MetadataFileMode", _BYNAMEABBR_ );
+
+        if ( this->findByNameOnlyRadioButton->isChecked() )
             settings.setValue( "MetadataFileMode", _BYNAME_ );
 
         if ( this->ignoreRange_radioButton->isChecked() )
@@ -390,7 +396,7 @@ void Split2EventsDialog::NewProject()
     this->makeFilenameUniqueCheckBox->setChecked( false );
     this->markSmallFileCheckBox->setChecked( false );
     this->OverwriteDatasetCheckBox->setChecked( false );
-    this->findByNameRadioButton->setChecked( true );
+    this->findByNameOnlyRadioButton->setChecked( true );
     this->writeParameterImportFileCheckBox->setChecked( false );
     this->ignoreRange_radioButton->setChecked( true );
 }
@@ -733,10 +739,13 @@ void MainWindow::doSplit2EventsDialog()
         dialog.useAutoMetadataFileRadioButton->setChecked( true );
         break;
     case _BYPOSITION_:
-        dialog.findByPosisitionRadioButton->setChecked( true );
+        dialog.findByPositionRadioButton->setChecked( true );
+        break;
+    case _BYNAMEABBR_:
+        dialog.findByNameOrAbbreviationRadioButton->setChecked( true );
         break;
     case _BYNAME_:
-        dialog.findByNameRadioButton->setChecked( true );
+        dialog.findByNameOnlyRadioButton->setChecked( true );
         break;
     }
 
@@ -852,9 +861,11 @@ void MainWindow::doSplit2EventsDialog()
 
         if ( dialog.useAutoMetadataFileRadioButton->isChecked() )
             gi_MetadataFileMode = _AUTO_;
-        if ( dialog.findByPosisitionRadioButton->isChecked() )
+        if ( dialog.findByPositionRadioButton->isChecked() )
             gi_MetadataFileMode = _BYPOSITION_;
-        if ( dialog.findByNameRadioButton->isChecked() )
+        if ( dialog.findByNameOrAbbreviationRadioButton->isChecked() )
+            gi_MetadataFileMode = _BYNAMEABBR_;
+        if ( dialog.findByNameOnlyRadioButton->isChecked() )
             gi_MetadataFileMode = _BYNAME_;
 
 // ****************************************************************************

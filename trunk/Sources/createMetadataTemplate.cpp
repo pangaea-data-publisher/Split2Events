@@ -214,7 +214,6 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Factor		= "1";
             }
 
-
             if ( ( s_ParameterSearch == "m" ) || ( s_ParameterSearch == "depth, rock [m]" ) || ( s_ParameterSearch == "depth, sediment [m]" ) || ( s_ParameterSearch == "depth, sediment/rock [m]" )  || ( s_ParameterSearch == "depth, rock/sediment [m]" ) )
             {
                 s_ParameterID	= "1";
@@ -355,7 +354,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_ParameterSearch.append( " []" );
                 s_ParameterSearch.replace( "] []", "]" );
 
-                s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch );
+                s_ParameterID = findParameterByName( p_ParameterList, s_ParameterSearch, i_MetadataFileMode );
 
                 if ( s_ParameterID == "unknown" )
                     sl_ListParameterNew.append( buildNewParameterEntry( s_Parameter, b_match_against_WoRMS ) ) ;
@@ -442,7 +441,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 // *************************************************************************************
 // *************************************************************************************
 
-QString MainWindow::findParameterByName(const structParameter p_ParameterList[], const QString &s_ParameterIn )
+QString MainWindow::findParameterByName(const structParameter p_ParameterList[], const QString &s_ParameterIn, int i_MetadataFileMode )
 {
     QString s_ParameterID           = "unknown";
 
@@ -488,17 +487,36 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
 
     while ( b_Stop == false )
     {
-        if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterAbbreviationL ) )
-            s_ParameterID = p_ParameterList[p1].ParameterID;
+        switch ( i_MetadataFileMode )
+        {
+        case _BYNAMEABBR_:
+            if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterAbbreviationL ) )
+                s_ParameterID = p_ParameterList[p1].ParameterID;
 
-        if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p2].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p2].ParameterAbbreviationL ) )
-            s_ParameterID = p_ParameterList[p2].ParameterID;
+            if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p2].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p2].ParameterAbbreviationL ) )
+                s_ParameterID = p_ParameterList[p2].ParameterID;
 
-        if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p3].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p3].ParameterAbbreviationL ) )
-            s_ParameterID = p_ParameterList[p3].ParameterID;
+            if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p3].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p3].ParameterAbbreviationL ) )
+                s_ParameterID = p_ParameterList[p3].ParameterID;
 
-        if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p4].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p4].ParameterAbbreviationL ) )
-            s_ParameterID = p_ParameterList[p4].ParameterID;
+            if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p4].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p4].ParameterAbbreviationL ) )
+                s_ParameterID = p_ParameterList[p4].ParameterID;
+            break;
+
+        default:
+            if ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterNameL )
+                s_ParameterID = p_ParameterList[p1].ParameterID;
+
+            if ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p2].ParameterNameL )
+                s_ParameterID = p_ParameterList[p2].ParameterID;
+
+            if ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p3].ParameterNameL )
+                s_ParameterID = p_ParameterList[p3].ParameterID;
+
+            if ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p4].ParameterNameL )
+                s_ParameterID = p_ParameterList[p4].ParameterID;
+            break;
+        }
 
         ++p1; --p2; ++p3; --p4;
 

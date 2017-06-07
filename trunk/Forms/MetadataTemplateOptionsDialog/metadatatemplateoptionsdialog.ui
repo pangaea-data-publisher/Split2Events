@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>729</width>
-    <height>224</height>
+    <width>731</width>
+    <height>243</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,16 +24,29 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QRadioButton" name="findByPosisitionRadioButton">
+       <widget class="QRadioButton" name="findByPositionRadioButton">
         <property name="text">
          <string>find parameter by position (be careful if you use one metadata file for different data files)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QRadioButton" name="findByNameRadioButton">
+       <widget class="QRadioButton" name="findByNameOrAbbreviationRadioButton">
         <property name="text">
-         <string>find parameter by name (a parameter database will be used)</string>
+         <string>find parameter by name or abbreviation (a parameter database will be used)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QRadioButton" name="findByNameOnlyRadioButton">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>find parameter by name only (a parameter database will be used)</string>
         </property>
        </widget>
       </item>
@@ -100,8 +113,9 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>findByPosisitionRadioButton</tabstop>
-  <tabstop>findByNameRadioButton</tabstop>
+  <tabstop>findByPositionRadioButton</tabstop>
+  <tabstop>findByNameOrAbbreviationRadioButton</tabstop>
+  <tabstop>findByNameOnlyRadioButton</tabstop>
   <tabstop>writeParameterImportFileCheckBox</tabstop>
   <tabstop>addSpeciesNamesCheckBox</tabstop>
   <tabstop>OK_pushButton</tabstop>

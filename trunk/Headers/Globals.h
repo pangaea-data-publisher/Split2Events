@@ -19,7 +19,7 @@
     const QString _PROGRAMDOI_           = "doi:10.1594/PANGAEA.835398";
     const QString _PROGRAMREADME_        = "https://wiki.pangaea.de/wiki/Split2Events";
 
-    const QString _VERSION_              = "12.27";	// Version number, 2017-01-31
+    const QString _VERSION_              = "12.28";	// Version number, 2017-06-07
     const QString _PROVERSION_           = "Split2Event - Project - 2013-03-23";
 
     const int   _NOERROR_                = 0;
@@ -77,7 +77,8 @@
 
     const int	_AUTO_                   = 1;
     const int	_BYPOSITION_             = 2;
-    const int	_BYNAME_                 = 3;
+    const int   _BYNAMEABBR_             = 3;
+    const int	_BYNAME_                 = 4;
 
     const int	_MAX_NUM_OF_COLUMNS_     = 4000;	 // maximum number of columns to handle
     const int	_MAX_NUM_OF_PARAMETERS_  = 200000;   // maximum number of parameters to handle, changed 2011-11-10

@@ -152,7 +152,7 @@ public:
     int findFormat( const QString &FilenameIn, const QStringList &Input, const int NumOfParameters, structPFormat Format[], const int NumOfFiles );
 
     QString findMethod( const QString &Comment );
-    QString findParameterByName( const structParameter ParameterList[], const QString &Parameter );
+    QString findParameterByName( const structParameter ParameterList[], const QString &Parameter, int MetadataFileMode );
     QString findParameterByID( const structParameter ParameterList[], const QString &Parameter );
     QString buildParameter( const QString &ParameterMF, const QString &EventLabel );
     QString buildNewParameterEntry( const QString &Parameter, const bool match_against_WoRMS );
