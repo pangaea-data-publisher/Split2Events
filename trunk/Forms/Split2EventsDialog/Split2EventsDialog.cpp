@@ -850,10 +850,13 @@ void MainWindow::doSplit2EventsDialog()
 
         if ( dialog.UnrestrictedRadioButton->isChecked() )
             gi_Login = _UNRESTRICTED_;
+
         if ( dialog.SignupRequiredRadioButton->isChecked() )
             gi_Login = _SIGNUPREQUIRED_;
+
         if ( dialog.AccessRightsNeededRadioButton->isChecked() )
             gi_Login = _ACCESSRIGHTSNEEDED_;
+
         if ( dialog.LoginEventRadioButton->isChecked() )
             gi_Login = _EVENT_;
 
@@ -861,10 +864,13 @@ void MainWindow::doSplit2EventsDialog()
 
         if ( dialog.useAutoMetadataFileRadioButton->isChecked() )
             gi_MetadataFileMode = _AUTO_;
+
         if ( dialog.findByPositionRadioButton->isChecked() )
             gi_MetadataFileMode = _BYPOSITION_;
+
         if ( dialog.findByNameOrAbbreviationRadioButton->isChecked() )
             gi_MetadataFileMode = _BYNAMEABBR_;
+
         if ( dialog.findByNameOnlyRadioButton->isChecked() )
             gi_MetadataFileMode = _BYNAME_;
 

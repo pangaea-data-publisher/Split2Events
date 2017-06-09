@@ -52,7 +52,7 @@ void MainWindow::doSplit2Events()
 
 // *************************************************************************************
 
-    if ( ( ( gi_MetadataFileMode == _BYNAME_ ) || ( gi_MetadataFileMode == _BYPOSITION_ ) ) && ( gb_writeHeader == true ) )
+    if ( ( ( gi_MetadataFileMode == _BYPOSITION_ ) || ( gi_MetadataFileMode == _BYNAMEABBR_ ) || ( gi_MetadataFileMode == _BYNAME_ ) ) && ( gb_writeHeader == true ) )
     {
         s_FilenameMetadata = getMetadataFilename( gsl_FilenameList.at( 0 ), gi_Extension, gsl_FilenameList.count() );
 

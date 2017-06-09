@@ -1094,6 +1094,16 @@ int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, c
 
     switch ( i_MetadataFileMode )
     {
+    case _AUTO_:
+    case _BYPOSITION_:
+        for ( int i_MF=0; i_MF<sl_MFParameter.count(); i_MF++ )
+        {
+            if ( b_EmptyColumn[++j] == false )
+                sl_Parameter.append( buildParameter( sl_MFParameter.at( i_MF ), s_tempEventLabel ) );
+        }
+        break;
+
+    case _BYNAMEABBR_:
     case _BYNAME_:
         for ( int i_DS=1; i_DS<sl_DSParameter.count(); i_DS++ ) // i_DS = 0 => Event label
         {
@@ -1124,15 +1134,6 @@ int MainWindow::writeDataDescription( QIODevice *outDevice, const int i_Codec, c
                 else
                     sl_Parameter.append( s_Parameter );
             }
-        }
-        break;
-
-    case _AUTO_:
-    case _BYPOSITION_:
-        for ( int i_MF=0; i_MF<sl_MFParameter.count(); i_MF++ )
-        {
-            if ( b_EmptyColumn[++j] == false )
-                sl_Parameter.append( buildParameter( sl_MFParameter.at( i_MF ), s_tempEventLabel ) );
         }
         break;
     }
@@ -1279,6 +1280,42 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
 
     switch ( i_MetadataFileMode )
     {
+    case _AUTO_:
+    case _BYPOSITION_:
+        for ( int j=1; j<i_NumOfParameters; j++ )
+        {
+            if ( b_EmptyColumn[j] == false )
+            {
+                s_Parameter		= s_Header.section( "\t", j, j );
+                s_ParameterMF	= sl_MFParameter.at( j-1 );
+                d_Factor[j]		= 1.;
+
+                if ( s_ParameterMF.section( "\t", 1, 1 ).isEmpty() == false )
+                    s_Parameter = s_ParameterMF.section( "\t", 1, 1 );
+                else
+                    s_Parameter = s_ParameterMF.section( "\t", 0, 0 );
+
+                i_Digits[j]			= s_ParameterMF.section( "\t", 5, 5 ).section( ".", 1, 1 ).length();
+                d_Factor[j]			= s_ParameterMF.section( "\t", 6, 6 ).toDouble();
+                s_defaultValue[j]	= s_ParameterMF.section( "\t", 7, 7 );
+                d_RangeMin[j]		= s_ParameterMF.section( "\t", 8, 8 ).toDouble();
+                d_RangeMax[j]		= s_ParameterMF.section( "\t", 9, 9 ).toDouble();
+
+                if ( d_Factor[j] == 0. )
+                    d_Factor[j] = 1.;
+
+                if ( ( d_RangeMin[j] == 0. ) && ( d_RangeMax[j] == 0. ) )
+                {
+                    d_RangeMin[j] = -10E30;
+                    d_RangeMax[j] = 10E30;
+                }
+
+                sl_Header.append( s_Parameter );
+            }
+        }
+        break;
+
+    case _BYNAMEABBR_:
     case _BYNAME_:
         for ( int j=1; j<i_NumOfParameters; j++ )
         {
@@ -1315,43 +1352,6 @@ int MainWindow::writeDataHeader( QIODevice *outDevice, const int i_Codec, const 
 
                         i_MF = sl_MFParameter.count();
                     }
-                }
-
-                sl_Header.append( s_Parameter );
-            }
-        }
-        break;
-
-// ***********************************************************************************
-
-    case _AUTO_:
-    case _BYPOSITION_:
-        for ( int j=1; j<i_NumOfParameters; j++ )
-        {
-            if ( b_EmptyColumn[j] == false )
-            {
-                s_Parameter		= s_Header.section( "\t", j, j );
-                s_ParameterMF	= sl_MFParameter.at( j-1 );
-                d_Factor[j]		= 1.;
-
-                if ( s_ParameterMF.section( "\t", 1, 1 ).isEmpty() == false )
-                    s_Parameter = s_ParameterMF.section( "\t", 1, 1 );
-                else
-                    s_Parameter = s_ParameterMF.section( "\t", 0, 0 );
-
-                i_Digits[j]			= s_ParameterMF.section( "\t", 5, 5 ).section( ".", 1, 1 ).length();
-                d_Factor[j]			= s_ParameterMF.section( "\t", 6, 6 ).toDouble();
-                s_defaultValue[j]	= s_ParameterMF.section( "\t", 7, 7 );
-                d_RangeMin[j]		= s_ParameterMF.section( "\t", 8, 8 ).toDouble();
-                d_RangeMax[j]		= s_ParameterMF.section( "\t", 9, 9 ).toDouble();
-
-                if ( d_Factor[j] == 0. )
-                    d_Factor[j] = 1.;
-
-                if ( ( d_RangeMin[j] == 0. ) && ( d_RangeMax[j] == 0. ) )
-                {
-                    d_RangeMin[j] = -10E30;
-                    d_RangeMax[j] = 10E30;
                 }
 
                 sl_Header.append( s_Parameter );
