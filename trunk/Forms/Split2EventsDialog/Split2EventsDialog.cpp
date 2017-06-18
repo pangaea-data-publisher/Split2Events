@@ -355,6 +355,27 @@ void Split2EventsDialog::SaveProject()
 
 void Split2EventsDialog::NewProject()
 {
+
+    QString s_Filename = "";
+    QString s_Issue    = "";
+
+// ***********************************************************************************************************************
+// set issue number if given in file path
+
+    s_Filename = this->windowTitle().section( "[", 1, 1 ).section( "]", 0, 0 ).toUpper();
+
+    QFileInfo fi( s_Filename );
+
+    if ( fi.absolutePath().contains( "PDI-" ) == true )
+    {
+        int i_Issue = fi.absolutePath().section( "/PDI-", 1, 1 ).section( "/", 0, 0 ).toInt();
+
+        if ( ( i_Issue > 0 ) && ( i_Issue < _MAX_NUM_OF_ISSUES ) )
+            s_Issue = "PDI-" + fi.absolutePath().section( "/PDI-", 1, 1 ).section( "/", 0, 0 );
+        else
+            s_Issue = "";
+    }
+
 // ***********************************************************************************************************************
 // Mandatory
 
@@ -379,7 +400,7 @@ void Split2EventsDialog::NewProject()
     this->SourceReferenceLineEdit->setText( "" );
     this->SourceDatasetLineEdit->setText( "" );
     this->ParentLineEdit->setText( "" );
-    this->IssueLineEdit->setText( "" );
+    this->IssueLineEdit->setText( s_Issue );
     this->UserLineEdit->setText( "" );
 
     this->TopologicTypeComboBox->setCurrentIndex( _NOTSPECIFIED_ );

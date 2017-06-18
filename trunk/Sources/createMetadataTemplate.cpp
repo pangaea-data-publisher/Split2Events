@@ -194,15 +194,15 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
         {   // Parameter is given as text
 
             s_ParameterID     = tr( "unknown" );
-            s_ParameterSearch = s_Parameter.section( "@", 0, 0 ).toLower();
+            s_ParameterSearch = s_Parameter.section( "@", 0, 0 ).toLower().replace( " []", "" );
 
-            if ( ( s_ParameterSearch == "latitude" ) || ( s_ParameterSearch == "latitude []" ) )
+            if ( s_ParameterSearch == "latitude" )
             {
                 s_ParameterID	= "1600";
                 s_Factor		= "1";
             }
 
-            if ( ( s_ParameterSearch == "longitude" ) || ( s_ParameterSearch == "longitude []" ) )
+            if ( s_ParameterSearch == "longitude" )
             {
                 s_ParameterID	= "1601";
                 s_Factor		= "1";
@@ -231,20 +231,20 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                     s_Format.append( ".00" );
             }
 
-            if ( ( s_ParameterSearch == "date/time" ) || ( s_ParameterSearch == "date/time []" ) )
+            if ( s_ParameterSearch == "date/time" )
             {
                 s_ParameterID	= "1599";
                 s_Format		= "yyyy-MM-dd'T'HH:mm";
                 s_Comment       = "for details see: http://icu-project.org/apiref/icu4j/com/ibm/icu/text/SimpleDateFormat.html";
             }
 
-            if ( ( s_ParameterSearch == "date/time start" ) || ( s_ParameterSearch == "date/time start []" ) )
+            if ( s_ParameterSearch == "date/time start" )
             {
                 s_ParameterID	= "152460";
                 s_Format		= "yyyy-MM-dd'T'HH:mm";
             }
 
-            if ( ( s_ParameterSearch == "date/time end" ) || ( s_ParameterSearch == "date/time end []" ) )
+            if ( s_ParameterSearch == "date/time end" )
             {
                 s_ParameterID	= "150986";
                 s_Format		= "yyyy-MM-dd'T'HH:mm";
@@ -286,7 +286,7 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Factor		= "1";
             }
 
-            if ( ( s_ParameterSearch == "salinity" ) || ( s_ParameterSearch == "salinity []" ) || ( s_ParameterSearch == "sal" ) || ( s_ParameterSearch == "sal []" ) )
+            if ( ( s_ParameterSearch == "salinity" ) || ( s_ParameterSearch == "sal" ) )
             {
                 if ( s_Parameter.section( "@", 1, 1 ).isEmpty() == true )
                     s_Parameter = "Salinity []";
@@ -319,6 +319,21 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_ParameterID	= "1883";
                 s_Factor		= "1";
             }
+
+            if ( s_ParameterSearch == "url all" ) s_ParameterID = "149087";
+            if ( s_ParameterSearch == "url audio" ) s_ParameterID = "84658";
+            if ( s_ParameterSearch == "url file" ) s_ParameterID = "54251";
+            if ( s_ParameterSearch == "url graphic" ) s_ParameterID = "83788";
+            if ( s_ParameterSearch == "url image" ) s_ParameterID = "54243";
+            if ( s_ParameterSearch == "url meta" ) s_ParameterID = "54242";
+            if ( s_ParameterSearch == "url model" ) s_ParameterID = "90375";
+            if ( s_ParameterSearch == "url movie" ) s_ParameterID = "83431";
+            if ( s_ParameterSearch == "url raw" ) s_ParameterID = "15651";
+            if ( s_ParameterSearch == "url ref" ) s_ParameterID = "54968";
+            if ( s_ParameterSearch == "url sgy" ) s_ParameterID = "54248";
+            if ( s_ParameterSearch == "url source" ) s_ParameterID = "77453";
+            if ( s_ParameterSearch == "url thumb" ) s_ParameterID = "54034";
+            if ( s_ParameterSearch == "url wcd" ) s_ParameterID = "149088";
 
             s_Comment = s_Parameter.section( "@", 1, 1 ).simplified();
 
