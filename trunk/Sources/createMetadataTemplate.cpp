@@ -214,6 +214,12 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Factor		= "1";
             }
 
+            if ( s_ParameterSearch == "depth water [m]" )
+            {
+                s_ParameterID	= "1619";
+                s_Factor		= "1";
+            }
+
             if ( ( s_ParameterSearch == "m" ) || ( s_ParameterSearch == "depth, rock [m]" ) || ( s_ParameterSearch == "depth, sediment [m]" ) || ( s_ParameterSearch == "depth, sediment/rock [m]" )  || ( s_ParameterSearch == "depth, rock/sediment [m]" ) )
             {
                 s_ParameterID	= "1";
@@ -262,7 +268,19 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
                 s_Factor		= "1";
             }
 
+            if ( s_ParameterSearch == "depth top [m]" )
+            {
+                s_ParameterID	= "3";
+                s_Factor		= "1";
+            }
+
             if ( s_ParameterSearch == "depth, bottom [m]" )
+            {
+                s_ParameterID	= "4";
+                s_Factor		= "1";
+            }
+
+            if ( s_ParameterSearch == "depth bot [m]" )
             {
                 s_ParameterID	= "4";
                 s_Factor		= "1";
