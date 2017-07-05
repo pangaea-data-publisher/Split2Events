@@ -37,7 +37,7 @@ int MainWindow::createImportParameterFile( const QString &s_FilenameParameterImp
 
 // **********************************************************************************************
 
-    tout << tr( "ParameterName\tAbbreviation\tUnit\tDataGroup\tLowerLimit\tUpperLimit\tDefaultFormat\t" );
+    tout << tr( "ParameterName\tAbbreviation\tUnit\tLowerLimit\tUpperLimit\tDefaultFormat\t" );
     tout << tr( "DefaultMethodID\tDefaultDataType\tReferenceID\tDescription\tURL Parameter" );
 
     if ( b_match_against_WoRMS == true )
@@ -194,7 +194,7 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
 
     s_ParameterNew = s_ParameterName;
 
-    s_ParameterNew.append( QString( "\t%1\t%2\t\t\t\t\t\t%3\t\t\t").arg( s_ParameterAbbreviation ).arg( s_Unit ).arg( i_DataType ) );
+    s_ParameterNew.append( QString( "\t%1\t%2\t\t\t\t\t%3\t\t\t").arg( s_ParameterAbbreviation ).arg( s_Unit ).arg( i_DataType ) );
 
     s_ParameterNew.replace( " \t", "\t" );
 

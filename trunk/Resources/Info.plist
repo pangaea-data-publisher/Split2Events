@@ -23,9 +23,9 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>12.30</string>
+    <string>12.31</string>
     <key>CFBundleVersion</key>
-    <string>12.30</string>
+    <string>12.31</string>
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2017, Alfred Wegener Institute, PANGAEA</string>
     <key>LSApplicationCategoryType</key>
