@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>731</width>
-    <height>243</height>
+    <width>867</width>
+    <height>262</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,20 +24,27 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QRadioButton" name="findByPositionRadioButton">
+       <widget class="QRadioButton" name="useAutoMetadataFileRadioButton">
         <property name="text">
-         <string>find parameter by position (be careful if you use one metadata file for different data files)</string>
+         <string>use auto metadata file (set the default method and a suitable format for the data)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QRadioButton" name="findByNameOrAbbreviationRadioButton">
+       <widget class="QRadioButton" name="findByPositionRadioButton">
         <property name="text">
-         <string>find parameter by name or abbreviation (a parameter database will be used)</string>
+         <string>use metadata file; find parameter by position (be careful if you use one metadata file for different data files)</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
+       <widget class="QRadioButton" name="findByNameOrAbbreviationRadioButton">
+        <property name="text">
+         <string>use metadata file; find parameter by name or abbreviation (if a metadata template is created, the parameter database will be used)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
        <widget class="QRadioButton" name="findByNameOnlyRadioButton">
         <property name="font">
          <font>
@@ -46,7 +53,7 @@
          </font>
         </property>
         <property name="text">
-         <string>find parameter by name only (a parameter database will be used)</string>
+         <string>use metadata file; find parameter by name only (if a metadata template is created, the parameter database will be used)</string>
         </property>
        </widget>
       </item>
@@ -113,6 +120,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>useAutoMetadataFileRadioButton</tabstop>
   <tabstop>findByPositionRadioButton</tabstop>
   <tabstop>findByNameOrAbbreviationRadioButton</tabstop>
   <tabstop>findByNameOnlyRadioButton</tabstop>

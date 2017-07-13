@@ -522,6 +522,7 @@ QString MainWindow::findParameterByName(const structParameter p_ParameterList[],
     {
         switch ( i_MetadataFileMode )
         {
+        case _AUTO_:
         case _BYNAMEABBR_:
             if ( ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterNameL ) || ( s_Parameter.section( "@", 0, 0 ) == p_ParameterList[p1].ParameterAbbreviationL ) )
                 s_ParameterID = p_ParameterList[p1].ParameterID;

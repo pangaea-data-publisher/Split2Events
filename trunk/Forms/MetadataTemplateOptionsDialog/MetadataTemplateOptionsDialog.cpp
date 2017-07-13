@@ -44,7 +44,7 @@ void MainWindow::doMetadataTemplateOptionsDialog()
     switch ( gi_MetadataFileMode )
     {
     case _AUTO_:
-        dialog.findByPositionRadioButton->setChecked( true );
+        dialog.useAutoMetadataFileRadioButton->setChecked( true );
         break;
     case _BYPOSITION_:
         dialog.findByPositionRadioButton->setChecked( true );
@@ -85,6 +85,9 @@ void MainWindow::doMetadataTemplateOptionsDialog()
     switch ( dialog.exec() )
     {
     case QDialog::Accepted:
+        if ( dialog.useAutoMetadataFileRadioButton->isChecked() )
+            gi_MetadataFileMode = _AUTO_;
+
         if ( dialog.findByPositionRadioButton->isChecked() )
             gi_MetadataFileMode = _BYPOSITION_;
 
