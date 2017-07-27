@@ -29,6 +29,7 @@
 #include <QStatusBar>
 #include <QSettings>
 #include <QSslError>
+#include <QDebug>
 
 #include "Globals.h"
 

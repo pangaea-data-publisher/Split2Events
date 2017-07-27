@@ -31,7 +31,6 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
     QString       s_ParameterID                     = "";
     QString		  s_Parameter                       = "";
-    QString		  s_ParameterName                   = "";
     QString       s_ParameterSearch                 = "";
     QString		  s_Format                          = "";
     QString		  s_Factor                          = "";
@@ -157,6 +156,10 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
 
         if ( b_OK == true )
         {	// Parameter is given by ID
+
+            if ( i_ParameterID == 1599 )
+                s_Format = "yyyy-MM-dd'T'HH:mm";
+
             if ( ( i_MetadataFileMode == _AUTO_ ) || ( i_ParameterID <= 0 ) )
             {
                 tmeta << s_Parameter << "\t" << s_Parameter.section( "@", 0, 0 ) << "\t" << s_PI << "\t" << s_Method << "\t" << s_Parameter.section( "@", 1, 1 ) << "\t";
@@ -164,9 +167,12 @@ int MainWindow::createMetadataTemplate( const QString &s_FilenameIn, const QStri
             }
             else
             {
-                s_ParameterName = findParameterByID( p_ParameterList, s_Parameter );
+                if ( s_Parameter.contains( "@" ) == true )
+                    tmeta << s_Parameter << "\t";
+                else
+                    tmeta << findParameterByID( p_ParameterList, s_Parameter ) << "\t";
 
-                tmeta << s_ParameterName << "\t" << s_Parameter.section( "@", 0, 0 ) << "\t" << s_PI << "\t" << s_Method << "\t" << s_Parameter.section( "@", 1, 1 ) << "\t";
+                tmeta << s_Parameter.section( "@", 0, 0 ) << "\t" << s_PI << "\t" << s_Method << "\t" << s_Parameter.section( "@", 1, 1 ) << "\t";
                 tmeta << s_Format << "\t" << s_Factor << "\t\t";
 
                 if ( F_ptr[i].min < 9.999E30 )
