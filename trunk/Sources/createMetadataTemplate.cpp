@@ -619,8 +619,6 @@ void MainWindow::doCreateMetadataTemplate()
 
     QTime       timer;
 
-    QDateTime   datetime = QDateTime::currentDateTime();
-
 // *************************************************************************************
 
     if ( gsl_FilenameList.isEmpty() == true )  // no data file selected
@@ -652,13 +650,19 @@ void MainWindow::doCreateMetadataTemplate()
 
         QFileInfo fi = QFileInfo( gsl_FilenameList.at( 0 ) );
 
+        QString s_Username = QString::fromLocal8Bit( qgetenv( "USER" ) ); // macOS and Linux
+        if ( s_Username.isEmpty() )
+            s_Username = QString::fromLocal8Bit( qgetenv( "USERNAME" ) ); // Windows
+
+        s_Username = s_Username.replace( " ", "" ).toLower();
+
         switch ( gi_Extension )
         {
         case _CSV_:
-            s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_" ) + datetime.toString( "yyyyMMddhhmmss" ) + ".csv";
+            s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".csv";
             break;
         default:
-            s_FilenameParameterImport = fi.absolutePath() + "/" + tr( "imp_parameter_" ) + datetime.toString( "yyyyMMddhhmmss" ) + ".txt";
+            s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".txt";
             break;
         }
 

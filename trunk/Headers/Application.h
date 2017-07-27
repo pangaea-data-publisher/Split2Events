@@ -114,6 +114,7 @@ public:
     QString     gs_Parent;
 
     int         gi_NumOfParametersInPDB;
+    int         gi_NumOfParameterSubmissions;
     int         gi_MetadataFileMode;
     int         gi_TopologicType;
     int         gi_Status;

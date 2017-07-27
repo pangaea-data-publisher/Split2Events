@@ -92,6 +92,7 @@ void MainWindow::savePreferences()
     settings.setValue( "Extension", gi_Extension );
     settings.setValue( "FilenameOfPDB", gs_FilenamePDB );
     settings.setValue( "ChecksumOfPDB", gs_PDBChecksum );
+    settings.setValue( "NumOfParameterSubmissions", gi_NumOfParameterSubmissions );
 
     settings.endGroup();
 }
@@ -200,6 +201,7 @@ void MainWindow::loadPreferences()
     gi_Extension                                = settings.value( "Extension", _TXT_ ).toInt();
     gs_FilenamePDB                              = settings.value( "FilenameOfPDB", getDataLocation() + QLatin1String( "/ParameterDB.pdb" ) ).toString();
     gs_PDBChecksum                              = settings.value( "ChecksumOfPDB", "ffff" ).toString();
+    gi_NumOfParameterSubmissions                = settings.value( "NumOfParameterSubmissions", 0 ).toInt();
 
     settings.endGroup();
 }
