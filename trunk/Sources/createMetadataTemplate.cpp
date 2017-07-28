@@ -650,22 +650,6 @@ void MainWindow::doCreateMetadataTemplate()
 
         QFileInfo fi = QFileInfo( gsl_FilenameList.at( 0 ) );
 
-        QString s_Username = QString::fromLocal8Bit( qgetenv( "USER" ) ); // macOS and Linux
-        if ( s_Username.isEmpty() )
-            s_Username = QString::fromLocal8Bit( qgetenv( "USERNAME" ) ); // Windows
-
-        s_Username = s_Username.replace( " ", "" ).toLower();
-
-        switch ( gi_Extension )
-        {
-        case _CSV_:
-            s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".csv";
-            break;
-        default:
-            s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".txt";
-            break;
-        }
-
         while ( ( i < gsl_FilenameList.count() ) && ( err == _NOERROR_ ) && ( i_stopProgress == 0 ) )
         {
             fi.setFile( gsl_FilenameList.at( i ) );
@@ -704,6 +688,24 @@ void MainWindow::doCreateMetadataTemplate()
     {
         if ( ( gb_writeParameterImportFile == true ) && ( sl_ListParameterNew.count() > 0 ) )
         {
+            QFileInfo fi = QFileInfo( gsl_FilenameList.at( 0 ) );
+
+            QString s_Username = QString::fromLocal8Bit( qgetenv( "USER" ) ); // macOS and Linux
+            if ( s_Username.isEmpty() )
+                s_Username = QString::fromLocal8Bit( qgetenv( "USERNAME" ) ); // Windows
+
+            s_Username = s_Username.replace( " ", "" ).toLower();
+
+            switch ( gi_Extension )
+            {
+            case _CSV_:
+                s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".csv";
+                break;
+            default:
+                s_FilenameParameterImport = fi.absolutePath() + "/" + "imp_Parameter_" + s_Username + "_" + QString( "%1" ).arg( ++gi_NumOfParameterSubmissions, 4, 10, QLatin1Char( '0' ) ) + ".txt";
+                break;
+            }
+
             err = createImportParameterFile( s_FilenameParameterImport, gi_Codec, gb_match_against_WoRMS, sl_ListParameterNew );
 
             if ( gb_showParameterImportFileCreatedMessage == true )
