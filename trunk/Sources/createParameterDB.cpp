@@ -92,7 +92,7 @@ void MainWindow::doCreateParameterDB()
 
 // **********************************************************************************************
 
-    if ( ( sl_FilenameIn.count() > 0 ) && ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
+    if ( ( gi_NumOfParameterFiles > 0 ) && ( sl_FilenameIn.count() > 0 ) && ( sl_FilenameIn.count() == gi_NumOfParameterFiles ) && ( err == _NOERROR_ ) && ( i_stopProgress != _APPBREAK_ ) )
     {
         err = concatenateFiles( gs_FilenamePDB, sl_FilenameIn, tr( "Refreshing parameter database (concatenate)..." ), 1, false );
 
@@ -265,7 +265,7 @@ void MainWindow::doMergeParameterDB()
 // **********************************************************************************************
 
     if ( gi_NumOfParameterFiles == 0 ) // https://store.pangaea.de/software/Split2Events/ParameterDDI.txt not readable
-        err = -146;
+        err = -142;
 
 // **********************************************************************************************
 

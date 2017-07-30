@@ -80,7 +80,7 @@ void MainWindow::onError( const int err )
         QMessageBox::information( this, getApplicationName( true ), tr( "Too many parameters in parameter database.\nPlease contact rsieger@pangaea.de" ) );
         break ;
     case -142:
-        QMessageBox::information( this, getApplicationName( true ), tr( "Parameter database cannot be updated.\nPlease refresh parameter database." ) );
+        QMessageBox::information( this, getApplicationName( true ), tr( "Parameter database cannot be created.\nPlease contact rsieger@pangaea.de" ) );
         break ;
     case -143:
         QMessageBox::information( this, getApplicationName( true ), tr( "One parameter file is missing or empty.\nParameter database cannot be updated.\n\nDont't worry, the old parameter database has be restored. Try again after 2 minutes." ) );
@@ -90,9 +90,6 @@ void MainWindow::onError( const int err )
         break ;
     case -145:
         QMessageBox::information( this, getApplicationName( true ), tr( "Parameter database hasn't changed. Please check the status of 4D update queue before calling the helpdesk." ) );
-        break ;
-    case -146:
-        QMessageBox::information( this, getApplicationName( true ), tr( "ParameterDDI.txt cannot be updated.\nPlease contact rsieger@pangaea.de" ) );
         break ;
     default :
         QMessageBox::information( this, getApplicationName( true ), tr( "Unknown error.\nPlease contact rsieger@pangaea.de" ) );
