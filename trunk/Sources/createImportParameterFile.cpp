@@ -169,7 +169,10 @@ QString MainWindow::buildNewParameterEntry( const QString &s_Parameter, const bo
     switch ( s_ParameterAbbreviationMajor.count( " " ) )
     {
     case 0:
-        s_ParameterAbbreviation = s_ParameterAbbreviationMajor;
+        if ( s_ParameterAbbreviationMinor.startsWith( "cf. " ) == true )
+            s_ParameterAbbreviation = s_ParameterAbbreviationMajor.left( 1 ) + tr( "." );
+        else
+            s_ParameterAbbreviation = s_ParameterAbbreviationMajor;
         break;
 
     default:
